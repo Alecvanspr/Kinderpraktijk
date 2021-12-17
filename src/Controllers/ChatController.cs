@@ -1,13 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 //authorize
 public class ChatController : Controller{
     private static List<Chat> _Chats;
-    private static List<User> _Users;
-    private static List<Message> _Messages;
     public ChatController(){
-        if(_Chats!=null)
+        if(_Chats==null)
             InitializeDatabase();
     }
     public IActionResult Index(){
@@ -19,6 +19,7 @@ public class ChatController : Controller{
     }
     public IActionResult GroepToevoegen(){
         //hier wordt dan een query uitgehaald
+        Console.WriteLine(_Chats.Count());
         return View(_Chats);
     }
     //hieronder wordt de database in elkaar gezet zodat ik kan kijken of alles werkt.
