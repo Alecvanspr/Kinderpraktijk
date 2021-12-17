@@ -15619,6 +15619,11 @@
   "RootNamespace": "src",
   "Documents": [
     {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Shared\\_ZelfhulpgroepenPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_ZelfhulpgroepenPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Ons\\Index.cshtml",
       "TargetPath": "Views\\Ons\\Index.cshtml",
       "FileKind": "mvc"
@@ -15651,6 +15656,11 @@
     {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Chat\\Index.cshtml",
       "TargetPath": "Views\\Chat\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Chat\\GroepToevoegen.cshtml",
+      "TargetPath": "Views\\Chat\\GroepToevoegen.cshtml",
       "FileKind": "mvc"
     },
     {

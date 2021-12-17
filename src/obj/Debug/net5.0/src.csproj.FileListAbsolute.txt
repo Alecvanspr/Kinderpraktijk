@@ -47,3 +47,5 @@ C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.genruntim
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.csproj.CopyComplete
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Chat\DashBoard.cshtml.g.cs
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Chat\Index.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Shared\_ZelfhulpgroepenPartial.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Chat\GroepToevoegen.cshtml.g.cs
