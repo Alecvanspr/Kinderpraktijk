@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\src.csproj",
+      "projectUniqueName": "C:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\src.csproj",
       "projectName": "src",
-      "projectPath": "C:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\src.csproj",
+      "projectPath": "C:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\src.csproj",
       "packagesPath": "C:\\Users\\alecv\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\obj\\",
+      "outputPath": "C:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

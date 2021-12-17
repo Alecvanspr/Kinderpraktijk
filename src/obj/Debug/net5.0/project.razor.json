@@ -1,5 +1,5 @@
 {
-  "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\src.csproj",
+  "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\src.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "5.0",
@@ -15619,48 +15619,58 @@
   "RootNamespace": "src",
   "Documents": [
     {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\Views\\Home\\Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\Views\\_ViewImports.cshtml",
-      "TargetPath": "Views\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\Views\\Shared\\Error.cshtml",
-      "TargetPath": "Views\\Shared\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\Views\\Ons\\Index.cshtml",
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Ons\\Index.cshtml",
       "TargetPath": "Views\\Ons\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\Views\\_ViewStart.cshtml",
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Shared\\Error.cshtml",
+      "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\Views\\Ons\\Contact.cshtml",
-      "TargetPath": "Views\\Ons\\Contact.cshtml",
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\_ViewImports.cshtml",
+      "TargetPath": "Views\\_ViewImports.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\Views\\Shared\\_Layout.cshtml",
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Home\\Privacy.cshtml",
+      "TargetPath": "Views\\Home\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Kinderpraktijk\\Nieuwe map\\Kinderpraktijk\\src\\Views\\Home\\Index.cshtml",
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Chat\\Index.cshtml",
+      "TargetPath": "Views\\Chat\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Ons\\Contact.cshtml",
+      "TargetPath": "Views\\Ons\\Contact.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Chat\\DashBoard.cshtml",
+      "TargetPath": "Views\\Chat\\DashBoard.cshtml",
       "FileKind": "mvc"
     }
   ],
