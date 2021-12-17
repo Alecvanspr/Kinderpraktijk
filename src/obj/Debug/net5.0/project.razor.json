@@ -15654,18 +15654,13 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Chat\\Index.cshtml",
-      "TargetPath": "Views\\Chat\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Chat\\GroepToevoegen.cshtml",
-      "TargetPath": "Views\\Chat\\GroepToevoegen.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\DashBoard\\Index.cshtml",
+      "TargetPath": "Views\\DashBoard\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15674,13 +15669,13 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Ons\\Contact.cshtml",
-      "TargetPath": "Views\\Ons\\Contact.cshtml",
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\DashBoard\\GroepToevoegen.cshtml",
+      "TargetPath": "Views\\DashBoard\\GroepToevoegen.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Chat\\DashBoard.cshtml",
-      "TargetPath": "Views\\Chat\\DashBoard.cshtml",
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Ons\\Contact.cshtml",
+      "TargetPath": "Views\\Ons\\Contact.cshtml",
       "FileKind": "mvc"
     }
   ],

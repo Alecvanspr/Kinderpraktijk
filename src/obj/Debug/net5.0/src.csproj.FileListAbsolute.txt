@@ -45,7 +45,6 @@ C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\ref\src.dll
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.pdb
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.genruntimeconfig.cache
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.csproj.CopyComplete
-C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Chat\DashBoard.cshtml.g.cs
-C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Chat\Index.cshtml.g.cs
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Shared\_ZelfhulpgroepenPartial.cshtml.g.cs
-C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Chat\GroepToevoegen.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\DashBoard\GroepToevoegen.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\DashBoard\Index.cshtml.g.cs

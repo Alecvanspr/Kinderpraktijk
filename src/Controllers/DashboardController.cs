@@ -4,9 +4,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 //authorize
-public class ChatController : Controller{
+public class DashboardController : Controller{
     private static List<Chat> _Chats;
-    public ChatController(){
+    public DashboardController(){
         if(_Chats==null)
             InitializeDatabase();
     }
