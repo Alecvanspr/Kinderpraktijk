@@ -28,8 +28,9 @@
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/messageBuilder.js"></script>
 <script>
-        //DIt is voor het aanmaken van een connectie met de ChatHub
+    //DIt is voor het aanmaken van een connectie met de ChatHub
     //De naam van de Chathub is case sensitive
+    //hierbij moet ook de link veranderd worden zodra het kan
     const connection = new signalR.HubConnectionBuilder()
                                     .withUrl("https://localhost:5001/chathub")
                                     .configureLogging(signalR.LogLevel.Information)

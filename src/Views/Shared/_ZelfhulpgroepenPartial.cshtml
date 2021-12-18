@@ -1,23 +1,11 @@
 <!--Hierzo misschien de 10 met de meeste deelnemers-->
+@model List<Chat>
 <div class="groups b-small">
-    <div class="group row">
-        <h3>Groep 1</h3>
-        <p>Beschrijving van de groep</p>
+    @foreach (var chat in Model)
+    {
+    <div class="group row" >
+       <a asp-action="Chat" asp-route-ChatId="@chat.Id"><h3>@chat.Naam</h3></a>
+        <p>@chat.Beschrijving</p>
     </div>
-    <div class="group row">
-        <h3>Groep 2</h3>
-        <p>Beschrijving van de groep</p>
-    </div>
-    <div class="group row">
-        <h3>Groep 3</h3>
-        <p>Beschrijving van de groep</p>
-    </div>
-    <div class="group row">
-        <h3>Groep 4</h3>
-        <p>Beschrijving van de groep</p>
-    </div>
-    <div class="group row">
-        <h3>Groep 5</h3>
-        <p>Beschrijving van de groep</p>
-    </div>
+    }
 </div>

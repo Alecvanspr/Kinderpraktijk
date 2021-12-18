@@ -25,10 +25,14 @@ public class DashboardController : Controller{
     public IActionResult ChatBody(){
         return View();
     }
-    public IActionResult Chat(){
+
+    [HttpGet]
+    //Dit moet straks worden veranderd doordat dit een datalek is
+    public IActionResult Chat(int ChatId){
         //hier wordt nu een nieuwe ding aangemaakt.
         //maar dit zou eigenlijk uit de database moeten 
-        return View(_context.Chat.Include(x=>x.Messages).First());
+        
+        return View(_context.Chat.Include(x=>x.Messages).Where(x=>x.Id==ChatId).Single());
     }
     //de berichten hieronder zijn voor het gebruik van de chat
     //dan kan je denken aan het verzenden van berichten en het maken van chats

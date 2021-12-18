@@ -119,8 +119,14 @@ body {
 .group{
   display: inline;
   margin:0.25rem;
+  padding:0.25rem;
   background-color: lightgray;
 }
+.group:hover{
+  background-color:#4363C5;
+  color:white;
+}
+
 .main-knop{
   margin: 0.25rem;
   margin-left:0.5rem;
