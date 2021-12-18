@@ -204,6 +204,9 @@ body {
   padding-bottom: 1rem;
   overflow-y: auto;
   height: 80%;
+  max-height: 45rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .message {
@@ -234,10 +237,19 @@ body {
   text-align: center;
 }
 .chat-input{
+  position: sticky;
+  top:25rem;
+}
+.chat-input > form{
+  padding: 0.25rem;
+  margin:0.25rem;
   display: flex;
-  position: absolute;
   flex-direction: row;
-  background-color: red;
+}
+.chat-input >form> input{
+  max-width: 60rem;
+  margin:0.25rem;
+  padding:0.25rem;
 }
 
 

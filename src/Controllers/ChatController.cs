@@ -29,19 +29,21 @@ public class ChatController : Controller{
        var NewMessage = new Message(){
                     ChatId = chatId,
                     Text = message,
-                    Naam = User.Identity.Name,
+                    //Naam = User.Identity.Name,
+                    Naam="User",
                     timestamp = DateTime.Now
             };
+
             //Naam is NULL doordat de identity nog niet goed is ingesteld
             _context.Messages.Add(NewMessage);
             await _context.SaveChangesAsync();
 
-            //dit doet het niet ofzo
             //Deze wordt wel verzonden, echter gaat dit naar alle clients. Ik den dat de GROUP niet werkt van de andere
             await _chat.Clients.All.SendAsync("ReceiveMessage",NewMessage);
+            
             //hieronder wordt het naar alle gebruikers van die group gestuurd
             //Console.WriteLine(roomName);
-            
+            //Voor de groups heb ik identity nodig
             //await _chat.Clients.Groups(roomName).SendAsync("RecieveMessage",NewMessage);
             //Dit gaat een bericht sturen naar de client
             return Ok();

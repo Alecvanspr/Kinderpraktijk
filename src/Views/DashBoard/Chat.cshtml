@@ -18,8 +18,8 @@
     <form onsubmit="sendMessage(event)" asp-controller="Chat" asp-action="CreateMessage" method="post">
         <input type="hidden" name="chatId" value="@Model.Id">
         <input type="hidden" name="roomName" value="@Model.Naam">
-        <input type="text" name="Message">
-        <input type="submit" />
+        <input class="form-control form-control-lg" type="text" name="Message">
+        <input class="btn btn-primary" type="submit" />
     </form>
 </div>
 
@@ -90,7 +90,6 @@
             })
             .catch(err => {
                 console.log("Iets ging fout!")
-                console.log(err)
             })
     }
 </script>
