@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 //authorize
 public class DashboardController : Controller{
@@ -25,7 +26,9 @@ public class DashboardController : Controller{
         return View();
     }
     public IActionResult Chat(){
-        return View();
+        //hier wordt nu een nieuwe ding aangemaakt.
+        //maar dit zou eigenlijk uit de database moeten 
+        return View(_context.Chat.Include(x=>x.Messages).First());
     }
     //de berichten hieronder zijn voor het gebruik van de chat
     //dan kan je denken aan het verzenden van berichten en het maken van chats

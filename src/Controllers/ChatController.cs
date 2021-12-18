@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-[Authorize]
 public class ChatController : Controller{
     private IHubContext<ChatHub> _chat;
     public ChatController( IHubContext<ChatHub> chat){
@@ -33,15 +32,17 @@ public class ChatController : Controller{
                     Naam = User.Identity.Name,
                     timestamp = DateTime.Now
             };
+            //Naam is NULL doordat de identity nog niet goed is ingesteld
             _context.Messages.Add(NewMessage);
             await _context.SaveChangesAsync();
 
             //dit doet het niet ofzo
             //Deze wordt wel verzonden, echter gaat dit naar alle clients. Ik den dat de GROUP niet werkt van de andere
-            //await _chat.Clients.All.SendAsync("ReceiveMessage",NewMessage);
+            await _chat.Clients.All.SendAsync("ReceiveMessage",NewMessage);
             //hieronder wordt het naar alle gebruikers van die group gestuurd
-            Console.WriteLine(roomName);
-            await _chat.Clients.Groups(roomName).SendAsync("RecieveMessage",NewMessage);
+            //Console.WriteLine(roomName);
+            
+            //await _chat.Clients.Groups(roomName).SendAsync("RecieveMessage",NewMessage);
             //Dit gaat een bericht sturen naar de client
             return Ok();
     }
