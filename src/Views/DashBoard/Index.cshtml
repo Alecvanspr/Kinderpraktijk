@@ -1,7 +1,7 @@
     @{
     ViewData["Title"] = "Dashboard";
 }
-    
+    @model List<Chat>
     <h1 class="text-center">Welkom terug!</h1>    
     <img src="~/img/banner.png" class="waas img-responsive" alt="Bannerfoto met mensen in gesprek">
 
@@ -13,4 +13,4 @@
     </div>
 
 <h3>Mijn chatgroepen</h3>
-    <partial name="_ZelfhulpgroepenPartial"/> 
+    <partial name="_ZelfhulpgroepenPartial" model=@Model/> 
