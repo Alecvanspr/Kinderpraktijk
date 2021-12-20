@@ -40,8 +40,12 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.0",
           "Microsoft.EntityFrameworkCore.Sqlite": "5.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "5.0.0",
+          "Microsoft.Owin.Host.SystemWeb": "4.2.0",
+          "Microsoft.Owin.Security.Cookies": "4.2.0",
+          "Microsoft.Owin.Security.OpenIdConnect": "4.2.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.0",
           "Moq": "4.16.1",
+          "bootstrap": "5.1.2",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "5.0.0.0",
@@ -333,6 +337,7 @@
           "src.dll": {}
         }
       },
+      "bootstrap/5.1.2": {},
       "Castle.Core/4.4.0": {
         "dependencies": {
           "NETStandard.Library": "1.6.1",
@@ -1086,6 +1091,87 @@
       },
       "Microsoft.NETCore.Platforms/3.1.0": {},
       "Microsoft.NETCore.Targets/1.1.3": {},
+      "Microsoft.Owin/4.2.0": {
+        "dependencies": {
+          "Owin": "1.0.0"
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.dll": {
+            "assemblyVersion": "4.2.0.0",
+            "fileVersion": "4.2.34971.142"
+          }
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.dll": {}
+        }
+      },
+      "Microsoft.Owin.Host.SystemWeb/4.2.0": {
+        "dependencies": {
+          "Microsoft.Owin": "4.2.0",
+          "Owin": "1.0.0"
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Host.SystemWeb.dll": {
+            "assemblyVersion": "4.2.0.0",
+            "fileVersion": "4.2.34971.142"
+          }
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Host.SystemWeb.dll": {}
+        }
+      },
+      "Microsoft.Owin.Security/4.2.0": {
+        "dependencies": {
+          "Microsoft.Owin": "4.2.0",
+          "Owin": "1.0.0"
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Security.dll": {
+            "assemblyVersion": "4.2.0.0",
+            "fileVersion": "4.2.34971.142"
+          }
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Security.dll": {}
+        }
+      },
+      "Microsoft.Owin.Security.Cookies/4.2.0": {
+        "dependencies": {
+          "Microsoft.Owin": "4.2.0",
+          "Microsoft.Owin.Security": "4.2.0",
+          "Owin": "1.0.0"
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Security.Cookies.dll": {
+            "assemblyVersion": "4.2.0.0",
+            "fileVersion": "4.2.34971.142"
+          }
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Security.Cookies.dll": {}
+        }
+      },
+      "Microsoft.Owin.Security.OpenIdConnect/4.2.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Logging": "5.6.0",
+          "Microsoft.IdentityModel.Protocols": "5.6.0",
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "5.6.0",
+          "Microsoft.IdentityModel.Tokens": "5.6.0",
+          "Microsoft.Owin": "4.2.0",
+          "Microsoft.Owin.Security": "4.2.0",
+          "Owin": "1.0.0",
+          "System.IdentityModel.Tokens.Jwt": "5.6.0"
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Owin.Security.OpenIdConnect.dll": {
+            "assemblyVersion": "4.2.0.0",
+            "fileVersion": "4.2.34971.142"
+          }
+        },
+        "compile": {
+          "lib/net45/Microsoft.Owin.Security.OpenIdConnect.dll": {}
+        }
+      },
       "Microsoft.VisualStudio.Web.CodeGeneration/5.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "5.0.0",
@@ -1310,6 +1396,17 @@
         },
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Owin/1.0.0": {
+        "runtime": {
+          "lib/net40/Owin.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/net40/Owin.dll": {}
         }
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
@@ -4155,6 +4252,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "bootstrap/5.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-q67rt/zOhTjlvX0hER9Wao/EohLkwJwbD6wYNorI6e9q3bUz1ZzrZjaCCEpAktAuHzm3HjKeFqENf7bfuHXx3Q==",
+      "path": "bootstrap/5.1.2",
+      "hashPath": "bootstrap.5.1.2.nupkg.sha512"
+    },
     "Castle.Core/4.4.0": {
       "type": "package",
       "serviceable": true,
@@ -4533,6 +4637,41 @@
       "path": "microsoft.netcore.targets/1.1.3",
       "hashPath": "microsoft.netcore.targets.1.1.3.nupkg.sha512"
     },
+    "Microsoft.Owin/4.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NPPwhK+oSf6JWAy6m2Dq7xYIVnEvUTeMM1mVaOobkiVsOaHPAu8E05/fKAjrDBBDCC14z32jwnZyPs3z9UNV5w==",
+      "path": "microsoft.owin/4.2.0",
+      "hashPath": "microsoft.owin.4.2.0.nupkg.sha512"
+    },
+    "Microsoft.Owin.Host.SystemWeb/4.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fjBSPPXS9gXVoHvvpjjfhcIH3XwArt37oqEkJDXH5O0l6VcSmteaQS76esJHQI4Wk6Bc+ebHmGaM5eX9ovJiCA==",
+      "path": "microsoft.owin.host.systemweb/4.2.0",
+      "hashPath": "microsoft.owin.host.systemweb.4.2.0.nupkg.sha512"
+    },
+    "Microsoft.Owin.Security/4.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-w/cWWNkc4sBRYHmY49VSfgKGEXVbBNecnrLR6sHf/shkRpFvitduo6dGUy/CwL3bQEFPEbuyQeXmMVVXQj3R4Q==",
+      "path": "microsoft.owin.security/4.2.0",
+      "hashPath": "microsoft.owin.security.4.2.0.nupkg.sha512"
+    },
+    "Microsoft.Owin.Security.Cookies/4.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pH7EIIPO6/zu8Bz1SlJeUR+4o/iYo0tSmTzdRcPaK3Il1DixgXuiMAgSw6GrVLOqAYdv5YW2hWyRjseBRrWQAg==",
+      "path": "microsoft.owin.security.cookies/4.2.0",
+      "hashPath": "microsoft.owin.security.cookies.4.2.0.nupkg.sha512"
+    },
+    "Microsoft.Owin.Security.OpenIdConnect/4.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QtRCoLDueRhpu7oHRASJfyHYpkXQnAkVDGMjIGO1S0ea7Jdy3nWvJNHfGHwK0tmTJbOyBRC4mPwcaAASkfqGGg==",
+      "path": "microsoft.owin.security.openidconnect/4.2.0",
+      "hashPath": "microsoft.owin.security.openidconnect.4.2.0.nupkg.sha512"
+    },
     "Microsoft.VisualStudio.Web.CodeGeneration/5.0.0": {
       "type": "package",
       "serviceable": true,
@@ -4630,6 +4769,13 @@
       "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
       "path": "newtonsoft.json/11.0.2",
       "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
+    },
+    "Owin/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OseTFniKmyp76mEzOBwIKGBRS5eMoYNkMKaMXOpxx9jv88+b6mh1rSaw43vjBOItNhaLFG3d0a20PfHyibH5sw==",
+      "path": "owin/1.0.0",
+      "hashPath": "owin.1.0.0.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",

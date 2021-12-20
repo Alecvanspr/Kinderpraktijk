@@ -1,10 +1,5 @@
-C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Publish\web.config
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\appsettings.json
-C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Publish\appsettings.Development.json
-C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Publish\appsettings.json
-C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Publish\src.deps.json
-C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Publish\src.runtimeconfig.json
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\src.exe
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\src.deps.json
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\src.runtimeconfig.json
@@ -186,3 +181,15 @@ C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\runtimes\win\
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Microsoft.Owin.dll
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Microsoft.Owin.Security.dll
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Microsoft.Owin.Security.Cookies.dll
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Microsoft.Owin.Security.OpenIdConnect.dll
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\bin\Debug\net5.0\Owin.dll
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Register.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\_ViewImports.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_Layout.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs

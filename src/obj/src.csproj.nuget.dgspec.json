@@ -76,6 +76,18 @@
               "target": "Package",
               "version": "[5.0.0, )"
             },
+            "Microsoft.Owin.Host.SystemWeb": {
+              "target": "Package",
+              "version": "[4.2.0, )"
+            },
+            "Microsoft.Owin.Security.Cookies": {
+              "target": "Package",
+              "version": "[4.2.0, )"
+            },
+            "Microsoft.Owin.Security.OpenIdConnect": {
+              "target": "Package",
+              "version": "[4.2.0, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[5.0.0, )"
@@ -83,6 +95,10 @@
             "Moq": {
               "target": "Package",
               "version": "[4.16.1, )"
+            },
+            "bootstrap": {
+              "target": "Package",
+              "version": "[5.1.2, )"
             }
           },
           "imports": [
