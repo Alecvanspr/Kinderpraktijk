@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-//authorize
+[Authorize]
 public class DashboardController : Controller{
     private MijnContext _context;
     public DashboardController(MijnContext context){
@@ -15,15 +16,16 @@ public class DashboardController : Controller{
         _context = context;
     }
     public IActionResult Index(){
-        return View(_context.Chat.ToList());
+        //met deze method haal het Id van de current User op
+        var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return View(_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Select(x=>x.chat).ToList());
     }
+    //Dit is voor het verkrijgen van de view voor het toevoegen van de model
     [HttpGet]
     public IActionResult GroepToevoegen(){
         //hier wordt dan een query uitgehaald
-        return View(_context.Chat.ToList());
-    }
-    public IActionResult ChatBody(){
-        return View();
+        var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return View( _context.Chat.ToList());
     }
 
     [HttpGet]
@@ -41,7 +43,7 @@ public class DashboardController : Controller{
         var NewMessage = new Message(){
                 ChatId = chatId,
                 Text = message,
-                Naam = User.Identity.Name,
+                Naam = User.FindFirst(ClaimTypes.NameIdentifier).Value,
                 timestamp = DateTime.Now
         };
 
@@ -50,6 +52,7 @@ public class DashboardController : Controller{
         return RedirectToAction("Chat",new {id=chatId});
     }
 
+    //Hiervan mist nog de Cshtml
     [HttpPost]
     public async Task<IActionResult> CreateRoom(string naam){
         var chat =new Chat{
@@ -69,6 +72,7 @@ public class DashboardController : Controller{
         return RedirectToAction("Index");
     }
 
+    //Hiervan mist nog de cshtml
     [HttpGet]
     public async Task<IActionResult> JoinChat(int id){
         var ChatUser = new ChatUser(){

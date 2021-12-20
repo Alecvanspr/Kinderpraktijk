@@ -193,3 +193,4 @@ C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\I
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_Layout.cshtml.g.cs
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Home\Error.cshtml.g.cs

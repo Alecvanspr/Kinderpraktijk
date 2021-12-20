@@ -15656,6 +15656,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Areas\\Identity\\Pages\\_Layout.cshtml",
+      "TargetPath": "Areas\\Identity\\Pages\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Ons\\Index.cshtml",
       "TargetPath": "Views\\Ons\\Index.cshtml",
       "FileKind": "mvc"
@@ -15668,6 +15673,21 @@
     {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Shared\\_ChatBody.cshtml",
       "TargetPath": "Views\\Shared\\_ChatBody.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Areas\\Identity\\Pages\\Account\\_ViewImports.cshtml",
+      "TargetPath": "Areas\\Identity\\Pages\\Account\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Areas\\Identity\\Pages\\_ViewImports.cshtml",
+      "TargetPath": "Areas\\Identity\\Pages\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+      "TargetPath": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15691,6 +15711,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Shared\\_LoginPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_LoginPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Shared\\Room\\Default.cshtml",
       "TargetPath": "Views\\Shared\\Room\\Default.cshtml",
       "FileKind": "mvc"
@@ -15703,6 +15728,11 @@
     {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+      "TargetPath": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15723,6 +15753,11 @@
     {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Ons\\Contact.cshtml",
       "TargetPath": "Views\\Ons\\Contact.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Home\\Error.cshtml",
+      "TargetPath": "Views\\Home\\Error.cshtml",
       "FileKind": "mvc"
     },
     {

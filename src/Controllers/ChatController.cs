@@ -1,9 +1,12 @@
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
+[Authorize]
 public class ChatController : Controller{
     private IHubContext<ChatHub> _chat;
     public ChatController( IHubContext<ChatHub> chat){
@@ -26,11 +29,13 @@ public class ChatController : Controller{
         string roomName,
         [FromServices] MijnContext _context
         ){
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        var currentUser = _context.Users.Where(x=>x.Id==currentUserId).First();
+        var Username = currentUser.Firstname+" "+currentUser.LastName;
        var NewMessage = new Message(){
                     ChatId = chatId,
                     Text = message,
-                    //Naam = User.Identity.Name,
-                    Naam="User",
+                    Naam = Username,
                     timestamp = DateTime.Now
             };
 
