@@ -1,0 +1,11 @@
+<!--Hierzo misschien de 10 met de meeste deelnemers-->
+@model List<Chat>
+<div class="groups b-small">
+    @foreach (var chat in Model)
+    {
+    <div class="group row" >
+       <a asp-action="Chat" asp-route-ChatId="@chat.Id"><h3>@chat.Naam</h3></a>
+        <p>@chat.Beschrijving</p>
+    </div>
+    }
+</div>

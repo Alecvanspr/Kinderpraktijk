@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +26,37 @@ namespace src
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            
+            //Deze moet later verwijderd worden,Doordat we gebruik maken van een andere DB provider 
+            services.AddDbContext<MijnContext>(o=>
+                        o.UseSqlite("Data source= Database.db"));
+
+            //dit is nodig voor de identity. Echter is deze nog niet van toepassing
+            services.AddIdentity<srcUser, IdentityRole>()
+                                .AddEntityFrameworkStores<MijnContext>()
+                                .AddDefaultUI()
+                                .AddDefaultTokenProviders();
+                                
+
+            //Dit is nodig voor het gebruik van signal R
+            services.AddSignalR();
+
+            /* 
+                Dit moet worden gedaan doordat het framework een preventie
+                heeft voor een Cross site attack.
+
+                Hiermee stel je vast dat je van deze website wel berichten
+                zou willen ontvangen
+            */
+            services.AddCors(options=>
+                options.AddDefaultPolicy(builder =>
+                {
+                    //dit moet later ook terug veranderd worden naar de website die gebruikt gaat worden
+                    builder.WithOrigins("https://localhost:5001")
+                            .AllowCredentials();
+                })
+            );
+                services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,11 +77,18 @@ namespace src
 
             app.UseRouting();
 
+            //Dit is nodig voor de werking van signalR
+            app.UseCors(); 
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                //Deze maphub moet hier geinitialiseerd zijn
+                //Deze zorgt voor de verbinding
+                endpoints.MapHub<ChatHub>("/chatHub");
+                //endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
