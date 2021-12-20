@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-public class MijnContext :IdentityDbContext<User>{
+public class MijnContext :IdentityDbContext<srcUser>{
 
     public MijnContext(DbContextOptions<MijnContext> options) : base(options)
     {
