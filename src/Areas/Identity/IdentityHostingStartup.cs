@@ -15,6 +15,22 @@ namespace src.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+<<<<<<< HEAD
+=======
+                /*
+                Deze laat ik er in. Dit is voor de locale database als SQL server
+                services.AddDbContext<srcContext>(options =>
+                    options.UseSqlServer(
+                        context.Configuration.GetConnectionString("srcContextConnection")));
+
+                services.AddDefaultIdentity<srcUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<srcContext>();
+            });
+        }
+    }
+}
+*/
+>>>>>>> 8389422d02a7ce225d0e88b71766fa905e22621d
                 services.AddDbContext<MijnContext>(options =>
                 
                     //options.UseSqlServer(
@@ -30,4 +46,8 @@ namespace src.Areas.Identity
             );
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8389422d02a7ce225d0e88b71766fa905e22621d
