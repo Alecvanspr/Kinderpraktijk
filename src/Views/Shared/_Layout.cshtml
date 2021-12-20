@@ -28,9 +28,10 @@
                             <a class="nav-link" asp-area="" asp-controller="Ons" asp-action="Contact">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Log in</a>
+                            <a class="nav-link" asp-area="Identity" asp-controller="Home" asp-action="Privacy">Log in</a>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial"/>
                 </div>
             </div>
         </nav>
