@@ -105,8 +105,6 @@ body {
   border-radius: 21px;
 }
 
-<<<<<<< HEAD
-=======
 /*for Tab control*/
 div.login-logout-tab div.card.header {
     padding: 0px 0px 12px 0px;
@@ -125,7 +123,6 @@ div.login-logout-tab a.nav-link {
     color: #495057;
     text-align: center;
 }  
->>>>>>> 8389422d02a7ce225d0e88b71766fa905e22621d
 .groups{
   border:solid black 2px;
   display: flex;

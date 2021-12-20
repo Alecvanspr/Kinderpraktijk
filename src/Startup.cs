@@ -32,11 +32,7 @@ namespace src
                         o.UseSqlite("Data source= Database.db"));
 
             //dit is nodig voor de identity. Echter is deze nog niet van toepassing
-<<<<<<< HEAD
-            services.AddIdentity<User, IdentityRole>()
-=======
             services.AddIdentity<srcUser, IdentityRole>()
->>>>>>> 8389422d02a7ce225d0e88b71766fa905e22621d
                                 .AddEntityFrameworkStores<MijnContext>()
                                 .AddDefaultUI()
                                 .AddDefaultTokenProviders();
