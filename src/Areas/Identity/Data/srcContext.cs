@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using src.Areas.Identity.Data;
-
-namespace src.Data;
 
 public class srcContext : IdentityDbContext<srcUser>
 {

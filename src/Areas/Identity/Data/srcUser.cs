@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace src.Areas.Identity.Data;
-
 // Add profile data for application users by adding properties to the srcUser class
 public class srcUser : IdentityUser
 {

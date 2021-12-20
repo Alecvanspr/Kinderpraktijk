@@ -1,11 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
 namespace src.Migrations
 {
-    public partial class FirstCreate : Migration
+    public partial class nieuweMIgration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
