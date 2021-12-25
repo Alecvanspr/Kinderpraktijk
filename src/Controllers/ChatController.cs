@@ -12,8 +12,11 @@ public class ChatController : Controller{
     public ChatController( IHubContext<ChatHub> chat){
             _chat = chat;
     }
+    //dit is voor het maken van de groups
+    //Als er een bericht wordt verstuurd. Dan wordt zo'n bericht async verstuurd
     [HttpPost("[action]/{connectionId}/{RoomName}")]
     public async Task<IActionResult> JoinRoomAsync(string connectionId, string RoomName){
+            //hiermee wordt een user aan een room group gekoppeld inplaats van dat alle berichten bij iederen komen
             await _chat.Groups.AddToGroupAsync(connectionId, RoomName);
             return Ok();
     }

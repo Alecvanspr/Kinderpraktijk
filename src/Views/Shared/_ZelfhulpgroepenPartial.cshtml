@@ -4,8 +4,12 @@
     @foreach (var chat in Model)
     {
     <div class="group row" >
-       <a asp-action="Chat" asp-route-ChatId="@chat.Id"><h3>@chat.Naam</h3></a>
-        <p>@chat.Beschrijving</p>
+        <form action="Dashboard/Chat" method="get">
+            <input type="hidden" value="@chat.Id" name="ChatId"/>
+            <header>@chat.Naam</header>
+            <p>@chat.Beschrijving</p>
+            <input class="btn btn-primary" type="submit" value="ga naar chat">
+        </form>
     </div>
     }
 </div>

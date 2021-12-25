@@ -28,7 +28,10 @@
     <div class="group">
         <h3>@groep.Naam</h3>
         <p>@groep.Beschrijving</p>
-        <a asp-action="Chat" asp-route-ChatId="@groep.Id">join group>></a> 
+        <form action="JoinChat" method='post'>
+            <input type="Hidden" value="@groep.Id" name="Id"/>
+            <input type="submit" value="Neem deel aan de groep">
+        </form>
         </div>
 }
 </div>
