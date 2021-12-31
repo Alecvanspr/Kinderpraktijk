@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 
 public class ChatHub : Hub 
 {
-    //Deze methode send een message
+    //Deze methode send een message 
         public async Task SendMessage(string user, string message, string roomId)
         {
             await Clients.Group(roomId).SendAsync("ReceiveMessage", user, message);
