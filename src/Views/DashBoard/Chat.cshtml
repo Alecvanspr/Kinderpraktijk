@@ -28,6 +28,8 @@
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/messageBuilder.js"></script>
 <script>
+
+    var _connectionId = '';
     //DIt is voor het aanmaken van een connectie met de ChatHub
     //De naam van de Chathub is case sensitive
     //hierbij moet ook de link veranderd worden zodra het kan
@@ -47,10 +49,10 @@
         document.querySelector('.chat-body').append(message);
     });
 
-        var _connectionId = '';
-
+        //dee is leeg
+        //deze methode is verantoordelijk voor het aanroepen van de methode in de controller chat.
         var joinroom = () =>{
-            var url = '/Chat/JoinRoom/' + _connectionId +'/@Model.Naam';
+            var url = '/Chat/joinRoom/' + _connectionId +'/@Model.Naam';
             axious.post(url,null)
                 .then(res => {
                     console("Room Joined!", res);
@@ -64,6 +66,9 @@
         try {
             await connection.start();
             console.log("SignalR Connected.");
+            connection.invoke('joinRoom',""+@Model.Id);
+            console.log("invoked");
+            console.log(@Model.Id);
         } catch (err) {
             console.log(err);
             setTimeout(start, 5000);

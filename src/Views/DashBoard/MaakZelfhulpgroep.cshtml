@@ -1,12 +1,12 @@
 @model Chat
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="">
-            <label asp-for="Naam">
+        <form asp-action="CreateRoom">
+            <label asp-for="Naam">De naam van de groep
                 <input asp-for="Naam" type="text"/>
             </label>
 
-            <label asp-for="Beschrijving">
+            <label asp-for="Beschrijving">Geef een beschrijving van de groep
                 <input asp-for="Beschrijving" type="text"/>
             </label>
             

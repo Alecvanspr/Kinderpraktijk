@@ -16,7 +16,9 @@ public class DashboardController : Controller{
         _context = context;
     }
     public IActionResult Index(){
-        ViewData["IsModerator"]=User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
+        //Hier wordt meegegeven of de user een moderator is.
+        //op basis hiervan wordt bepaald of de user te zien krijgt of hij een groep aan mag maken of dat hij kan chatten met de pedagoog
+        ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
         //met deze method haal het Id van de current User op
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
         return View(_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Select(x=>x.chat).ToList());
@@ -31,8 +33,10 @@ public class DashboardController : Controller{
     //Deze is voor de chat zelf. Hiermee kan je alle berichten zien
     [HttpGet]
     public IActionResult Chat(int ChatId){
-        if(UserIsIn(ChatId))
+        if(UserIsIn(ChatId)){
+            
             return View(_context.Chat.Include(x=>x.Messages).Where(x=>x.Id==ChatId).Single());
+        }
         return RedirectToAction("Index",_context.Chat);
     }
     //de berichten hieronder zijn voor het gebruik van de chat
@@ -57,26 +61,35 @@ public class DashboardController : Controller{
             return RedirectToAction("AccessDenied","Home");
     }
 
-    //alles van hieronder is nog niet in gebruik genomen
+    //TODO tests maken voor deze room
     [HttpPost]
-    public async Task<IActionResult> CreateRoom(string naam){
-        var chat =new Chat{
-            Naam = naam,
-            type = ChatType.Room
-        };
-        chat.Users = new List<ChatUser>();
-        chat.Users.Add(new ChatUser(){
-        //UserId is nu niet van toepassing doordat identity nog niet is geintegreerd in het systeem
-        UserId =User.FindFirst(ClaimTypes.NameIdentifier).Value,
-        Role = UserRole.Admin,
-        ChatId = chat.Id
-        });
-            
-         _context.Chat.Add(chat);
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Index");
-    }
+    public async Task<IActionResult> CreateRoom([Bind("Naam","Beschrijving")]Chat chat){
+        if(ModelState.IsValid){
+            chat.type = ChatType.Room;
+            chat.Users = new List<ChatUser>();
+            chat.Users.Add(new ChatUser(){
+            //UserId is nu niet van toepassing doordat identity nog niet is geintegreerd in het systeem
+            UserId =User.FindFirst(ClaimTypes.NameIdentifier).Value,
+            Role = UserRole.Admin,
+            ChatId = chat.Id
+            });
+                
+            _context.Chat.Add(chat);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }else{
+            Console.WriteLine("modelstate is niet valid");
+        }
 
+        return View();
+    }
+    //Delete room
+
+    //Remove room from list
+
+    //Edit room
+
+    //alles van hieronder is nog niet in gebruik genomen
     [HttpPost]
     public async Task<IActionResult> JoinChat(int id){
         if(!UserIsIn(id)){

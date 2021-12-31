@@ -15,14 +15,16 @@ public class ChatController : Controller{
     //dit is voor het maken van de groups
     //Als er een bericht wordt verstuurd. Dan wordt zo'n bericht async verstuurd
     [HttpPost("[action]/{connectionId}/{RoomName}")]
-    public async Task<IActionResult> JoinRoomAsync(string connectionId, string RoomName){
+    public async Task<IActionResult> joinRoom(string connectionId, string RoomName){
             //hiermee wordt een user aan een room group gekoppeld inplaats van dat alle berichten bij iederen komen
+            Console.WriteLine("De user is aan de groep "+ RoomName+ " toegevoegd");
             await _chat.Groups.AddToGroupAsync(connectionId, RoomName);
             return Ok();
     }
     [HttpPost("[action]/{connectionId}/{RoomName}")]
-        public async Task<IActionResult> LeaveRoom(string connectionId, string RoomName){
+        public async Task<IActionResult> LeaveGroup(string connectionId, string RoomName){
             await _chat.Groups.RemoveFromGroupAsync(connectionId, RoomName);
+
             return Ok();
     }
     //deze methode vindt plaats bij die client
@@ -47,12 +49,9 @@ public class ChatController : Controller{
             await _context.SaveChangesAsync();
 
             //Deze wordt wel verzonden, echter gaat dit naar alle clients. Ik den dat de GROUP niet werkt van de andere
-            await _chat.Clients.All.SendAsync("ReceiveMessage",NewMessage);
-            
-            //hieronder wordt het naar alle gebruikers van die group gestuurd
-            //Console.WriteLine(roomName);
-            //Voor de groups heb ik identity nodig
-            //await _chat.Clients.Groups(roomName).SendAsync("RecieveMessage",NewMessage);
+            //await _chat.Clients.All.SendAsync("ReceiveMessage",NewMessage);
+
+           await _chat.Clients.Group(chatId+"").SendAsync("ReceiveMessage", NewMessage);
             //Dit gaat een bericht sturen naar de client
             return Ok();
     }
