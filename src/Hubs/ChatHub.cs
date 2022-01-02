@@ -8,7 +8,7 @@ public class ChatHub : Hub
         public async Task SendMessage(string user, string message, string roomId)
         {
             await Clients.Group(roomId).SendAsync("ReceiveMessage", user, message);
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            //await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
 
         //Onderstaande methode zou ervoor moeten zorgen dat je in een group geconnect wordt

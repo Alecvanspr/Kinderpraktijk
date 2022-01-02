@@ -28,6 +28,7 @@
     //Hier wordt ervoor gezorgd dat wanneer je op de knop sendButton klikt dat er een bericht verzend
     document.getElementById("sendButton").addEventListener("click", event => {
         const user = document.getElementById("userInput").value; //Hier wordt de user value gepakt
+        document.getElementById("MessageField").value = "";
         const message = document.getElementById("messageInput").value; //Hier wordt het bericht gepakt
         connection.invoke("SendMessage", user, message).catch(err => console.error(err));
         event.preventDefault();

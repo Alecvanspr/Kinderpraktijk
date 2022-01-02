@@ -18,8 +18,8 @@
     <form onsubmit="sendMessage(event)" asp-controller="Chat" asp-action="CreateMessage" method="post">
         <input type="hidden" name="chatId" value="@Model.Id">
         <input type="hidden" name="roomName" value="@Model.Naam">
-        <input class="form-control form-control-lg" type="text" name="Message">
-        <input class="btn btn-primary" type="submit" />
+        <input class="form-control form-control-lg" id="MessageField" type="text" name="Message">
+        <input class="btn btn-primary" type="submit"/>
     </form>
 </div>
 
@@ -39,12 +39,12 @@
                                     .build();
 
         //In de methode hieronder wordt bij het ontvangen van een bericht het bericht toegevoegd aan de html
-    connection.on("ReceiveMessage", (data ) => {
+    connection.on("ReceiveMessage", (data ,time) => {
         var message = messageBuilder()
             .createMessage()
             .withHeader(data.naam)
             .withParagraph(data.text)
-            .withFooter(data.timestamp)
+            .withFooter(time)
             .build();
         document.querySelector('.chat-body').append(message);
     });
@@ -93,6 +93,7 @@
         axios.post('/Chat/SendMessage',data)
             .then(res => {
                 console.log("Message send!")
+                document.getElementById("MessageField").value = "";
             })
             .catch(err => {
                 console.log("Iets ging fout!")

@@ -29,7 +29,7 @@ var messageBuilder = function () {
         },
         withFooter: function (text) {
             footer = document.createElement("footer")
-            footer.appendChild(document.createTextNode(text))
+            footer.appendChild(document.createTextNode(text.getHours()+":"+text.getMinutes()))
             return this;
         },
         build: function () {
