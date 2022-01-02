@@ -196,3 +196,5 @@ C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\S
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Home\Error.cshtml.g.cs
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\DashBoard\MaakZelfhulpgroep.cshtml.g.cs
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Home\AccessDenied.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\Client\Index.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\DashBoard\Overzicht.cshtml.g.cs

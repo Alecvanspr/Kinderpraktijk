@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-[Authorize]
 public class DashboardController : Controller{
     private MijnContext _context;
     public DashboardController(MijnContext context){
@@ -16,6 +15,10 @@ public class DashboardController : Controller{
         _context = context;
     }
     public IActionResult Index(){
+        if(User.IsInRole("Ouder"))
+        {
+            return RedirectToAction("Overzicht");
+        }
         //Hier wordt meegegeven of de user een moderator is.
         //op basis hiervan wordt bepaald of de user te zien krijgt of hij een groep aan mag maken of dat hij kan chatten met de pedagoog
         ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
@@ -25,13 +28,18 @@ public class DashboardController : Controller{
     }
     //Dit is voor het verkrijgen van de view voor het toevoegen van de model
     [HttpGet]
+    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+
     public IActionResult GroepToevoegen(){
-        //hier wordt dan een query uitgehaald
-        var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        return View( _context.Chat.ToList());
+        //Hieronder wordt een lijst van alle chats naarvoren gehaald die publiek zijn
+        var GroepenLijst = _context.Chat.Where(x=>x.type==ChatType.Room);
+        //Hier wordt die lijst terug geven aan de mensen
+        return View(GroepenLijst.ToList());
     }
     //Deze is voor de chat zelf. Hiermee kan je alle berichten zien
     [HttpGet]
+    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+
     public IActionResult Chat(int ChatId){
         if(UserIsIn(ChatId)){
             
@@ -42,6 +50,8 @@ public class DashboardController : Controller{
     //de berichten hieronder zijn voor het gebruik van de chat
     //dan kan je denken aan het verzenden van berichten en het maken van chats
     [HttpPost]
+    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+
     public async Task<IActionResult> CreateMessage(int chatId,string message){
         var NewMessage = new Message(){
                 ChatId = chatId,
@@ -54,15 +64,14 @@ public class DashboardController : Controller{
         await _context.SaveChangesAsync();
         return RedirectToAction("Chat",new {id=chatId});
     }
+    [Authorize(Roles = "Moderator,Pedagoog")]
     public IActionResult MaakZelfhulpgroep(){
-        if(User.IsInRole("Moderator")||User.IsInRole("Pedagoog"))
             return View();
-        else
-            return RedirectToAction("AccessDenied","Home");
     }
 
     //TODO tests maken voor deze room
     [HttpPost]
+    [Authorize(Roles = "Moderator,Pedagoog")]
     public async Task<IActionResult> CreateRoom([Bind("Naam","Beschrijving")]Chat chat){
         if(ModelState.IsValid){
             chat.type = ChatType.Room;
@@ -91,6 +100,7 @@ public class DashboardController : Controller{
 
     //alles van hieronder is nog niet in gebruik genomen
     [HttpPost]
+    [Authorize(Roles = "Moderator,Pedagoog,Client")]
     public async Task<IActionResult> JoinChat(int id){
         if(!UserIsIn(id)){
             var ChatUser = new ChatUser(){
@@ -104,9 +114,16 @@ public class DashboardController : Controller{
         }
         return RedirectToAction("Chat",new {ChatId = id});
     }
+    [Authorize(Roles="Ouder")]
+    public ActionResult Overzicht(){
+        return View();
+    }
+
     //Door onderstaande kan je zien of een user in een bepaalde class is
     public bool UserIsIn(int ChatId){
+        //Hier wordt de current user opgevraagd
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //hieronder wordt gekeken of de user in de lijst zit van alle users van de aangegeven chat
         return _context.ChatUsers.Where(x=>x.ChatId==ChatId).Any(x=>x.UserId==CurrentUser);
     }
 }

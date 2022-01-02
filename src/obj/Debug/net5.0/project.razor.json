@@ -15661,6 +15661,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Client\\Index.cshtml",
+      "TargetPath": "Views\\Client\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Ons\\Index.cshtml",
       "TargetPath": "Views\\Ons\\Index.cshtml",
       "FileKind": "mvc"
@@ -15743,6 +15748,11 @@
     {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\DashBoard\\Index.cshtml",
       "TargetPath": "Views\\DashBoard\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\DashBoard\\Overzicht.cshtml",
+      "TargetPath": "Views\\DashBoard\\Overzicht.cshtml",
       "FileKind": "mvc"
     },
     {

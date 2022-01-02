@@ -10,7 +10,7 @@
         <a class="main-knop btn btn-primary" asp-action="GroepToevoegen" alt="Een groep toevoegen aan uw lijst"> Groep toevoegen</a>
         @if((bool)ViewData["IsModerator"]){
         <a class="main-knop btn btn-primary" asp-action="MaakZelfhulpgroep" alt="Maak een nieuwe groep aan"> Groep aanmaken</a>
-        <a class="main-knop btn btn-primary" alt="Chats met Clienten">Chats met Clienten</a>
+        <a class="main-knop btn btn-primary" asp-controller="Client" asp-action="Index" alt="Chats met Clienten">Chats met Clienten</a>
         }else{
         <button class="main-knop btn btn-primary">Chat met mijn Pedagoog</button>
         <button class="main-knop btn btn-primary">Praat annoniem</button>
