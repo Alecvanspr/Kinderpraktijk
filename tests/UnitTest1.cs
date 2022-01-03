@@ -1,8 +1,5 @@
 using System;
 using Xunit;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace tests
 {
