@@ -11,6 +11,7 @@ public class ChatController : Controller{
     private IHubContext<ChatHub> _chat;
     public ChatController( IHubContext<ChatHub> chat){
             _chat = chat;
+
     }
     //dit is voor het maken van de groups
     //Als er een bericht wordt verstuurd. Dan wordt zo'n bericht async verstuurd
