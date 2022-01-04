@@ -4,9 +4,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+[Authorize]
 public class DashboardController : Controller{
     private MijnContext _context;
     public DashboardController(MijnContext context){
@@ -29,7 +31,6 @@ public class DashboardController : Controller{
     //Dit is voor het verkrijgen van de view voor het toevoegen van de model
     [HttpGet]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
-
     public IActionResult GroepToevoegen(){
         //Hieronder wordt een lijst van alle chats naarvoren gehaald die publiek zijn
         var GroepenLijst = _context.Chat.Where(x=>x.type==ChatType.Room);
@@ -59,7 +60,6 @@ public class DashboardController : Controller{
                 Naam = User.FindFirst(ClaimTypes.NameIdentifier).Value,
                 timestamp = DateTime.Now
         };
-
         _context.Messages.Add(NewMessage);
         await _context.SaveChangesAsync();
         return RedirectToAction("Chat",new {id=chatId});
