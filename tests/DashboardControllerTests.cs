@@ -34,6 +34,7 @@ namespace tests
             };
             return controller;
         }
+        //Index Tests\\
         //Met deze test, test ik of als je de role hebt van ouder dat deze dan geridirect wordt naar de overzichtspagina
         [Fact]
         public void IndexOuderTest()
@@ -87,7 +88,6 @@ namespace tests
         [Fact]
         public void TestInhoudTest(){
         DashboardController controller = getController("Pedagoog","User1");
-
         var result = controller.Index();
         //var IndexActionResult =Assert.IsType<IActionResult>(result);
             
@@ -96,5 +96,32 @@ namespace tests
 
         Assert.Equal(model.First().Naam,"Chat1");        
         } 
+
+        //Chat tests\\
+        //In deze test testen wij of de juiste chat wordt meegegeven
+        [Theory]
+        [InlineData("User1",1,"Chat1")]
+        [InlineData("User2",1,"Chat1")]
+        [InlineData("User2",2,"Chat2")]
+        [InlineData("User3",1,"Chat1")]
+        [InlineData("User3",2,"Chat2")]
+        public void TestChat1(string user,int ChatId,string expectedChatName){
+            DashboardController controller = getController("Pedagoog",user);
+            var result = controller.Chat(ChatId);
+                
+            ViewResult viewResult = result as ViewResult;
+            var model = Assert.IsAssignableFrom<Chat>(viewResult.ViewData.Model);
+            Assert.Equal(expectedChatName, model.Naam);
+        }
+        //Hier testen wij of de user wordt geredirect wordt naar de juiste pagina
+        [Fact]
+        public void TestChat2(){
+            DashboardController controller = getController("Pedagoog","User1");
+            var result = controller.Chat(2);
+            var ChatRedirect =Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index",ChatRedirect.ActionName);
+        }
+
+
     }
 }

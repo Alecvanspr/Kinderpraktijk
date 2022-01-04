@@ -16,6 +16,7 @@ public class DashboardController : Controller{
         //te gebruiken
         _context = context;
     }
+    //Getest
     public IActionResult Index(){
         if(User.IsInRole("Ouder"))
         {
@@ -43,7 +44,6 @@ public class DashboardController : Controller{
 
     public IActionResult Chat(int ChatId){
         if(UserIsIn(ChatId)){
-            
             return View(_context.Chat.Include(x=>x.Messages).Where(x=>x.Id==ChatId).Single());
         }
         return RedirectToAction("Index",_context.Chat);
