@@ -20,14 +20,14 @@ namespace tests
             return m.CreateContext();
         }
         //ClaimTypeId is denk een soort van static userId
-        private DashboardController getController(string roleClaim,string ClaimTypeId){
+        private DashboardController getController(MijnContext context,string roleClaim,string ClaimTypeId){
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Role, roleClaim),
                 new Claim(ClaimTypes.NameIdentifier,ClaimTypeId)
             }, "mock"));
 
-            var controller = new DashboardController(GetDatabase());
+            var controller = new DashboardController(context);
             controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = new DefaultHttpContext() { User = user }
@@ -40,7 +40,7 @@ namespace tests
         public void IndexOuderTest()
         {
             //arrange
-            DashboardController controller = getController("Ouder","User1");
+            DashboardController controller = getController(GetDatabase(),"Ouder","User1");
             var index = controller.Index();
             //act
             var IndexActionResult =Assert.IsType<RedirectToActionResult>(index);
@@ -52,7 +52,7 @@ namespace tests
         [InlineData("Pedagoog","True")]
         [InlineData("Client","False")]
         public void IndexTestIsModerator(string role,string expected){
-            DashboardController controller = getController(role,"User1");
+            DashboardController controller = getController(GetDatabase(),role,"User1");
             IActionResult index = controller.Index();
             //Dit laad hij als een test die er niet staat
             //var IndexActionResult =Assert.IsType<IActionResult>(index);
@@ -72,7 +72,7 @@ namespace tests
         [InlineData("User3",2)]
         [InlineData("User4",0)]
         public void TestIndexChatList(string user, int ChatAmount){ 
-        DashboardController controller = getController("Pedagoog",user);
+        DashboardController controller = getController(GetDatabase(),"Pedagoog",user);
 
         var result = controller.Index();
         //var IndexActionResult =Assert.IsType<IActionResult>(result);
@@ -87,7 +87,7 @@ namespace tests
         //In onderstaande tests wordt gekeken of de gegevens uit de chat toeghangelijk zijn
         [Fact]
         public void TestInhoudTest(){
-        DashboardController controller = getController("Pedagoog","User1");
+        DashboardController controller = getController(GetDatabase(),"Pedagoog","User1");
         var result = controller.Index();
         //var IndexActionResult =Assert.IsType<IActionResult>(result);
             
@@ -106,7 +106,7 @@ namespace tests
         [InlineData("User3",1,"Chat1")]
         [InlineData("User3",2,"Chat2")]
         public void TestChat1(string user,int ChatId,string expectedChatName){
-            DashboardController controller = getController("Pedagoog",user);
+            DashboardController controller = getController(GetDatabase(),"Pedagoog",user);
             var result = controller.Chat(ChatId);
                 
             ViewResult viewResult = result as ViewResult;
@@ -116,12 +116,29 @@ namespace tests
         //Hier testen wij of de user wordt geredirect wordt naar de juiste pagina
         [Fact]
         public void TestChat2(){
-            DashboardController controller = getController("Pedagoog","User1");
+            DashboardController controller = getController(GetDatabase(),"Client","User1");
             var result = controller.Chat(2);
             var ChatRedirect =Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Index",ChatRedirect.ActionName);
         }
 
-
+        //Create Message tests\\
+        //Deze test kijken we of het chat bericht correct wordt opgeslagen in de databse
+        [Theory]
+        [InlineData(1,"TestBericht","User1")]
+        [InlineData(1,"NieuwBericht","User1")]
+        public void CreateMessageTest(int chatId,string message,string user){
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Client",user);
+            
+            var result = controller.CreateMessage(chatId,message);
+            var resultMessage = context.Messages.OrderByDescending(x=>x.Id).First();
+            
+            //Deze test of het chatbericht in de juiste chat is gedaan
+            Assert.Equal(chatId,resultMessage.ChatId);
+            //Deze test of het bericht de juiste text heeft
+            Assert.Equal(message,resultMessage.Text);
+            
+        }
     }
 }

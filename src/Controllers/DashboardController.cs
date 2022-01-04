@@ -52,7 +52,7 @@ public class DashboardController : Controller{
     //dan kan je denken aan het verzenden van berichten en het maken van chats
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
-
+    //Deze methode is echter nog aanvalbaar 
     public async Task<IActionResult> CreateMessage(int chatId,string message){
         var NewMessage = new Message(){
                 ChatId = chatId,
