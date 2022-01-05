@@ -35,6 +35,7 @@ public class ChatController : Controller{
         string roomName,
         [FromServices] MijnContext _context
         ){
+        
         var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
         var currentUser = _context.Users.Where(x=>x.Id==currentUserId).First();
         var Username = currentUser.Firstname+" "+currentUser.LastName;

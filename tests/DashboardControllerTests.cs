@@ -122,23 +122,87 @@ namespace tests
             Assert.Equal("Index",ChatRedirect.ActionName);
         }
 
-        //Create Message tests\\
-        //Deze test kijken we of het chat bericht correct wordt opgeslagen in de databse
-        [Theory]
-        [InlineData(1,"TestBericht","User1")]
-        [InlineData(1,"NieuwBericht","User1")]
-        public void CreateMessageTest(int chatId,string message,string user){
+        //Create Room Tests\\
+        //Met deze test wordt gekeken of de chat correct wordt aangemaakt
+        [Fact]
+        public void CreateRoomTests(){
+            //Arrange
+            var userId = "User1";
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context,"Client",user);
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+            string expectedChatName = "TestChat";
+            string expectedChatBeschrijving = "Deze chat is om te testen of de chat het goed doet";
+              //Act
+            var result = controller.CreateRoom(new Chat(){Naam=expectedChatName,Beschrijving=expectedChatBeschrijving});
             
-            var result = controller.CreateMessage(chatId,message);
-            var resultMessage = context.Messages.OrderByDescending(x=>x.Id).First();
+            //met deze onderstaande methode pak je de laatste die is toegevoegd
+            var chat = context.Chat.OrderByDescending(x=>x.Id).First();
             
-            //Deze test of het chatbericht in de juiste chat is gedaan
-            Assert.Equal(chatId,resultMessage.ChatId);
-            //Deze test of het bericht de juiste text heeft
-            Assert.Equal(message,resultMessage.Text);
+            //Assert
+            Assert.Equal(expectedChatName, chat.Naam);
+            Assert.Equal(expectedChatBeschrijving, chat.Beschrijving);
+            Assert.Equal(User.UserName,chat.Users.First().User.UserName);
+            Assert.Equal(UserRole.Admin,chat.Users.First().Role);
+        }
+        //Join Chat\\
+        [Theory]
+        [InlineData("User4",1)]
+        [InlineData("User1",2)]
+        [InlineData("User4",2)]
+        public void JoinChatTest(string user,int chatOmTeJoinen){
+            //Arrange
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",user);
+            var User = context.Users.Where(x=>x.Id==user).Single();
             
+            //Act
+            var result = controller.JoinChat(chatOmTeJoinen);
+            
+            //Met onderstaande methode wordt de laatst toegevoegde ChatUser gepakt
+            var chat = context.ChatUsers.Where(x=>x.UserId==user);
+
+            //Assert
+            Assert.True(chat.Any(x=>x.ChatId==chatOmTeJoinen));
+        }
+        [Fact]
+        //Deze test zou een error geven als het er niet een maar meerdere zijn
+        public void JoinChatWaarJeAlInzitTest(){
+            //Arrange
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog","User1");
+            var User = context.Users.Where(x=>x.Id=="User1").Single();
+            
+            //Act
+            var result = controller.JoinChat(1);
+            
+            //Met onderstaande methode wordt de laatst toegevoegde ChatUser gepakt
+            var chat = context.ChatUsers.Where(x=>x.UserId=="User1");
+
+            //Assert
+            Assert.NotNull(chat.Where(x=>x.ChatId==1).SingleOrDefault());
+        }
+
+        //Met onderstaande test testen we of de UserIsIn werkt
+        [Theory]
+        //Hiermee testen we of hij het doet
+        [InlineData("User1",1,true)]
+        //hiermee testen wij of hij niet telkens de eerste pakt
+        [InlineData("User2",2,true)]
+        //Hiermee testen we of hij ook een false terug geeft als de user er niet in zit
+        [InlineData("User1",2,false)]
+        //Hiermee testen wij of hij niet telkens user1 pakt
+        [InlineData("User4",1,false)]
+        public void TestUserIsIn(string user,int chat,bool expected){
+            //Arrange
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",user);
+            var User = context.Users.Where(x=>x.Id==user).Single();
+            
+            //Act
+            var result = controller.UserIsIn(chat);
+            //Assert
+            Assert.Equal(expected, result);
         }
     }
 }

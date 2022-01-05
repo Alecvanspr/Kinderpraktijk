@@ -48,28 +48,33 @@ public class DashboardController : Controller{
         }
         return RedirectToAction("Index",_context.Chat);
     }
-    //de berichten hieronder zijn voor het gebruik van de chat
-    //dan kan je denken aan het verzenden van berichten en het maken van chats
-    [HttpPost]
-    [Authorize(Roles = "Moderator,Pedagoog,Client")]
-    //Deze methode is echter nog aanvalbaar 
-    public async Task<IActionResult> CreateMessage(int chatId,string message){
-        var NewMessage = new Message(){
-                ChatId = chatId,
-                Text = message,
-                Naam = User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                timestamp = DateTime.Now
-        };
-        _context.Messages.Add(NewMessage);
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Chat",new {id=chatId});
-    }
+
     [Authorize(Roles = "Moderator,Pedagoog")]
     public IActionResult MaakZelfhulpgroep(){
             return View();
     }
-
-    //TODO tests maken voor deze room
+    /*
+    //De onderstaande methode wordt niet gebruikt bij het verzenden van een bericht
+    [HttpPost]
+    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+    //Deze methode is echter nog aanvalbaar 
+    public async Task<IActionResult> CreateMessage(int chatId,string message){
+        //Hierbij wordt gekeken of de user in de chat zit. Als dat niet het geval is dan wordt hij terug gestuurd naar de index pagina
+        if(UserIsIn(chatId)){
+            var NewMessage = new Message(){
+                    ChatId = chatId,
+                    Text = message,
+                    Naam = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                    timestamp = DateTime.Now
+            };
+            _context.Messages.Add(NewMessage);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Chat",new {id=chatId});
+        }
+        return RedirectToAction("index");
+    }
+    */
+    //Deze methode is voor het aanmaken van een Chatroom
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog")]
     public async Task<IActionResult> CreateRoom([Bind("Naam","Beschrijving")]Chat chat){
@@ -77,7 +82,6 @@ public class DashboardController : Controller{
             chat.type = ChatType.Room;
             chat.Users = new List<ChatUser>();
             chat.Users.Add(new ChatUser(){
-            //UserId is nu niet van toepassing doordat identity nog niet is geintegreerd in het systeem
             UserId =User.FindFirst(ClaimTypes.NameIdentifier).Value,
             Role = UserRole.Admin,
             ChatId = chat.Id
@@ -89,7 +93,6 @@ public class DashboardController : Controller{
         }else{
             Console.WriteLine("modelstate is niet valid");
         }
-
         return View();
     }
     //Delete room
@@ -98,7 +101,8 @@ public class DashboardController : Controller{
 
     //Edit room
 
-    //alles van hieronder is nog niet in gebruik genomen
+    //Remove chat
+
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
     public async Task<IActionResult> JoinChat(int id){
@@ -114,6 +118,7 @@ public class DashboardController : Controller{
         }
         return RedirectToAction("Chat",new {ChatId = id});
     }
+    
     [Authorize(Roles="Ouder")]
     public ActionResult Overzicht(){
         return View();

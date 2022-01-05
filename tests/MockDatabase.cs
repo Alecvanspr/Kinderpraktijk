@@ -36,6 +36,9 @@ public class MockDatabase{
                     }, type= ChatType.Room};
 
             context.Users.Add(Alec);
+            context.Users.Add(Jeremy);
+            context.Users.Add(Claudio);
+            context.Users.Add(Bert);
             context.Chat.Add(chat1);
             context.Chat.Add(chat2);
             context.SaveChanges();
