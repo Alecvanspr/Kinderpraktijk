@@ -15656,6 +15656,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\DashBoard\\Edit.cshtml",
+      "TargetPath": "Views\\DashBoard\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Areas\\Identity\\Pages\\_Layout.cshtml",
       "TargetPath": "Areas\\Identity\\Pages\\_Layout.cshtml",
       "FileKind": "mvc"

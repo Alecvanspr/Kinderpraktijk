@@ -111,8 +111,38 @@ public class DashboardController : Controller{
         return RedirectToAction("Index");
     }
     //Remove room from list
-
+    //Als je een owner bent van de 
+    [HttpPost]
+    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+    public IActionResult RemoveRoomFromList(int chatId){
+        if(UserIsIn(chatId)){
+            var userid =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var ChatUser = _context.ChatUsers.Where(x=>x.ChatId==chatId).Where(x=>x.UserId==userid).Single();
+            _context.ChatUsers.Remove(ChatUser);
+            _context.SaveChanges();
+        }
+        return RedirectToAction("Index");
+    }
     //Edit room
+    [HttpGet]
+    [Authorize(Roles = "Moderator,Pedagoog")]
+    public IActionResult Edit(int Id){
+        return View(_context.Chat.Where(x=>x.Id==Id).SingleOrDefault());
+    }
+    [HttpPost]
+    [Authorize(Roles = "Moderator,Pedagoog")]
+    public IActionResult Edit(int Id,string naam,string beschrijving){
+        if(UserIsIn(Id)){
+            var chat = _context.Chat.Where(x=>x.Id==Id).SingleOrDefault();
+            chat.Naam = naam;
+            chat.Beschrijving = beschrijving;
+            _context.Chat.Update(chat);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        return RedirectToAction("Edit",Id);
+    }
+    
 
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]

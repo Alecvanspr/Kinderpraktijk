@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace tests
 {
@@ -250,7 +251,102 @@ namespace tests
             //Deze checkt of de test wordt doorgewezen
             Assert.Equal("Index",ChatRedirect.ActionName);
         }
-        
+        //leave room test\\
+        [Theory]
+        [InlineData("User1",1)]
+        [InlineData("User2",1)]
+        [InlineData("User2",2)]
+        public void TestLeaveRoom(string userId, int chatId){
+            //arrange
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+
+            //Act
+            var result = controller.RemoveRoomFromList(chatId);
+
+            //Assert
+            ViewResult viewResult = result as ViewResult;
+            var ChatUser = context.ChatUsers.Where(x=>x.ChatId==chatId);
+            var Chat = context.Chat.Where(x=>x.Id==chatId).SingleOrDefault();
+
+            //Dit is om te checken of de user is verwijderd
+            Assert.Null(ChatUser.Where(x=>x.UserId==userId).SingleOrDefault());
+            //Dit is een check of de chat niet verwijderd wordt
+            Assert.NotNull(Chat);
+        }
+        [Fact]
+        public void LeaveRoomWithoutRoomAccess(){
+            //arrange
+            var userId = "User1";
+            var chatId = 2;
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+            var expectedUsers = context.ChatUsers.Where(x=>x.ChatId==chatId).Count();
+            //Act
+            //de user zit niet in de chat 2
+            var result = controller.RemoveRoomFromList(chatId);
+
+            //Assert
+            ViewResult viewResult = result as ViewResult;
+            var ChatUser = context.ChatUsers.Where(x=>x.ChatId==chatId);
+            var Chat = context.Chat.Where(x=>x.Id==chatId).SingleOrDefault();
+
+            //Dit is om te checken of de user is verwijderd
+            Assert.Null(ChatUser.Where(x=>x.UserId==userId).SingleOrDefault());
+            //Dit is een check of de chat niet verwijderd wordt
+            Assert.NotNull(Chat);
+            //Dit is een check om te kijken of er niet per ongeluk mensen zijn verwijderd van de chat
+            Assert.Equal(expectedUsers, context.ChatUsers.Where(x=>x.ChatId==chatId).Count());
+        }
+        //Edit test\\
+        //In deze test wordt getest of de gegevens van de chat correct worden aangepast
+        [Fact]
+        public void TestEdit(){
+            //arrange
+            var userId = "User1";
+            var chatId = 1;
+            var ExpectedChatName = "Veranderde Chat";
+            var expectedChatBeschrijving = "Dit is de nieuwe beschrijving voor de nieuwe chat";
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+            var expectedUsers = context.ChatUsers.Where(x=>x.ChatId==chatId).Count();
+            //Act
+            var result = controller.Edit(chatId,ExpectedChatName,expectedChatBeschrijving);            
+            var chat = context.Chat.Where(x=>x.Id==chatId).SingleOrDefault();
+            //Assert
+            //Deze checkt of de chat niet perongeluk verwijderd is
+            Assert.NotNull(chat);
+            //Deze checkt of de naam goed is geset
+            Assert.Equal(ExpectedChatName,chat.Naam);
+            //Deze test of de beschrijving goed is gedaan
+            Assert.Equal(expectedChatBeschrijving,chat.Beschrijving);
+        }
+        //Deze test of je de chat niet kan veranderen als je er niet in zit
+        [Fact]
+        public void TestEditVanGroepWaarJeNietInzit(){
+            //Arrange
+            var userId = "User1";
+            var chatId = 2;
+            var expectedChatName = "Chat2";
+            var expectedChatBeschrijving = "Dit is een chat applicatie";
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+            var expectedUsers = context.ChatUsers.Where(x=>x.ChatId==chatId).Count();
+
+            //Act
+            var result = controller.Edit(chatId,"Een gloednieuwe Chat","Nieuwe Omschrijving van De Chat");            
+            var chat = context.Chat.Where(x=>x.Id==chatId).SingleOrDefault();
+
+            //Assert
+            Assert.NotNull(chat);
+            Assert.Equal(expectedChatName,chat.Naam);
+            Assert.Equal(expectedChatBeschrijving,chat.Beschrijving);
+        }
+
         //Join Chat\\
         [Theory]
         [InlineData("User4",1)]
