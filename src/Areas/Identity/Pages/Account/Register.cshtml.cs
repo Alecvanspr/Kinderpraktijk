@@ -99,9 +99,17 @@ namespace src.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Required]
+            [StringLength(50)]
+            [DataType(DataType.Text)]
+            [Display(Name = "Voornaam")]
             public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(50)]
+            [DataType(DataType.Text)]
+            [Display(Name = "Achternaam")]
             public string LastName { get; set; }
-            public string PhoneNumber { get; set; }
         }
 
 

@@ -178,7 +178,7 @@ namespace src.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Firstname")
+                    b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
