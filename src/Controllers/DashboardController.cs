@@ -94,11 +94,19 @@ public class DashboardController : Controller{
         return View();
     }
     [HttpPost]
-    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+    [Authorize(Roles = "Moderator,Pedagoog")]
     public IActionResult DeleteRoom(int ChatRoomId,string ChatRoomName){
-        var chat = _context.Chat.Where(x=>x.Id==ChatRoomId).First();
-        if(chat.Naam!=ChatRoomName){
-            return RedirectToAction("DeleteRoom");
+        if(UserIsIn(ChatRoomId)){
+            var chat = _context.Chat.Find(ChatRoomId);
+            if(chat.Naam==ChatRoomName){
+                //Dit is om alle verbindingen die gemaakt zijn met de chat ook gelijk worden verwijderd
+                foreach(var item in _context.ChatUsers.Where(x=>x.ChatId==ChatRoomId)){
+                        _context.ChatUsers.Remove(item);
+                }
+                _context.Chat.Remove(chat);
+                _context.SaveChanges();
+                return RedirectToAction("DeleteRoom");
+            }
         }
         return RedirectToAction("Index");
     }

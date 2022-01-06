@@ -75,7 +75,7 @@ namespace tests
         DashboardController controller = getController(GetDatabase(),"Pedagoog",user);
 
         var result = controller.Index();
-                    
+
         ViewResult viewResult = result as ViewResult;
         var model = Assert.IsAssignableFrom<List<Chat>>(viewResult.ViewData.Model);
 
@@ -167,13 +167,90 @@ namespace tests
         //In onderstaande test testen wij met een user die geen toegang heeft tot de gegevens
         [Fact]
         public void TestVerkeerdeRoom(){
+            //arrange
+            var userId ="User1";
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
 
+            //Act
+            //de user zit niet in de chat 2
+            var result = controller.Details(2);
+
+            //Assert
+            ViewResult viewResult = result as ViewResult;
+            var ChatRedirect =Assert.IsType<RedirectToActionResult>(result);
+
+            Assert.Equal("Index",ChatRedirect.ActionName);
         }
         //Delete Room\\
-        [Fact]
-        public void DeleteRoomTest(){
+        [Theory]
+        [InlineData("User1",1,"Chat1")]
+        [InlineData("User2",1,"Chat1")]
+        [InlineData("User2",2,"Chat2")]
+        public void DeleteRoomTest(string userId,int chatid,string chatName){
+            //arrange
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
 
+            //Act
+            //de user zit niet in de chat 2
+            var result = controller.DeleteRoom(chatid,chatName);
+
+            //Assert
+            ViewResult viewResult = result as ViewResult;
+            var Chat = context.Chat.Where(x=>x.Id==chatid).SingleOrDefault();
+
+            Assert.Null(Chat);
         }
+        //Deze test of de user in de chat zit die hij verwijderd
+        [Fact]
+        public void DeleteRoomWhenNotInRoom(){
+            //arrange
+            var userId = "User1";
+            var chatId = 2;
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+
+            //Act
+            //de user zit niet in de chat 2
+            var result = controller.DeleteRoom(chatId,"Chat2");
+           ViewResult viewResult = result as ViewResult;
+            var ChatRedirect =Assert.IsType<RedirectToActionResult>(result);
+            var Chat = context.Chat.Where(x=>x.Id==chatId).SingleOrDefault();
+
+            //Assert
+            //Deze checkt of de chat niet verwijderd is
+            Assert.NotNull(Chat);
+            //Deze checkt of de test wordt doorgewezen
+            Assert.Equal("Index",ChatRedirect.ActionName);
+        }
+        //Hier komt een test dat je de chatname niet correct invult
+        [Fact]
+        public void DeleteRoomWrongNameTest(){
+            //arrange
+            var userId = "User1";
+            var chatId = 1;
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+
+            //Act
+            //de user zit niet in de chat 2
+            var result = controller.DeleteRoom(chatId,"Chat2");
+           ViewResult viewResult = result as ViewResult;
+            var ChatRedirect =Assert.IsType<RedirectToActionResult>(result);
+            var Chat = context.Chat.Where(x=>x.Id==chatId).SingleOrDefault();
+
+            //Assert
+            //Deze checkt of de chat niet verwijderd is
+            Assert.NotNull(Chat);
+            //Deze checkt of de test wordt doorgewezen
+            Assert.Equal("Index",ChatRedirect.ActionName);
+        }
+        
         //Join Chat\\
         [Theory]
         [InlineData("User4",1)]

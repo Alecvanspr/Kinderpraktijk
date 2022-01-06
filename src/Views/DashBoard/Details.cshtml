@@ -1,2 +1,9 @@
 @model Chat
 <h1>Hier komen de gegevens van de chat te staan voor chat @Model.Naam</h1>
+<form asp-action="Edit">
+    <input type="Submit" value="Edit">
+</form>
+<form asp-action="DeleteRoom">
+    <input type="Submit" value="Delete">
+</form>
+<h2>hieronder komt te staan hoe en wat over de chat</h2>
