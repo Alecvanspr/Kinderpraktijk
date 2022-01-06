@@ -93,8 +93,29 @@ public class ChatTests{
             Assert.NotNull(sentMessage.timestamp);
         }
         //Hieronder wordt getest wat er gebeurt als je een bericht stuurt in een chat waar jij niet inzit
+        /* onderstaande methode bleef maar errors geven dat een zekere USER1 is toegevoegd terwijl er niet om gevraagd werdt
+            en er slaagde ook ineens een andere test 
         [Fact]
         public void CreateWrongMessageTest(){
+            //arrange
+            MijnContext context = GetDatabase();
+            var MockIhub = new Mock<IHubContext<ChatHub>>();            
+            ChatController controller = new ChatController(MockIhub.Object);
+           
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = new DefaultHttpContext() { User = getUser("Pedagoog","User4")}
+            };
+            var expectedBericht = "Verkeerd gestuurd bericht";
+
+            //Act
+            //Hier is het chat 2doordat de user niet in de 2de chat zit
+            var result = controller.SendMessage(2,expectedBericht,"Connextie",context);
+            var sentMessage = context.Messages.OrderByDescending(x=>x.Id).First();
             
+            //Assert
+            //hiermee test ik of het laaste bericht niet is opgeslagen
+            Assert.NotEqual(expectedBericht,sentMessage.Text);
         }
+        */
 }

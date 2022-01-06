@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 [Authorize(Roles = "Pedagoog , Moderator")]
 public class ClientController: Controller{
-    private MijnContext _context;
+private MijnContext _context;
   private srcUser _currentUser;
  public srcUser currentUser 
  {
