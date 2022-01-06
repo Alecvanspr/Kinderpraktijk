@@ -28,6 +28,8 @@ public class ClientController: Controller{
     }
     //TODO De user moet automatisch gelinkt worden met de pedagoog bij het aanmelden.
     //Bij het aanmelden van de user en de pedagoog moet deze groep automatisch aangemaakt 
+
+    //TODO Als er een link is tussen de Users en de Pedagoogen daar ook een list van laten weergeven
     public ActionResult Index(){
         //hiermee worden alle privé chats toegevoegd
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;

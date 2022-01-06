@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 [Authorize]
 public class ChatController : Controller{
     private IHubContext<ChatHub> _chat;
-    public ChatController( IHubContext<ChatHub> chat){
+    public ChatController(IHubContext<ChatHub> chat){
             _chat = chat;
 
     }
@@ -18,7 +18,6 @@ public class ChatController : Controller{
     [HttpPost("[action]/{connectionId}/{RoomName}")]
     public async Task<IActionResult> joinRoom(string connectionId, string RoomName){
             //hiermee wordt een user aan een room group gekoppeld inplaats van dat alle berichten bij iederen komen
-            Console.WriteLine("De user is aan de groep "+ RoomName+ " toegevoegd");
             await _chat.Groups.AddToGroupAsync(connectionId, RoomName);
             return Ok();
     }
@@ -35,7 +34,6 @@ public class ChatController : Controller{
         string roomName,
         [FromServices] MijnContext _context
         ){
-        
         var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
         var currentUser = _context.Users.Where(x=>x.Id==currentUserId).First();
         var Username = currentUser.Firstname+" "+currentUser.LastName;
