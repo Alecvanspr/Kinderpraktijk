@@ -41,9 +41,9 @@ public class DashboardController : Controller{
     //Deze is voor de chat zelf. Hiermee kan je alle berichten zien
     [HttpGet]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
-
     public IActionResult Chat(int ChatId){
         if(UserIsIn(ChatId)){
+            ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
             return View(_context.Chat.Include(x=>x.Messages).Where(x=>x.Id==ChatId).Single());
         }
         return RedirectToAction("Index",_context.Chat);
@@ -53,27 +53,6 @@ public class DashboardController : Controller{
     public IActionResult MaakZelfhulpgroep(){
             return View();
     }
-    /*
-    //De onderstaande methode wordt niet gebruikt bij het verzenden van een bericht
-    [HttpPost]
-    [Authorize(Roles = "Moderator,Pedagoog,Client")]
-    //Deze methode is echter nog aanvalbaar 
-    public async Task<IActionResult> CreateMessage(int chatId,string message){
-        //Hierbij wordt gekeken of de user in de chat zit. Als dat niet het geval is dan wordt hij terug gestuurd naar de index pagina
-        if(UserIsIn(chatId)){
-            var NewMessage = new Message(){
-                    ChatId = chatId,
-                    Text = message,
-                    Naam = User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                    timestamp = DateTime.Now
-            };
-            _context.Messages.Add(NewMessage);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Chat",new {id=chatId});
-        }
-        return RedirectToAction("index");
-    }
-    */
     //Deze methode is voor het aanmaken van een Chatroom
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog")]
@@ -95,13 +74,37 @@ public class DashboardController : Controller{
         }
         return View();
     }
-    //Delete room
+    //Deze methode laat de gegevens van de huidige chat zien
+    //Dit is een get Als een user hier geen toegang tot heeft wordt hij ook geweigerd
+    [HttpGet]
+    [Authorize(Roles = "Moderator,Pedagoog,Client,Admin")]
+    public IActionResult Details(int chatId){
+        //Misschien voor de zekerheid een check hier doen
+        if(UserIsIn(chatId)){
+            return View(_context.Chat.Where(x=>x.Id==chatId).Single());
+        }
+        return RedirectToAction("Index");
+    }
 
+    //Deze methode is verantwoordelijk voor het verwijderen van een chat uit de chat list
+    //Mischien een extra vertificatie toevoegen
+    [HttpGet]
+    [Authorize(Roles = "Moderator,Pedagoog")]
+    public IActionResult DeleteRoom(){
+        return View();
+    }
+    [HttpPost]
+    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+    public IActionResult DeleteRoom(int ChatRoomId,string ChatRoomName){
+        var chat = _context.Chat.Where(x=>x.Id==ChatRoomId).First();
+        if(chat.Naam!=ChatRoomName){
+            return RedirectToAction("DeleteRoom");
+        }
+        return RedirectToAction("Index");
+    }
     //Remove room from list
 
     //Edit room
-
-    //Remove chat
 
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
@@ -132,3 +135,25 @@ public class DashboardController : Controller{
         return _context.ChatUsers.Where(x=>x.ChatId==ChatId).Any(x=>x.UserId==CurrentUser);
     }
 }
+
+    /*
+    //De onderstaande methode wordt niet gebruikt bij het verzenden van een bericht
+    [HttpPost]
+    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+    //Deze methode is echter nog aanvalbaar 
+    public async Task<IActionResult> CreateMessage(int chatId,string message){
+        //Hierbij wordt gekeken of de user in de chat zit. Als dat niet het geval is dan wordt hij terug gestuurd naar de index pagina
+        if(UserIsIn(chatId)){
+            var NewMessage = new Message(){
+                    ChatId = chatId,
+                    Text = message,
+                    Naam = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                    timestamp = DateTime.Now
+            };
+            _context.Messages.Add(NewMessage);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Chat",new {id=chatId});
+        }
+        return RedirectToAction("index");
+    }
+    */

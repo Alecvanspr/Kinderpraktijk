@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Xunit.Abstractions;
 
 public class MockDatabase{
         //Hieronder wordt een clean database aangemaakt.
         private static string dbName;
+        private readonly ITestOutputHelper output;
         //Dit is de methode die je oproept als je de database context nodig hebt voor het testen
         public MijnContext CreateContext(){
             MijnContext context = GetCleanContext(true);

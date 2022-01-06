@@ -8,7 +8,6 @@ public class ClientTests{
     //Deze methode is nog niet af doordat het gekoppeld moet worden aan bepaalde componenten van de applicatie
     [Fact]
     public void testclass1(){
-        ClientController controller = new ClientController(GetContext());
 
     }
 }

@@ -198,3 +198,5 @@ C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.RazorTarg
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.RazorTargetAssemblyInfo.cs
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.Views.pdb
 C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\src.csproj.CopyComplete
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\DashBoard\DeleteRoom.cshtml.g.cs
+C:\Users\alecv\Desktop\Project\Kinderpraktijk\src\obj\Debug\net5.0\Razor\Views\DashBoard\Details.cshtml.g.cs

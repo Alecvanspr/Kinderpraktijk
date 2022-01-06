@@ -15671,6 +15671,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\DashBoard\\Details.cshtml",
+      "TargetPath": "Views\\DashBoard\\Details.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
       "FileKind": "mvc"
@@ -15678,6 +15683,11 @@
     {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Shared\\_ChatBody.cshtml",
       "TargetPath": "Views\\Shared\\_ChatBody.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\DashBoard\\DeleteRoom.cshtml",
+      "TargetPath": "Views\\DashBoard\\DeleteRoom.cshtml",
       "FileKind": "mvc"
     },
     {

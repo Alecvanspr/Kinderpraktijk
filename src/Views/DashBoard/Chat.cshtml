@@ -1,5 +1,13 @@
 @model Chat
-
+@{
+    ViewData["Title"] = @Model.Naam;
+}
+    @if((bool)ViewData["IsModerator"]){
+        <form asp-controller="Dashboard" asp-action="Details" method="get">
+            <input type="hidden" value="@Model.Id" name="ChatId">
+            <input type="Submit" value="Details">
+        </form>
+    }
     <div class="chat-body">
     @if(Model!=null){
         @foreach (var message in Model.Messages)

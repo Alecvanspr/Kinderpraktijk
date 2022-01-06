@@ -75,8 +75,7 @@ namespace tests
         DashboardController controller = getController(GetDatabase(),"Pedagoog",user);
 
         var result = controller.Index();
-        //var IndexActionResult =Assert.IsType<IActionResult>(result);
-            
+                    
         ViewResult viewResult = result as ViewResult;
         var model = Assert.IsAssignableFrom<List<Chat>>(viewResult.ViewData.Model);
 
@@ -144,6 +143,36 @@ namespace tests
             Assert.Equal(expectedChatBeschrijving, chat.Beschrijving);
             Assert.Equal(User.UserName,chat.Users.First().User.UserName);
             Assert.Equal(UserRole.Admin,chat.Users.First().Role);
+        }
+        //Details Room\\
+        [Theory]
+        [InlineData("User1",1,"Chat1")]
+        [InlineData("User2",1,"Chat1")]
+        [InlineData("User2",2,"Chat2")]
+        public void TestDetails(string userId, int Chat,string expectedChatName){
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,"Pedagoog",userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+
+            //Act
+            var result = controller.Details(Chat);
+
+            ViewResult viewResult = result as ViewResult;
+            var model = Assert.IsAssignableFrom<Chat>(viewResult.ViewData.Model);  
+
+            //Assert          
+            //Hiermee wordt gecheckt of de naam wel overeen komt met hetgene wat we vragen
+            Assert.Equal(expectedChatName,model.Naam);
+        }
+        //In onderstaande test testen wij met een user die geen toegang heeft tot de gegevens
+        [Fact]
+        public void TestVerkeerdeRoom(){
+
+        }
+        //Delete Room\\
+        [Fact]
+        public void DeleteRoomTest(){
+
         }
         //Join Chat\\
         [Theory]
