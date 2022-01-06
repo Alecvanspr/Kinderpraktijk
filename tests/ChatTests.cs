@@ -93,4 +93,8 @@ public class ChatTests{
             Assert.NotNull(sentMessage.timestamp);
         }
         //Hieronder wordt getest wat er gebeurt als je een bericht stuurt in een chat waar jij niet inzit
+        [Fact]
+        public void CreateWrongMessageTest(){
+            
+        }
 }

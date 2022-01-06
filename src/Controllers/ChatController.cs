@@ -35,6 +35,7 @@ public class ChatController : Controller{
         [FromServices] MijnContext _context
         ){
         var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        if(_context.ChatUsers.Where(x=>x.ChatId==chatId).Any(x=>x.UserId==currentUserId)){
         var currentUser = _context.Users.Where(x=>x.Id==currentUserId).First();
         var Username = currentUser.Firstname+" "+currentUser.LastName;
        var NewMessage = new Message(){
@@ -53,6 +54,7 @@ public class ChatController : Controller{
         //bij deze await wordt het nieuwe bericht naar ieder gestuurd die in de groupschat zit met hetzelfde groupsnummer
         await _chat.Clients.Group(chatId+"").SendAsync("ReceiveMessage", NewMessage, DateTime.Now.ToShortTimeString());
             //Dit gaat een bericht sturen naar de client
+        }
         return Ok();
     }
 }
