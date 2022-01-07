@@ -14,9 +14,5 @@ namespace src.Areas.Profile.Pages.Tabs
         {
         }
 
-        public async void OnPost()
-        {
-            User = await db.
-        }
     }
 }
