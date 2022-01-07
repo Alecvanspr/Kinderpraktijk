@@ -1,41 +1,37 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using src.Areas.Identity.Data;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Encodings.Web;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Xml.Linq;
+using System;
+using System.Linq;
 
-namespace src.Areas.Identity.Pages.Account
+namespace src.Areas.Profile.Pages.Tabs
 {
-    public class RegisterModel : PageModel
+    public class AanmeldenModel : PageModel
     {
         private readonly SignInManager<srcUser> _signInManager;
         private readonly UserManager<srcUser> _userManager;
         private readonly IUserStore<srcUser> _userStore;
         private readonly IUserEmailStore<srcUser> _emailStore;
-        private readonly ILogger<RegisterModel> _logger;
+        private readonly ILogger<AanmeldenModel> _logger;
         private readonly IEmailSender _emailSender;
 
-        public RegisterModel(
+        public AanmeldenModel(
             UserManager<srcUser> userManager,
             IUserStore<srcUser> userStore,
             SignInManager<srcUser> signInManager,
-            ILogger<RegisterModel> logger,
+            ILogger<AanmeldenModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -51,7 +47,7 @@ namespace src.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel2 Input { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -69,7 +65,7 @@ namespace src.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public class InputModel
+        public class InputModel2
         {
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -110,6 +106,13 @@ namespace src.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Achternaam")]
             public string LastName { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Leeftijd")]
+            public int Age { get; set; }
+
+            public string ParentId { get; set; }
         }
 
 
@@ -129,8 +132,10 @@ namespace src.Areas.Identity.Pages.Account
                 var user = new srcUser
                 {
                     FirstName = Input.FirstName,
-                    LastName = Input.LastName
-                };
+                    LastName = Input.LastName,
+                    Age = Input.Age,
+                    ParentId = _userManager.GetUserId(User)
+            };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -196,3 +201,4 @@ namespace src.Areas.Identity.Pages.Account
         }
     }
 }
+
