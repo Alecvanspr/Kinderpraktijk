@@ -1,9 +1,25 @@
 @model Chat
-<h1>Hier komen de gegevens van de chat te staan voor chat @Model.Naam</h1>
-<form asp-action="Edit">
-    <input type="Submit" value="Edit">
-</form>
-<form asp-action="DeleteRoom">
-    <input type="Submit" value="Delete">
-</form>
-<h2>hieronder komt te staan hoe en wat over de chat</h2>
+
+<h1>Informatie over de chat</h1>
+<div>
+    <form asp-action="Edit">
+        <input class="btn btn-primary" type="Submit" value="Edit">
+    </form>
+    <form asp-action="DeleteRoom">
+        <input class="btn btn-primary" type="Submit" value="Delete">
+    </form>
+</div>
+
+<div>
+    <h2>Group</h2>
+    <hr />
+    <!-- hier nog beter naar kijken Dit werkt nog niet ten behoven-->
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Naam)
+        </dt>
+        <dd class = "col-sm-2">
+            @Html.DisplayFor(model => model.Beschrijving)
+        </dd>
+    </dl>
+</div>

@@ -66,7 +66,7 @@ namespace tests
         }
 
         //BIj deze test wordt getest het aantal correcte chats opgehaald worden
-        //{Als deze test het niet neer doet, kan dat liggen omdat er dan nieuwe gegevens aan de mock database zjn toegevoegd}
+        //Als het filteren en sorteren getest moet worden moeten daar ook performance testen bij gemaakt worden
         [Theory]
         [InlineData("User1",1)]
         [InlineData("User2",2)]
