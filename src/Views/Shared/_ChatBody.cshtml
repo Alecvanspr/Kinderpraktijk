@@ -1,5 +1,7 @@
 @model Chat
-
+   <div class="alert alert-danger hidden" id="ErrorField" role="alert">
+        <a id="ErrorMessage"></a>
+    </div>
     <div class="chat-body">
     @if(Model!=null){
         @foreach (var message in Model.Messages)
@@ -56,6 +58,7 @@
                     console("Room Joined!", res);
                 })
                 .catch(err => {
+                    showError("Inloggen bij chat mislukt");
                     console.err("Failed to join Room!", res);
                 })
         }
@@ -91,8 +94,16 @@
                 console.log("Message send!")
             })
             .catch(err => {
+                showError("Bericht verzenden mislukt");
                 console.log("Iets ging fout!")
             })
+    }
+        function showError(message){
+         //Dit zorgt ervoor dat er een error wordt geprint als het fout gaat
+         var element = document.getElementById("ErrorField");
+        var errorMessage = document.getElementById("ErrorMessage");
+        element.classList.remove("hidden");
+        errorMessage.innerHTML = message;
     }
 </script>
 }

@@ -84,7 +84,7 @@ public class DashboardController : Controller{
             ViewData["Users"] =  _context.Chat.Where(x=>x.Id==chatId).Include(x=>x.Users).Single().Users.Count();
             return View(_context.Chat.Where(x=>x.Id==chatId).Single());
         }
-        return RedirectToAction("Index");
+        return RedirectToAction("NotAuthorized");
     }
 
     //Deze methode is verantwoordelijk voor het verwijderen van een chat uit de chat list
@@ -92,8 +92,11 @@ public class DashboardController : Controller{
     [HttpGet]
     [Authorize(Roles = "Moderator,Pedagoog")]
     public IActionResult DeleteRoom(int Id,bool error){
-        ViewData["Gelukt"] = !error;
-        return View(_context.Chat.Where(x=>x.Id==Id).Single());
+        if(UserIsIn(Id)){
+            ViewData["Gelukt"] = !error;
+            return View(_context.Chat.Where(x=>x.Id==Id).Single());
+            }
+        return RedirectToAction("NotAuthorized");
     }
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog")]
@@ -112,7 +115,7 @@ public class DashboardController : Controller{
                 return RedirectToAction("DeleteRoom",new{Id= chat.Id , error=true});
             }
         }
-        return RedirectToAction("Index");
+        return RedirectToAction("NotAuthorized");
     }
     //Remove room from list
     //Als je een owner bent van de 
