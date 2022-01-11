@@ -20,6 +20,7 @@ namespace src.Areas.Profile.Pages.Tabs
 {
     public class AanmeldenModel : PageModel
     {
+        private MijnContext _context;
         private readonly SignInManager<srcUser> _signInManager;
         private readonly UserManager<srcUser> _userManager;
         private readonly IUserStore<srcUser> _userStore;
@@ -32,7 +33,8 @@ namespace src.Areas.Profile.Pages.Tabs
             IUserStore<srcUser> userStore,
             SignInManager<srcUser> signInManager,
             ILogger<AanmeldenModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            MijnContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -40,6 +42,7 @@ namespace src.Areas.Profile.Pages.Tabs
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -134,7 +137,7 @@ namespace src.Areas.Profile.Pages.Tabs
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     Age = Input.Age,
-                    ParentId = _userManager.GetUserId(User)
+                    ParentId = _userManager.GetUserId(User) //Wat is dit?
             };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -165,6 +168,9 @@ namespace src.Areas.Profile.Pages.Tabs
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
+                    }
+                    if(true){ //Dit moet later veranderd worden naar if(IsNietOuder)
+                     await _userManager.AddToRoleAsync(user,"CLIENT");
                     }
                 }
                 foreach (var error in result.Errors)

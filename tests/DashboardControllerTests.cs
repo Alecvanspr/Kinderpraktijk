@@ -182,7 +182,7 @@ namespace tests
             ViewResult viewResult = result as ViewResult;
             var ChatRedirect =Assert.IsType<RedirectToActionResult>(result);
 
-            Assert.Equal("Index",ChatRedirect.ActionName);
+            Assert.Equal("NotAuthorized",ChatRedirect.ActionName);
         }
         //Delete Room\\
         [Theory]
@@ -226,7 +226,7 @@ namespace tests
             //Deze checkt of de chat niet verwijderd is
             Assert.NotNull(Chat);
             //Deze checkt of de test wordt doorgewezen
-            Assert.Equal("Index",ChatRedirect.ActionName);
+            Assert.Equal("NotAuthorized",ChatRedirect.ActionName);
         }
         //Hier komt een test dat je de chatname niet correct invult
         [Fact]
@@ -249,9 +249,10 @@ namespace tests
             //Deze checkt of de chat niet verwijderd is
             Assert.NotNull(Chat);
             //Deze checkt of de test wordt doorgewezen
-            Assert.Equal("Index",ChatRedirect.ActionName);
+            Assert.Equal("DeleteRoom",ChatRedirect.ActionName);
         }
         //leave room test\\
+        /*
         [Theory]
         [InlineData("User1",1)]
         [InlineData("User2",1)]
@@ -275,6 +276,7 @@ namespace tests
             //Dit is een check of de chat niet verwijderd wordt
             Assert.NotNull(Chat);
         }
+        */
         [Fact]
         public void LeaveRoomWithoutRoomAccess(){
             //arrange
