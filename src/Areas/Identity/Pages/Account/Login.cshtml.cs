@@ -115,7 +115,11 @@ namespace src.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+<<<<<<< HEAD
                     return LocalRedirect(returnUrl);
+=======
+                    return LocalRedirect("/Profile/Tabs/Profiel");    
+>>>>>>> 37e6608603c4eabbdd42b2f40ef8be3bf4b7d24c
                 }
                 if (result.RequiresTwoFactor)
                 {

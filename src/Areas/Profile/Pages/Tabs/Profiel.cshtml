@@ -1,0 +1,34 @@
+﻿@page
+@model src.Areas.Profile.Pages.Tabs.ProfielModel
+@{
+    ViewData["Title"] = "Profiel";
+    Layout = "~/Areas/Profile/Pages/_Layout.cshtml";
+}
+
+@foreach(var a in Model.ProfileViewModel)
+{
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+        @if(String.IsNullOrEmpty(a.ParentId))
+            {
+                <a>Mijn Gegevens</a>
+            } else
+            {
+                <a>Mijn Kind</a>
+            }
+            </div>
+            <div class="col-3"> 
+            <ul>
+                <li>@Html.DisplayNameFor(a => a.ProfileViewModel[0].FirstName): @Html.DisplayFor(modelItem => a.FirstName)</li>
+            
+                <li>@Html.DisplayNameFor(a => a.ProfileViewModel[0].LastName): @Html.DisplayFor(modelItem => a.LastName)</li>
+            
+                <li>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Email): @Html.DisplayFor(modelItem => a.Email)</li>
+            
+                <li>@Html.DisplayNameFor(a => a.ProfileViewModel[0].PhoneNumber): @Html.DisplayFor(modelItem => a.PhoneNumber)</li>
+            </ul>
+            </div>
+    </div>
+</div>
+}

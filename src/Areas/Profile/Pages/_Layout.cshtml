@@ -9,31 +9,42 @@
     @{    
     Layout = "/Views/Shared/_Layout.cshtml";    
 }    
-<div class="row m-5">    
+<div class="m-5">    
     <div class="col-md-6  offset-md-3">    
-        <div class="card login-logout-tab">    
-            <div class="card-header" style="background-color: #EAFAF1">    
+            
+            <div class="">    
                 <ul class="nav nav-tabs card-header-tabs">    
                     <li class="nav-item">    
     
-                        <a class="nav-link" href="/Identity/Account/Login">Log In</a>    
+                        <a class="nav-link" href="/Profile/Tabs/Profiel">Mijn Profiel</a>    
                     </li>    
                     <li class="nav-item">    
     
-                        <a class="nav-link" href="/Identity/Account/Register">Sign Up </a>    
-                    </li>    
+                        <a class="nav-link" href="/Profile/Tabs/Chat">Chat</a>    
+                    </li>
+                    <li class="nav-item">    
+    
+                        <a class="nav-link" href="/Profile/Tabs/Specialist">Specialisten</a>    
+                    </li>
+                    <li class="nav-item">    
+    
+                        <a class="nav-link" href="/Profile/Tabs/Aanmelden">Aanmelden</a>    
+                    </li>
+                    <li class="nav-item">    
+    
+                        <a class="nav-link" href="/Profile/Tabs/Instellingen">Manage Gegevens</a>    
+                    </li>
                 </ul>    
             </div>    
             <div class="card-content">    
     
-                <div class="row">    
+                <div class="row mt-5">    
                     <div class="col-md-12 ">    
                         @RenderBody()    
                     </div>    
                 </div>    
             </div>    
     
-        </div>    
     </div>    
 </div>    
 @section Scripts{    

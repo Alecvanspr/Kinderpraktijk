@@ -15,8 +15,6 @@ namespace src.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                /*
-                Deze laat ik er in. Dit is voor de locale database als SQL server
                 services.AddDbContext<srcContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("srcContextConnection")));
@@ -24,23 +22,6 @@ namespace src.Areas.Identity
                 services.AddDefaultIdentity<srcUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<srcContext>();
             });
-        }
-    }
-}
-*/
-                services.AddDbContext<MijnContext>(options =>
-                
-                    //options.UseSqlServer(
-                     //   context.Configuration.GetConnectionString("poging4IdentityDbContextConnection")));
-            
-                options.UseSqlite("Data Source=database.db"));
-                /*
-                    services.AddDefaultIdentity<poging4IdentityDbContext>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<poging4IdentityDbContext>();
-                    */
-                    //Dit is voor de identity Roles waar je ook eigen kan maken vanuit de slides
-                }
-            );
         }
     }
 }

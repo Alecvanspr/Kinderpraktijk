@@ -3,14 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using src.Data;
+
+#nullable disable
 
 namespace src.Migrations
 {
     [DbContext(typeof(srcContext))]
-    partial class srcContextModelSnapshot : ModelSnapshot
+    [Migration("20220111110956_Nvarchar")]
+    partial class Nvarchar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,9 +228,6 @@ namespace src.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("UserBlocked")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
