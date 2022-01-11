@@ -36,7 +36,8 @@
                                     .build();
 
         //In de methode hieronder wordt bij het ontvangen van een bericht het bericht toegevoegd aan de html
-    connection.on("ReceiveMessage", (data ) => {
+    connection.on("ReceiveMessage", (data) => {
+        console.log("Data ontvangen "+ data.timestamp);
         var message = messageBuilder()
             .createMessage()
             .withHeader(data.naam)
@@ -83,6 +84,7 @@
         event.preventDefault();
 
         var data = new FormData(event.target);
+        console.log(data.timestamp);
         //Hieronder wordt de data gepost naar de method in chatController.cs
         axios.post('/Chat/SendMessage',data)
             .then(res => {

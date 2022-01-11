@@ -90,22 +90,25 @@ public class DashboardController : Controller{
     //Mischien een extra vertificatie toevoegen
     [HttpGet]
     [Authorize(Roles = "Moderator,Pedagoog")]
-    public IActionResult DeleteRoom(){
-        return View();
+    public IActionResult DeleteRoom(int Id,bool error){
+        ViewData["Gelukt"] = !error;
+        return View(_context.Chat.Where(x=>x.Id==Id).Single());
     }
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog")]
     public IActionResult DeleteRoom(int ChatRoomId,string ChatRoomName){
         if(UserIsIn(ChatRoomId)){
             var chat = _context.Chat.Find(ChatRoomId);
-            if(chat.Naam==ChatRoomName){
+            if(chat.Naam.Equals(ChatRoomName)){
                 //Dit is om alle verbindingen die gemaakt zijn met de chat ook gelijk worden verwijderd
                 foreach(var item in _context.ChatUsers.Where(x=>x.ChatId==ChatRoomId)){
                         _context.ChatUsers.Remove(item);
                 }
                 _context.Chat.Remove(chat);
                 _context.SaveChanges();
-                return RedirectToAction("DeleteRoom");
+                return RedirectToAction("DeleteRoom",new{Id= chat.Id , error=false});
+            }else{
+                return RedirectToAction("DeleteRoom",new{Id= chat.Id , error=true});
             }
         }
         return RedirectToAction("Index");
@@ -143,7 +146,6 @@ public class DashboardController : Controller{
         return RedirectToAction("Edit",Id);
     }
     
-
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
     public async Task<IActionResult> JoinChat(int id){

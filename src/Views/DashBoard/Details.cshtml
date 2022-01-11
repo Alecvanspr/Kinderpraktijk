@@ -2,10 +2,12 @@
 
 <h1>Informatie over de chat</h1>
 <div>
-    <form asp-action="Edit">
+    <form asp-action="Edit" method="get">
+        <input type="hidden" name="Id" value="@Model.Id">
         <input class="btn btn-primary" type="Submit" value="Edit">
     </form>
-    <form asp-action="DeleteRoom">
+    <form asp-action="DeleteRoom" method="get">
+        <input type="hidden" name="Id" value="@Model.Id">
         <input class="btn btn-primary" type="Submit" value="Delete">
     </form>
 </div>

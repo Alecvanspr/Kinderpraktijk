@@ -35,6 +35,7 @@ public class ChatController : Controller{
         [FromServices] MijnContext _context
         ){
         var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //Dit is een extra check om te voorkomen dat mensen  berichten gaan sturen in chats waar ze niet inzitten
         if(_context.ChatUsers.Where(x=>x.ChatId==chatId).Any(x=>x.UserId==currentUserId)){
         var currentUser = _context.Users.Where(x=>x.Id==currentUserId).First();
         var Username = currentUser.Firstname+" "+currentUser.LastName;
@@ -52,7 +53,7 @@ public class ChatController : Controller{
         //await _chat.Clients.All.SendAsync("ReceiveMessage",NewMessage);
 
         //bij deze await wordt het nieuwe bericht naar ieder gestuurd die in de groupschat zit met hetzelfde groupsnummer
-        await _chat.Clients.Group(chatId+"").SendAsync("ReceiveMessage", NewMessage, DateTime.Now.ToShortTimeString());
+        await _chat.Clients.Group(chatId+"").SendAsync("ReceiveMessage", NewMessage); //Hier doet hij het wel
             //Dit gaat een bericht sturen naar de client
         }
         return Ok();

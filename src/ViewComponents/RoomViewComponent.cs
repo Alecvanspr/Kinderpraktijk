@@ -1,10 +1,11 @@
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 //using Microsoft.EntityFrameworkCore;
 
 public class RoomViewComponent : ViewComponent{
-    /*
+/*
     private MijnContext _Context;
     public RoomViewComponent(MijnContext context){
         _Context = context;

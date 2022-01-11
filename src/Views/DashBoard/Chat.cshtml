@@ -2,12 +2,21 @@
 @{
     ViewData["Title"] = @Model.Naam;
 }
+    <div>
     @if((bool)ViewData["IsModerator"]){
         <form asp-controller="Dashboard" asp-action="Details" method="get">
             <input type="hidden" value="@Model.Id" name="ChatId">
             <input type="Submit" value="Details">
         </form>
     }
+        <div id="status" class="offline">
+            <a id="statusText">offline</a>
+        </div>
+    </div>
+
+     <div class="alert alert-danger hidden" id="ErrorField" role="alert">
+        <a id="ErrorMessage"></a>
+    </div>
     <div class="chat-body">
     @if(Model!=null){
         @foreach (var message in Model.Messages)
@@ -47,14 +56,17 @@
                                     .build();
 
         //In de methode hieronder wordt bij het ontvangen van een bericht het bericht toegevoegd aan de html
-    connection.on("ReceiveMessage", (data ,time) => {
-        var message = messageBuilder()
+    connection.on("ReceiveMessage", (data) => {
+        console.log("time "+data.timestamp); //Deze klopt
+        var message = messageBuilder() //Hier werkt de methode niet meer
             .createMessage()
             .withHeader(data.naam)
             .withParagraph(data.text)
-            .withFooter(time)
+            .withFooter(data.timestamp)
             .build();
+            console.log("Message gemaakt");
         document.querySelector('.chat-body').append(message);
+        console.log("Bericht toegevoegd");
     });
 
         //dee is leeg
@@ -67,6 +79,7 @@
                 })
                 .catch(err => {
                     console.err("Failed to join Room!", res);
+                    showError("Het aanmelden bij de chat is mislukt. Probeer het opnieuw");
                 })
         }
 
@@ -76,13 +89,13 @@
             console.log("SignalR Connected.");
             connection.invoke('joinRoom',""+@Model.Id);
             console.log("invoked");
-            console.log(@Model.Id);
+            ChangeStatusButton("online","offline");
         } catch (err) {
             console.log(err);
+            ChangeStatusButton("offline","online");
             setTimeout(start, 5000);
         }
     };
-
     connection.onclose(async () => {
         await start();
     });
@@ -104,8 +117,22 @@
                 document.getElementById("MessageField").value = "";
             })
             .catch(err => {
-                console.log("Iets ging fout!")
+                showError("Het versturen van het bericht is niet gelukt. Probeer het opnieuw.");
             })
+    }
+    function ChangeStatusButton(currentStatus, other){
+            var element = document.getElementById("status");
+            var textElement = document.getElementById("statusText");
+            element.classList.remove(other);
+            element.classList.add(currentStatus);
+            textElement.innerHTML=currentStatus;
+    }
+    function showError(message){
+         //Dit zorgt ervoor dat er een error wordt geprint als het fout gaat
+         var element = document.getElementById("ErrorField");
+        var errorMessage = document.getElementById("ErrorMessage");
+        element.classList.remove("hidden");
+        errorMessage.innerHTML = message;
     }
 </script>
 }
