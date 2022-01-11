@@ -14,6 +14,7 @@ namespace src.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
+            /*
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<srcContext>(options =>
                     options.UseSqlServer(
@@ -22,6 +23,7 @@ namespace src.Areas.Identity
                 services.AddDefaultIdentity<srcUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<srcContext>();
             });
+            */
         }
     }
 }

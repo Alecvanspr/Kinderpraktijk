@@ -214,9 +214,15 @@ namespace src.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("Age")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -225,7 +231,7 @@ namespace src.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Firstname")
+                    b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
@@ -245,6 +251,9 @@ namespace src.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ParentId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("TEXT");
 
@@ -257,7 +266,16 @@ namespace src.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Specialism")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SpecialistId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("UserBlocked")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("UserName")
@@ -274,6 +292,21 @@ namespace src.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("srcUsersrcUser", b =>
+                {
+                    b.Property<string>("ChilderenId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClientsId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ChilderenId", "ClientsId");
+
+                    b.HasIndex("ClientsId");
+
+                    b.ToTable("srcUsersrcUser");
                 });
 
             modelBuilder.Entity("ChatUser", b =>
@@ -353,6 +386,21 @@ namespace src.Migrations
                     b.HasOne("srcUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("srcUsersrcUser", b =>
+                {
+                    b.HasOne("srcUser", null)
+                        .WithMany()
+                        .HasForeignKey("ChilderenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("srcUser", null)
+                        .WithMany()
+                        .HasForeignKey("ClientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

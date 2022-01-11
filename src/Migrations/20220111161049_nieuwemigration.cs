@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace src.Migrations
 {
-    public partial class nieuwemigratie : Migration
+    public partial class nieuwemigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,14 @@ namespace src.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
+                    ParentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SpecialistId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserBlocked = table.Column<bool>(type: "INTEGER", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Age = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Specialism = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(256)", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -168,6 +176,30 @@ namespace src.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "srcUsersrcUser",
+                columns: table => new
+                {
+                    ChilderenId = table.Column<string>(type: "TEXT", nullable: false),
+                    ClientsId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_srcUsersrcUser", x => new { x.ChilderenId, x.ClientsId });
+                    table.ForeignKey(
+                        name: "FK_srcUsersrcUser_AspNetUsers_ChilderenId",
+                        column: x => x.ChilderenId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_srcUsersrcUser_AspNetUsers_ClientsId",
+                        column: x => x.ClientsId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ChatUsers",
                 columns: table => new
                 {
@@ -260,6 +292,11 @@ namespace src.Migrations
                 name: "IX_Messages_ChatId",
                 table: "Messages",
                 column: "ChatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_srcUsersrcUser_ClientsId",
+                table: "srcUsersrcUser",
+                column: "ClientsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -286,13 +323,16 @@ namespace src.Migrations
                 name: "Messages");
 
             migrationBuilder.DropTable(
+                name: "srcUsersrcUser");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Chat");
 
             migrationBuilder.DropTable(
-                name: "Chat");
+                name: "AspNetUsers");
         }
     }
 }

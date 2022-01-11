@@ -38,7 +38,7 @@ public class ChatController : Controller{
         //Dit is een extra check om te voorkomen dat mensen  berichten gaan sturen in chats waar ze niet inzitten
         if(_context.ChatUsers.Where(x=>x.ChatId==chatId).Any(x=>x.UserId==currentUserId)){
         var currentUser = _context.Users.Where(x=>x.Id==currentUserId).First();
-        var Username = currentUser.Firstname+" "+currentUser.LastName;
+        var Username = currentUser.FirstName+" "+currentUser.LastName;
        var NewMessage = new Message(){
                     ChatId = chatId,
                     Text = message,

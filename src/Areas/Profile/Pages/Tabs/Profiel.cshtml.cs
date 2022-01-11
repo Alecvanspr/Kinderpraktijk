@@ -5,7 +5,6 @@ using src.Areas.Profile.ViewModels;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using src.Data;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using AutoMapper;

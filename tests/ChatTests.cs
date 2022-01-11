@@ -81,7 +81,7 @@ public class ChatTests{
                 HttpContext = new DefaultHttpContext() { User = getUser("Pedagoog",user)}
             };
             var User = context.Users.Where(x=>x.Id==user).Single();
-            var expectedUsername = User.Firstname+" "+User.LastName;
+            var expectedUsername = User.FirstName+" "+User.LastName;
             //Act
             var result = controller.SendMessage(chatId,message,roomName,context);
             var sentMessage = context.Messages.OrderByDescending(x=>x.Id).First();

@@ -112,7 +112,7 @@ namespace src.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Date)]
-            [SixteenAndOlder]
+            //[SixteenAndOlder]
             [Display(Name = "Geboortedatum")]
             public DateTime Age { get; set; }
         }
