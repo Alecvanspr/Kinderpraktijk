@@ -20,8 +20,24 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Naam)
         </dt>
-        <dd class = "col-sm-2">
+        <dd class = "col-sm-6">
+            @Html.DisplayFor(model => model.Naam)
+        </dd>
+        </dl>
+        <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Beschrijving)
+        </dt>
+        <dd class = "col-sm-6">
             @Html.DisplayFor(model => model.Beschrijving)
         </dd>
+    </dl>
+        <dl class="row">
+            <dt class = "col-sm-2">
+                Aantal gebruikers
+            </dt>
+            <dd class = "col-sm-6">
+                @ViewData["Users"]
+            </dd>
     </dl>
 </div>

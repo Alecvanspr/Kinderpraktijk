@@ -81,6 +81,7 @@ public class DashboardController : Controller{
     public IActionResult Details(int chatId){
         //Misschien voor de zekerheid een check hier doen
         if(UserIsIn(chatId)){
+            ViewData["Users"] =  _context.Chat.Where(x=>x.Id==chatId).Include(x=>x.Users).Single().Users.Count();
             return View(_context.Chat.Where(x=>x.Id==chatId).Single());
         }
         return RedirectToAction("Index");
