@@ -15701,6 +15701,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\DashBoard\\NotAuthorized.cshtml",
+      "TargetPath": "Views\\DashBoard\\NotAuthorized.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Areas\\Identity\\Pages\\_ViewImports.cshtml",
       "TargetPath": "Areas\\Identity\\Pages\\_ViewImports.cshtml",
       "FileKind": "mvc"

@@ -77,7 +77,7 @@ public class DashboardController : Controller{
     //Deze methode laat de gegevens van de huidige chat zien
     //Dit is een get Als een user hier geen toegang tot heeft wordt hij ook geweigerd
     [HttpGet]
-    [Authorize(Roles = "Moderator,Pedagoog,Client,Admin")]
+    [Authorize(Roles = "Moderator,Pedagoog,Admin")]
     public IActionResult Details(int chatId){
         //Misschien voor de zekerheid een check hier doen
         if(UserIsIn(chatId)){
@@ -131,7 +131,10 @@ public class DashboardController : Controller{
     [HttpGet]
     [Authorize(Roles = "Moderator,Pedagoog")]
     public IActionResult Edit(int Id){
-        return View(_context.Chat.Where(x=>x.Id==Id).SingleOrDefault());
+        if(UserIsIn(Id)){
+            return View(_context.Chat.Where(x=>x.Id==Id).SingleOrDefault());
+        }
+        return RedirectToAction("NotAuthorized");
     }
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog")]
@@ -142,9 +145,9 @@ public class DashboardController : Controller{
             chat.Beschrijving = beschrijving;
             _context.Chat.Update(chat);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details",Id);
         }
-        return RedirectToAction("Edit",Id);
+        return RedirectToAction("NotAuthorized");
     }
     
     [HttpPost]
@@ -165,6 +168,9 @@ public class DashboardController : Controller{
     
     [Authorize(Roles="Ouder")]
     public ActionResult Overzicht(){
+        return View();
+    }
+    public ActionResult NotAuthorized(){
         return View();
     }
 
