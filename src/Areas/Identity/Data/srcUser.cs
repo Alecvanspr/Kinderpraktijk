@@ -12,7 +12,14 @@ namespace src.Areas.Identity.Data;
 public class srcUser : IdentityUser
 {
     [ForeignKey("srcUser")]
-    public string ParentId { get; set; } 
+    [Column(TypeName = "nvarchar(450)")]
+    public string ParentId { get; set; }
+
+    [ForeignKey("srcUser")]
+    [Column(TypeName = "nvarchar(450)")]
+    public string SpecialistId { get; set; }
+
+    public bool UserBlocked { get; set; }
 
     [PersonalData]
     [Column(TypeName = "nvarchar(100)")]
@@ -23,7 +30,7 @@ public class srcUser : IdentityUser
     public string LastName { get; set; }
 
     [PersonalData]
-    public int Age { get; set; }
+    public DateTime Age { get; set; }
 
     [Column(TypeName = "nvarchar(100)")]
     public string Specialism { get; set; }
@@ -32,5 +39,6 @@ public class srcUser : IdentityUser
     public string Description { get; set; }
 
     public ICollection<srcUser> Childeren { get; set;}
+    public ICollection<srcUser> Clients { get; set; }
 }
 

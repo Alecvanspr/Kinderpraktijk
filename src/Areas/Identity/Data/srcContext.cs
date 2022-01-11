@@ -12,6 +12,8 @@ public class srcContext : IdentityDbContext<srcUser>
     {
     }
 
+    //public DbSet<srcUser> Users { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

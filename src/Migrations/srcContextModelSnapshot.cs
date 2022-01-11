@@ -167,8 +167,8 @@ namespace src.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("Age")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -205,7 +205,7 @@ namespace src.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("ParentId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -222,15 +222,18 @@ namespace src.Migrations
                     b.Property<string>("Specialism")
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("SpecialistId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("UserBlocked")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("srcUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -242,9 +245,22 @@ namespace src.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("srcUserId");
-
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("srcUsersrcUser", b =>
+                {
+                    b.Property<string>("ChilderenId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClientsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ChilderenId", "ClientsId");
+
+                    b.HasIndex("ClientsId");
+
+                    b.ToTable("srcUsersrcUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -298,16 +314,19 @@ namespace src.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("src.Areas.Identity.Data.srcUser", b =>
+            modelBuilder.Entity("srcUsersrcUser", b =>
                 {
                     b.HasOne("src.Areas.Identity.Data.srcUser", null)
-                        .WithMany("Childeren")
-                        .HasForeignKey("srcUserId");
-                });
+                        .WithMany()
+                        .HasForeignKey("ChilderenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("src.Areas.Identity.Data.srcUser", b =>
-                {
-                    b.Navigation("Childeren");
+                    b.HasOne("src.Areas.Identity.Data.srcUser", null)
+                        .WithMany()
+                        .HasForeignKey("ClientsId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

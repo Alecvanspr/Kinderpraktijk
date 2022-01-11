@@ -12,8 +12,8 @@ using src.Data;
 namespace src.Migrations
 {
     [DbContext(typeof(srcContext))]
-    [Migration("20220106102117_CustomUserData")]
-    partial class CustomUserData
+    [Migration("20220111110956_Nvarchar")]
+    partial class Nvarchar
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -169,9 +169,15 @@ namespace src.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Age")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -180,7 +186,7 @@ namespace src.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Firstname")
+                    b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
@@ -200,6 +206,9 @@ namespace src.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("ParentId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -211,6 +220,12 @@ namespace src.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Specialism")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SpecialistId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -230,6 +245,21 @@ namespace src.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("srcUsersrcUser", b =>
+                {
+                    b.Property<string>("ChilderenId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClientsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ChilderenId", "ClientsId");
+
+                    b.HasIndex("ClientsId");
+
+                    b.ToTable("srcUsersrcUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -280,6 +310,21 @@ namespace src.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("srcUsersrcUser", b =>
+                {
+                    b.HasOne("src.Areas.Identity.Data.srcUser", null)
+                        .WithMany()
+                        .HasForeignKey("ChilderenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("src.Areas.Identity.Data.srcUser", null)
+                        .WithMany()
+                        .HasForeignKey("ClientsId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

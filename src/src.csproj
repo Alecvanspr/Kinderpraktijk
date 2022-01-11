@@ -6,7 +6,10 @@
   </PropertyGroup>
 	
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="bootstrap" Version="5.1.2" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Owin" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
@@ -18,11 +21,6 @@
     <PackageReference Include="Microsoft.Owin.Security.Cookies" Version="4.2.0" />
     <PackageReference Include="Microsoft.Owin.Security.OpenIdConnect" Version="4.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Pages\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

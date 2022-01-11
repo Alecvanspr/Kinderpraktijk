@@ -5,7 +5,8 @@ namespace src.Areas.Profile.ViewModels
 {
     public class ProfileViewModel
     {
-        public int ID { get; set; }
+        public string Id { get; set; }
+        public string ParentId { get; set; }
 
         [Display(Name = "Voornaam")]
         public string FirstName { get; set; }
@@ -15,14 +16,10 @@ namespace src.Areas.Profile.ViewModels
 
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Emailadres")]
-        public string EmailAddress { get; set; }
+        public string Email { get; set; }
 
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Telefoonnummer")]
         public string PhoneNumber { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Nieuwe Wachtwoord")]
-        public string Password { get; set; }
     }
 }

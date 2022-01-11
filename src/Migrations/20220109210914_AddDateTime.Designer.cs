@@ -12,8 +12,8 @@ using src.Data;
 namespace src.Migrations
 {
     [DbContext(typeof(srcContext))]
-    [Migration("20220106121236_UpdateData")]
-    partial class UpdateData
+    [Migration("20220109210914_AddDateTime")]
+    partial class AddDateTime
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -169,8 +169,8 @@ namespace src.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("Age")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -206,8 +206,8 @@ namespace src.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
+                    b.Property<string>("ParentId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");

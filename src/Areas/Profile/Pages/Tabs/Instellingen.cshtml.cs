@@ -5,8 +5,9 @@ namespace src.Areas.Profile.Pages.Tabs
 {
     public class InstellingenModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return RedirectToPage("/Account/Manage/Index", new { Area = "Identity" });
         }
     }
 }

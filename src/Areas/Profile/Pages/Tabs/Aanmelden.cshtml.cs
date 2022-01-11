@@ -108,9 +108,9 @@ namespace src.Areas.Profile.Pages.Tabs
             public string LastName { get; set; }
 
             [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Leeftijd")]
-            public int Age { get; set; }
+            [DataType(DataType.Date)]
+            [Display(Name = "Geboortedatum")]
+            public DateTime Age { get; set; }
 
             public string ParentId { get; set; }
         }

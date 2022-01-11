@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using src.Areas.Identity.Data;
+using src.Helpers;
 
 namespace src.Areas.Identity.Pages.Account
 {
@@ -110,6 +111,12 @@ namespace src.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Achternaam")]
             public string LastName { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [SixteenAndOlder]
+            [Display(Name = "Geboortedatum")]
+            public DateTime Age { get; set; }
         }
 
 
@@ -121,15 +128,18 @@ namespace src.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                //var user = CreateUser();
+                
+
                 var user = new srcUser
                 {
                     FirstName = Input.FirstName,
-                    LastName = Input.LastName
+                    LastName = Input.LastName,
+                    Age = Input.Age
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
