@@ -4,3 +4,40 @@
     ViewData["Title"] = "Specialisten";    
     Layout = "~/Areas/Profile/Pages/_Layout.cshtml";    
 } 
+<h1>Pedagoog</h1>
+@if((bool)ViewData["IsPedagoog"]){
+    <h2>U bent de pedagoog</h2>
+    }else if((bool)ViewData["HeeftPedagoog"]){
+    <h2>De gegevens van de pedagoog</h2>
+    <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.pedagoog.LastName)
+            </dt>
+            <dd class = "col-sm-6">
+                @Html.DisplayFor(model => model.pedagoog.LastName)
+            </dd>
+            </dl>
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.pedagoog.Email)
+            </dt>
+            <dd class = "col-sm-6">
+                @Html.DisplayFor(model => model.pedagoog.Email)
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.pedagoog.PhoneNumber)
+            </dt>
+            <dd class = "col-sm-6">
+                @Html.DisplayFor(model => model.pedagoog.PhoneNumber)
+            </dd>
+        </dl>
+}else{
+    <h2>U heeft nog geen pedagoog</h2>
+    <form asp-action="VoegPedagoogToe">
+        <label>Vul hier de verkregen code in van de pedagoog
+        <input type="Text" name="id" alt="Voer verkregen code hier in"/></label>
+        <input type="submit" value="Voeg toe" alt="Voeg ingevoerde pedagoog toe">
+    </form>
+}

@@ -15701,11 +15701,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Areas\\Profile\\Pages\\Tabs\\Chat.cshtml",
-      "TargetPath": "Areas\\Profile\\Pages\\Tabs\\Chat.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\alecv\\Desktop\\Project\\Kinderpraktijk\\src\\Views\\Hulp\\Index.cshtml",
       "TargetPath": "Views\\Hulp\\Index.cshtml",
       "FileKind": "mvc"
