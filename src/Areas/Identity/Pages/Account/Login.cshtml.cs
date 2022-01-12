@@ -116,6 +116,7 @@ namespace src.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
+                    //return LocalRedirect("/Profile/Tabs/Profiel");    Deze is van claudion
                 }
                 if (result.RequiresTwoFactor)
                 {

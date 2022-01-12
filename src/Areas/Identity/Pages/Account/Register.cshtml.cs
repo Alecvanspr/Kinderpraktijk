@@ -98,9 +98,23 @@ namespace src.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Required]
+            [StringLength(50)]
+            [DataType(DataType.Text)]
+            [Display(Name = "Voornaam")]
             public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(50)]
+            [DataType(DataType.Text)]
+            [Display(Name = "Achternaam")]
             public string LastName { get; set; }
-            public string PhoneNumber { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            //[SixteenAndOlder]
+            [Display(Name = "Geboortedatum")]
+            public DateTime Age { get; set; }
         }
 
 
@@ -116,7 +130,14 @@ namespace src.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                
+
+                var user = new srcUser
+                {
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Age = Input.Age
+                };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

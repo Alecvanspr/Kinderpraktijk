@@ -1,0 +1,16 @@
+@model Chat
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateRoom">
+            <label asp-for="Naam">De naam van de groep
+                <input asp-for="Naam" type="text" minlength="5" maxlength="25"/>
+            </label>
+
+            <label asp-for="Beschrijving">Geef een beschrijving van de groep
+                <input asp-for="Beschrijving" type="text" minlength="25" maxlength="250"/>
+            </label>
+            
+            <input type="submit" value="maak nieuwe groep aan">
+</form>
+    </div>
+</div>
