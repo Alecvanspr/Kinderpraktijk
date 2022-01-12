@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAqrIdTHypQk2GV4Fe2TXSKAAAAAACAAAAAAAQZgAAAAEAACAAAAAB4I9xnJLv8iAqAhudIjZs4i3SPyt39fO/k2Ylkd4SkgAAAAAOgAAAAAIAACAAAACk8clLer+zaItDk/MgxrWwPJISsR25A2BvBQx+sFgCfIAAAACA+jkvs/IQRVGjaPMkMvLtqN2o891vs8Bp+KaZiFvkwGqTcLngxqBHiAZYQe6EQEqyCsndraxUG4Vm5d4ghJImn+oDY/UbWJoojaBNN/HI7fGZtwS68e3dW0mX42J1cuegu8RiEREm1XstP+ua5NDt14AT8ITRHx/OxV/NM2A2GEAAAACtVKFJViJfZPWGY4VXI/tHUunUdRmS3By2Aw1+r00dWQPWsH/S1rGcihTfHR6wdEcnj6cg4waSzTwwq+1y+Ylq</EncryptedPassword>
+    <History>False|2022-01-11T13:04:09.8836934Z;False|2022-01-11T13:53:31.4311209+01:00;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="srcContextConnection">
+      <Value>Data Source=tcp:kinderpraktijkdb.database.windows.net,1433%3bInitial Catalog=src_db2%3bUser Id=childsplay%40kinderpraktijkdb%3bPassword=ProbleemKind0174</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="src.Data.srcContext">
+      <Value>Data Source=tcp:kinderpraktijkdb.database.windows.net,1433%3bInitial Catalog=src_db2%3bUser Id=childsplay%40kinderpraktijkdb%3bPassword=ProbleemKind0174</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>
