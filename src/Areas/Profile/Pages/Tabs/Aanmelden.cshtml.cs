@@ -24,7 +24,7 @@ namespace src.Areas.Profile.Pages.Tabs
         private readonly SignInManager<srcUser> _signInManager;
         private readonly UserManager<srcUser> _userManager;
         private readonly IUserStore<srcUser> _userStore;
-        private readonly IUserEmailStore<srcUser> _emailStore;
+        //private readonly IUserEmailStore<srcUser> _emailStore;
         private readonly ILogger<AanmeldenModel> _logger;
         private readonly IEmailSender _emailSender;
 
@@ -38,7 +38,7 @@ namespace src.Areas.Profile.Pages.Tabs
         {
             _userManager = userManager;
             _userStore = userStore;
-            _emailStore = GetEmailStore();
+            //_emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
@@ -137,11 +137,11 @@ namespace src.Areas.Profile.Pages.Tabs
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     Age = Input.Age,
-                    ParentId = _userManager.GetUserId(User) //Wat is dit?
+                    ParentId = _userManager.GetUserId(User)
             };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

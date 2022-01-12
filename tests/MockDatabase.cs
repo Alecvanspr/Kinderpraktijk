@@ -6,7 +6,7 @@ using Xunit.Abstractions;
 
 public class MockDatabase{
         //Hieronder wordt een clean database aangemaakt.
-        private static string dbName;
+        private string dbName;
         private readonly ITestOutputHelper output;
         //Dit is de methode die je oproept als je de database context nodig hebt voor het testen
         public MijnContext CreateContext(){
@@ -36,7 +36,6 @@ public class MockDatabase{
                         new ChatUser{UserId = Claudio.Id ,User=Claudio ,Role=UserRole.Admin},
                         new ChatUser{UserId = Jeremy.Id, User = Jeremy, Role= UserRole.Member}
                     }, type= ChatType.Room};
-
             context.Users.Add(Alec);
             context.Users.Add(Jeremy);
             context.Users.Add(Claudio);
@@ -50,7 +49,9 @@ public class MockDatabase{
         //Deze maakt eerst zodra nodig een schone context aan,
         //en daarna configureert hij de juiste options op de aangegeven naam
         private MijnContext GetCleanContext(bool clean){
-            if (clean) dbName = Guid.NewGuid().ToString(); //Hier wordt een unieke naam aangemaakt
+            if (clean){
+                dbName = Guid.NewGuid().ToString(); //Hier wordt een unieke naam aangemaakt
+            }
                 var options = new DbContextOptionsBuilder<MijnContext>()
                 .UseInMemoryDatabase(dbName)
                 .Options;

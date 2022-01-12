@@ -14,11 +14,11 @@ namespace src.Areas.Profile.Pages.Tabs
 {
     public class ProfielModel : PageModel
     {
-        private readonly srcContext _context;
+        private readonly MijnContext _context;
         private readonly UserManager<srcUser> _userManager;
         private readonly IMapper _mapper;
 
-        public ProfielModel(srcContext context, UserManager<srcUser> userManager, IMapper mapper)
+        public ProfielModel(MijnContext context, UserManager<srcUser> userManager, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;

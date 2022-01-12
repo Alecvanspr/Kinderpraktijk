@@ -252,7 +252,6 @@ namespace tests
             Assert.Equal("DeleteRoom",ChatRedirect.ActionName);
         }
         //leave room test\\
-        /*
         [Theory]
         [InlineData("User1",1)]
         [InlineData("User2",1)]
@@ -276,7 +275,6 @@ namespace tests
             //Dit is een check of de chat niet verwijderd wordt
             Assert.NotNull(Chat);
         }
-        */
         [Fact]
         public void LeaveRoomWithoutRoomAccess(){
             //arrange
