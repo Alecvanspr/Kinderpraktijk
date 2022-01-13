@@ -42,7 +42,7 @@ namespace tests
         {
             //arrange
             DashboardController controller = getController(GetDatabase(),"Ouder","User1");
-            var index = controller.Index();
+            var index = controller.Index("");
             //act
             var IndexActionResult =Assert.IsType<RedirectToActionResult>(index);
             //assert
@@ -54,7 +54,7 @@ namespace tests
         [InlineData("Client","False")]
         public void IndexTestIsModerator(string role,string expected){
             DashboardController controller = getController(GetDatabase(),role,"User1");
-            IActionResult index = controller.Index();
+            IActionResult index = controller.Index("");
             //Dit laad hij als een test die er niet staat
             //var IndexActionResult =Assert.IsType<IActionResult>(index);
             
@@ -75,7 +75,7 @@ namespace tests
         public void TestIndexChatList(string user, int ChatAmount){ 
         DashboardController controller = getController(GetDatabase(),"Pedagoog",user);
 
-        var result = controller.Index();
+        var result = controller.Index("");
 
         ViewResult viewResult = result as ViewResult;
         var model = Assert.IsAssignableFrom<List<Chat>>(viewResult.ViewData.Model);
@@ -88,7 +88,7 @@ namespace tests
         [Fact]
         public void TestInhoudTest(){
         DashboardController controller = getController(GetDatabase(),"Pedagoog","User1");
-        var result = controller.Index();
+        var result = controller.Index("");
         //var IndexActionResult =Assert.IsType<IActionResult>(result);
             
         ViewResult viewResult = result as ViewResult;
