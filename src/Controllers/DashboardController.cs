@@ -27,7 +27,7 @@ public class DashboardController : Controller{
         ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
         //met deze method haal het Id van de current User op
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        return View(_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Select(x=>x.chat).ToList());
+        return View(_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Select(x=>x.chat).Where(x=>x.type==ChatType.Room).ToList());
     }
     //Dit is voor het verkrijgen van de view voor het toevoegen van de model
     [HttpGet]

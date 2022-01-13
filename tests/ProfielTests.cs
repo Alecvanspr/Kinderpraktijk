@@ -112,6 +112,7 @@ public class profieltests{
         var user = context.Users.Where(x=>x.Id==ClaimTypeId).Single();
         var pedagoog =  context.Users.Where(x=>x.Id==SpecialistId).Single();
 
+        //Hieronder staan de verwachte typen
         var expectedChatName ="Prive chat "+ user.LastName;
         var expectedChatUsers = 2;
         var expectedType = ChatType.Private;
