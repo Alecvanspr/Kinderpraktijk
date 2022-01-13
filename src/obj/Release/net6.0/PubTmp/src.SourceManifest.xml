@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<sitemanifest>
-  <IisApp path="C:\Users\claud\source\repos\Alecvanspr\Kinderpraktijk\src\obj\Release\net6.0\PubTmp\Out\" />
-  <dbfullsql path="C:\Users\claud\source\repos\Alecvanspr\Kinderpraktijk\src\obj\Release\net6.0\PubTmp\EFSQLScripts\src.Data.srcContext.sql" />
-</sitemanifest>
