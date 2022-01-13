@@ -12,10 +12,11 @@ public class MockDatabase{
         public MijnContext CreateContext(){
             MijnContext context = GetCleanContext(true);
             //hier wordt de database Geinitaliseerd.
-            srcUser Alec = new srcUser(){Id="User1",UserName="Alecvanspr@gmail.com"};
+            srcUser Alec = new srcUser(){Id="User1",UserName="Alecvanspr@gmail.com",SpecialistId="User5"};
             srcUser Jeremy = new srcUser(){Id="User2", UserName="Jeremy@gmail.com"};
             srcUser Claudio = new srcUser(){Id="User3",UserName="Claudio@gmail.com"};
             srcUser Bert = new srcUser(){Id="User4",UserName="BertVanAchternaam@gmail.com"};
+            srcUser Emma = new srcUser(){Id="User5",UserName="EmmaDaBlat@Pedagoog.net"}; //Dit is een pedagoog
                 Chat chat1= new Chat(){
                     Id=1,Naam="Chat1",Beschrijving="Dit is een chat applicatie", Messages= new List<Message>(){
                         new Message{ Naam="Alec",Text="Hoi",timestamp=DateTime.Now},
@@ -40,6 +41,7 @@ public class MockDatabase{
             context.Users.Add(Jeremy);
             context.Users.Add(Claudio);
             context.Users.Add(Bert);
+            context.Users.Add(Emma);
             context.Chat.Add(chat1);
             context.Chat.Add(chat2);
             context.SaveChanges();

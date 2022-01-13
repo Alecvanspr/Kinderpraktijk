@@ -5,10 +5,17 @@
     Layout = "~/Areas/Profile/Pages/_Layout.cshtml";    
 } 
 <h1>Pedagoog</h1>
-@if((bool)ViewData["IsPedagoog"]){
+@if(Model.IsPedagoog){
     <h2>U bent de pedagoog</h2>
-    }else if((bool)ViewData["HeeftPedagoog"]){
+    <label for="PedagoogId">Uw connectieCode is:</label>
+    <input id="PedagoogId" type="text" value="@Model.pedagoog.Id" readonly>
+    }else if(Model.heeftPedagoog){
     <h2>De gegevens van de pedagoog</h2>
+    @if(Model.getSuccessvol()){
+        <div class="alert alert-success" role="alert">
+        De pedagoog is successvol toegevoegd!
+        </div>
+    }
     <dl class="row">
             <dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.pedagoog.LastName)
@@ -34,8 +41,13 @@
             </dd>
         </dl>
 }else{
+    @if(Model.getNietSuccessvol()){
+        <div class="alert alert-danger" role="alert">
+        De pedagoog kan niet gevonden worden, Probeer opnieuw  
+        </div>
+    }
     <h2>U heeft nog geen pedagoog</h2>
-    <form asp-action="VoegPedagoogToe">
+    <form asp-page-handler="ConnectWithPedagoog" method="Post">
         <label>Vul hier de verkregen code in van de pedagoog
         <input type="Text" name="id" alt="Voer verkregen code hier in"/></label>
         <input type="submit" value="Voeg toe" alt="Voeg ingevoerde pedagoog toe">

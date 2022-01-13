@@ -18,28 +18,61 @@ namespace src.Areas.Profile.Pages.Tabs
             _context = context;
             _mapper = mapper;
         }
+        public bool heeftPedagoog;
+        public bool IsPedagoog;
+        public static bool successvolToegevoegd;
+        public static bool nietSuccesvolToegevoegd;
+        public bool getSuccessvol(){
+            var ret= successvolToegevoegd;
+            successvolToegevoegd = false;
+            return ret;
+        }
+        public bool getNietSuccessvol(){
+            var ret = nietSuccesvolToegevoegd;
+            nietSuccesvolToegevoegd =false;
+            return ret;
+        }
+
         public srcUser pedagoog;
-        public void OnGet()
+        //Onderstaande methode wordt opgeroepen bij het laden van de pagina
+        //In de methode wordt er gekeken of de huidige user een pedagoog heeft
+        public IActionResult OnGet()
         {
-            var UserId =User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = _context.Users.Where(x=>x.Id==UserId).SingleOrDefault();
-            ViewData["IsPedagoog"]=false;
-            if(User.IsInRole("Pedagoog")){
-                ViewData["IsPedagoog"]=true;
-                ViewData["HeeftPedagoog"]=false;
-                Console.WriteLine("De user is een pedagoog");
+            var user = getUser();
+            heeftPedagoog=false;
+            IsPedagoog = false;
+            if(User.IsInRole("Pedagoog")){ //Hier is de user een pedagoog
+                IsPedagoog=true;
+                pedagoog = user;
             }else{
-            ViewData["IsPedagoog"]=false;
             var Specialist = _context.Users.Where(x=>x.Id==user.SpecialistId).SingleOrDefault();
-            if(Specialist==null){
-                ViewData["HeeftPedagoog"]=false;
-                Console.WriteLine("Geen pedagoog");
-            }else{
-                ViewData["HeeftPedagoog"]=true;
-                Console.WriteLine("User heeft pedagoog");
+            if(Specialist==null){//Heeft geen pedagoog
+                heeftPedagoog=false;
+            }else{//Heeft een pedagoog
+                heeftPedagoog=true;
                 pedagoog = Specialist;
                 }
             }
+            return Page();
+        }
+        [HttpPost]
+        public IActionResult OnPostConnectWithPedagoog(string Id){
+            //Vind pedagoog
+            var pedagoog = _context.Users.Where(x=>x.Id==Id).SingleOrDefault();
+            if(pedagoog!=null){
+                var user = getUser();
+                user.SpecialistId = pedagoog.Id;
+                _context.SaveChanges();
+                successvolToegevoegd = true;
+            }else{
+                //hier moet een foutmelding geven dat de pedagoog niet gevonden is
+                nietSuccesvolToegevoegd = true;
+            }
+            return RedirectToPage("/Tabs/Specialist", new { Area = "Profile" });
+        }
+        public srcUser getUser(){
+                var UserId =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                return _context.Users.Where(x=>x.Id==UserId).SingleOrDefault();
         }
     }
 }

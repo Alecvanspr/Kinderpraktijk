@@ -20,7 +20,7 @@ public class AanmeldenTest{
             }, "mock"));
             return user;
         }
-        
+        /*
         public AanmeldenModel GetAanmeldenModel(MijnContext context){
             var mockStore = new Mock<IUserStore<srcUser>>(); 
             var mockUser = new Mock<UserManager<srcUser>>(mockStore.Object,null,null,null,null,null,null,null,null);
@@ -55,4 +55,5 @@ public class AanmeldenTest{
             //assert
             //Hier later mee verder gaan
         }
+        */
 }

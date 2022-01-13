@@ -169,9 +169,6 @@ namespace src.Areas.Profile.Pages.Tabs
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
-                    if(true){ //Dit moet later veranderd worden naar if(IsNietOuder)
-                     await _userManager.AddToRoleAsync(user,"CLIENT");
-                    }
                 }
                 foreach (var error in result.Errors)
                 {
