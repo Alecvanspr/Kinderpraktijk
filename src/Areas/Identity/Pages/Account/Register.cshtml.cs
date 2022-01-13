@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using src.Areas.Identity.Data;
+using src.Helpers;
 
 namespace src.Areas.Identity.Pages.Account
 {
@@ -112,7 +114,7 @@ namespace src.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Date)]
-            //[SixteenAndOlder]
+            [SixteenAndOlder]
             [Display(Name = "Geboortedatum")]
             public DateTime Age { get; set; }
         }
@@ -126,6 +128,7 @@ namespace src.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
