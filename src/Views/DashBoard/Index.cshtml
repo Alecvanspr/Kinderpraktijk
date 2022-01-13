@@ -2,21 +2,23 @@
     ViewData["Title"] = "Dashboard";
 }
     @model List<Chat>
-    <h1 class="text-center">Welkom terug!</h1>    
-    <img src="~/img/banner.png" class="waas img-responsive" alt="Bannerfoto met mensen in gesprek">
+        <div class="container">
+        <h1 class="text-center">Welkom terug!</h1>    
+        <img src="~/img/banner.png" class="waas img-responsive" alt="Bannerfoto met mensen in gesprek">
 
-    <h2>Wat wilt u doen?</h2>
-    <div class = "row">
-        <a class="main-knop btn btn-primary" asp-action="GroepToevoegen" alt="Een groep toevoegen aan uw lijst"> Groep toevoegen</a>
-        @if((bool)ViewData["IsModerator"]){
-        <a class="main-knop btn btn-primary" asp-action="MaakZelfhulpgroep" alt="Maak een nieuwe groep aan"> Groep aanmaken</a>
-        <a class="main-knop btn btn-primary" asp-controller="Client" asp-action="Index" alt="Chats met Clienten">Chats met Clienten</a>
-        }else{
-        <button class="main-knop btn btn-primary">Chat met mijn Pedagoog</button>
-        <button class="main-knop btn btn-primary">Praat annoniem</button>
-        }
-    </div>
+        <h2>Wat wilt u doen?</h2>
+        <div class = "row">
+            <a class="main-knop btn btn-primary" asp-action="GroepToevoegen" alt="Een groep toevoegen aan uw lijst"> Groep toevoegen</a>
+            @if((bool)ViewData["IsModerator"]){
+            <a class="main-knop btn btn-primary" asp-action="MaakZelfhulpgroep" alt="Maak een nieuwe groep aan"> Groep aanmaken</a>
+            <a class="main-knop btn btn-primary" asp-controller="Client" asp-action="Index" alt="Chats met Clienten">Chats met Clienten</a>
+            }else{
+            <button class="main-knop btn btn-primary">Chat met mijn Pedagoog</button>
+            <button class="main-knop btn btn-primary">Praat annoniem</button>
+            }
+        </div>
 
 
-<h3>Mijn chatgroepen</h3>
-    <partial name="_ZelfhulpgroepenPartial" model=@Model/> 
+    <h3>Mijn chatgroepen</h3>
+        <partial name="_ZelfhulpgroepenPartial" model=@Model/> 
+</div>

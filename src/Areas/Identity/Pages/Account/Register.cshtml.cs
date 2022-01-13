@@ -149,6 +149,11 @@ namespace src.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    if(await SetRoleAsync(user)){
+                        _logger.LogInformation("Role has been added to the User.");
+                    }else{
+                         _logger.LogInformation("Adding role to user failed.");
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -181,19 +186,9 @@ namespace src.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
-        private srcUser CreateUser()
-        {
-            try
-            {
-                return Activator.CreateInstance<srcUser>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(srcUser)}'. " +
-                    $"Ensure that '{nameof(srcUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-            }
+        public async Task<bool> SetRoleAsync(srcUser user){
+             await _userManager.AddToRoleAsync(user,"Client");
+            return  await _userManager.IsInRoleAsync(user,"Client");
         }
 
         private IUserEmailStore<srcUser> GetEmailStore()

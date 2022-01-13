@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Moq;
@@ -20,40 +22,35 @@ public class AanmeldenTest{
             }, "mock"));
             return user;
         }
-        /*
-        public AanmeldenModel GetAanmeldenModel(MijnContext context){
+        public IUserStore<srcUser> GetStore(){
             var mockStore = new Mock<IUserStore<srcUser>>(); 
-            var mockUser = new Mock<UserManager<srcUser>>(mockStore.Object,null,null,null,null,null,null,null,null);
-            mockUser.Setup(x=>x.SupportsUserEmail).Returns(true);
             mockStore.Setup(x=>x.SetUserNameAsync(It.IsAny<srcUser>(),It.IsAny<String>(),It.IsAny<CancellationToken>()));
-            mockUser.Setup(x=>x.CreateAsync(It.IsAny<srcUser>(),It.IsAny<string>()));
-            var mockSignInManager = new Mock<SignInManager<srcUser>>(mockUser.Object,null,null,null,null,null,null);
-            mockSignInManager.Setup(x=>x.GetExternalAuthenticationSchemesAsync());
-            mockSignInManager.Setup(x=>x.SignInAsync(It.IsAny<srcUser>(),It.IsAny<bool>(),It.IsAny<string>()));
-            //var mockIUserEmailStore = new Mock<IUserEmailStore<srcUser>>();
-            //var mockIEmailSender = new Mock<IEmailSender>();
-            return new AanmeldenModel(mockUser.Object,mockStore.Object,mockSignInManager.Object,null,null,context);
+            return mockStore.Object;
+        }
+        public AanmeldenModel GetAanmeldenModel(MijnContext context,UserManager<srcUser> userManager){
+            return new AanmeldenModel(userManager,GetStore(),null,null,null,context);
+        }
+        private async Task<bool> returnValue(){
+            return true;
         }
 
         [Fact]
-        public async void TestCreateUser()
+        //Deze methode test of het toevoegen van een role goed wordt gedaan
+        public async void TestSetRole()
         {
             //Arrange
-            MijnContext context = GetDatabase();
-            AanmeldenModel controller = GetAanmeldenModel(context);
-            var expectedEmail ="Bert@Gmail.com";
-            var expectedPassword = "Wachtwoord!123";
-            var expectedConfirmPassword ="Wachtwoord!123";
-            var expectedFirstName = "Bert";
-            var expectedLastName = "van Bert en Ernie";
-            var expectedAge = DateTime.Parse("23-02-2004");
-            Assert.IsType<DateTime>(expectedAge);
-            AanmeldenModel.InputModel2 model= new AanmeldenModel.InputModel2(){Email=expectedEmail,Password=expectedPassword,ConfirmPassword=expectedConfirmPassword,FirstName=expectedFirstName,LastName=expectedLastName,Age=expectedAge};
-            //act
-            controller.Input = model;
-            //await controller.OnGetAsync("index");
+            MijnContext _context = GetDatabase();
+
+            var mockUser = new Mock<UserManager<srcUser>>(GetStore(),null,null,null,null,null,null,null,null);
+            mockUser.Setup(x=>x.AddToRoleAsync(It.IsAny<srcUser>(),It.IsAny<string>()));
+            mockUser.Setup(x=>x.IsInRoleAsync(It.IsAny<srcUser>(),It.IsAny<string>())).Returns(returnValue());
+            AanmeldenModel controller = GetAanmeldenModel(_context,mockUser.Object);
+            var user = _context.Users.First();
             //assert
-            //Hier later mee verder gaan
+            var result = await controller.SetRoleAsync(user);
+            Assert.True(result);
+            mockUser.Verify(x=>x.AddToRoleAsync(It.IsAny<srcUser>(),It.IsAny<string>()),Times.Once);
+            mockUser.Verify(x=>x.IsInRoleAsync(It.IsAny<srcUser>(),It.IsAny<string>()),Times.Once);
         }
-        */
+        
 }

@@ -147,6 +147,12 @@ namespace src.Areas.Profile.Pages.Tabs
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    if(await SetRoleAsync(user)){
+                        _logger.LogInformation("Role has been added to the User.");
+                    }else{
+                         _logger.LogInformation("Adding role to user failed.");
+                    }
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -178,6 +184,10 @@ namespace src.Areas.Profile.Pages.Tabs
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+        public async Task<bool> SetRoleAsync(srcUser user){
+             await _userManager.AddToRoleAsync(user,"Client");
+            return  await _userManager.IsInRoleAsync(user,"Client");
         }
 
         private srcUser CreateUser()
