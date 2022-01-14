@@ -13,7 +13,9 @@
             <a class="main-knop btn btn-primary" asp-action="MaakZelfhulpgroep" alt="Maak een nieuwe groep aan"> Groep aanmaken</a>
             <a class="main-knop btn btn-primary" asp-controller="Client" asp-action="Index" alt="Chats met Clienten">Chats met Clienten</a>
             }else{
-            <button class="main-knop btn btn-primary">Chat met mijn Pedagoog</button>
+            @if((bool)ViewData["HeeftPriveChat"]){
+            <a class="main-knop btn btn-primary" asp-action="GaNaarPriveChat" alt="Ga naar de chat met jouw pedagoog">Chat met pedagoog</a>
+            }
             <button class="main-knop btn btn-primary">Praat annoniem</button>
             }
         </div>

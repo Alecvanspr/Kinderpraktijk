@@ -29,6 +29,7 @@ public class MockDatabase{
                         new ChatUser{UserId= Claudio.Id, User=Claudio, Role= UserRole.Member}
                     }, type= ChatType.Room};
 
+
                     Chat chat2= new Chat(){
                     Id=2,Naam="Chat2",Beschrijving="Dit is een chat applicatie", Messages= new List<Message>(){
                         new Message{ Naam="Claudio",Text="GG",timestamp=DateTime.Now},
@@ -37,6 +38,15 @@ public class MockDatabase{
                         new ChatUser{UserId = Claudio.Id ,User=Claudio ,Role=UserRole.Admin},
                         new ChatUser{UserId = Jeremy.Id, User = Jeremy, Role= UserRole.Member}
                     }, type= ChatType.Room};
+
+                    Chat chat3= new Chat(){
+                    Id=3,Naam="Chat3",Beschrijving="Dit is een prive chat", Messages= new List<Message>(){
+                        new Message{ Naam="Alec",Text="Is dit prive",timestamp=DateTime.Now},
+                        new Message{Naam="Emma",Text="Ja",timestamp=DateTime.Now},
+                    },Users = new List<ChatUser>(){
+                        new ChatUser{UserId = Alec.Id ,User=Alec ,Role=UserRole.Member},
+                        new ChatUser{UserId = Emma.Id, User = Emma, Role= UserRole.Admin}
+                    }, type= ChatType.Private};
             context.Users.Add(Alec);
             context.Users.Add(Jeremy);
             context.Users.Add(Claudio);
@@ -44,6 +54,7 @@ public class MockDatabase{
             context.Users.Add(Emma);
             context.Chat.Add(chat1);
             context.Chat.Add(chat2);
+            context.Chat.Add(chat3);
             context.SaveChanges();
             return GetCleanContext(false);
         }
