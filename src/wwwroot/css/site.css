@@ -31,11 +31,8 @@ navyblue {
 rainblue {
     background-color: #7da1c4
 }
-
-
-
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #2149C6;
+  color: white;
   background-color: #1b6ec2;
   border-color: #1861ac;
   border-bottom: #2149C6 solid 2px;
@@ -153,9 +150,6 @@ div.login-logout-tab a.nav-link {
     padding: .5em 1em;
 }
 
-a:visited {
-    color: red;
-}
 .groups{
   border:solid black 2px;
   display: flex;
@@ -171,11 +165,11 @@ a:visited {
   display: inline;
   margin:0.25rem;
   padding:0.25rem;
-  background-color: lightgray;
+  background-color: #d3d3d3;
 }
 .group:hover{
-  background-color:#4363C5;
-  color:white;
+  background-color:#929292;
+  color:black;
 }
 
 .main-knop{

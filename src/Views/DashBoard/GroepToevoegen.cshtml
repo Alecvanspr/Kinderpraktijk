@@ -10,15 +10,15 @@
         <tbody>
         <tr>
             <td><label for="zoekBalkNaam">Zoek op naam</label></td>
-            <td><input id="zoekBalkNaam" type="text" placeholder="Naam groep"/></td>
+            <td><input id="zoekBalkNaam" type="text" placeholder="Naam groep" aria-label="zoek op naam van de Groep"/></td>
         </tr>
             <tr>
                 <td><label for="zoekBalkBeschrijving"> Zoeken op beschrijving</label></td>
-                <td><input id="zoekBalkBeschrijving" type="text"placeholder="beschrijving groep"/></td>
+                <td><input id="zoekBalkBeschrijving" type="text"placeholder="beschrijving groep" aria-label="zoek op de beschrijving van de groep"/></td>
             </tr>
         </tbody>
     </table>
-    <input type="submit" value="Zoek" alt="Zoek in lijst van groepen" class="btn btn-primary">
+    <input type="submit" value="Zoek" aria-label="Zoek in lijst van groepen" class="btn btn-primary">
 </form>
 
 <!--Dit moet later nog aangepast worden dat je daadwerkelijk kan joinen-->
@@ -30,7 +30,7 @@
         <p>@groep.Beschrijving</p>
         <form action="JoinChat" method='post'>
             <input type="Hidden" value="@groep.Id" name="Id"/>
-            <input type="submit" value="Neem deel aan de groep">
+            <input type="submit" value="Neem deel aan @groep.Naam">
         </form>
         </div>
 }
