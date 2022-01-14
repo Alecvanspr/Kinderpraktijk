@@ -126,7 +126,7 @@ public class DashboardController : Controller{
                 }
                 _context.Chat.Remove(chat);
                 _context.SaveChanges();
-                return RedirectToAction("DeleteRoom",new{Id= chat.Id , error=false});
+                return RedirectToAction("Index");
             }else{
                 return RedirectToAction("DeleteRoom",new{Id= chat.Id , error=true});
             }
@@ -164,7 +164,7 @@ public class DashboardController : Controller{
             chat.Beschrijving = beschrijving;
             _context.Chat.Update(chat);
             _context.SaveChanges();
-            return RedirectToAction("Details",Id);
+            return RedirectToAction("Details",new{chatId=Id});
         }
         return RedirectToAction("NotAuthorized");
     }
