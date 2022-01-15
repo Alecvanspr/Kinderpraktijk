@@ -42,7 +42,7 @@ namespace tests
         {
             //arrange
             DashboardController controller = getController(GetDatabase(),"Ouder","User1");
-            var index = controller.Index();
+            var index = controller.Index("");
             //act
             var IndexActionResult =Assert.IsType<RedirectToActionResult>(index);
             //assert
@@ -54,7 +54,7 @@ namespace tests
         [InlineData("Client","False")]
         public void IndexTestIsModerator(string role,string expected){
             DashboardController controller = getController(GetDatabase(),role,"User1");
-            IActionResult index = controller.Index();
+            IActionResult index = controller.Index("");
             //Dit laad hij als een test die er niet staat
             //var IndexActionResult =Assert.IsType<IActionResult>(index);
             
@@ -75,7 +75,7 @@ namespace tests
         public void TestIndexChatList(string user, int ChatAmount){ 
         DashboardController controller = getController(GetDatabase(),"Pedagoog",user);
 
-        var result = controller.Index();
+        var result = controller.Index("");
 
         ViewResult viewResult = result as ViewResult;
         var model = Assert.IsAssignableFrom<List<Chat>>(viewResult.ViewData.Model);
@@ -88,7 +88,7 @@ namespace tests
         [Fact]
         public void TestInhoudTest(){
         DashboardController controller = getController(GetDatabase(),"Pedagoog","User1");
-        var result = controller.Index();
+        var result = controller.Index("");
         //var IndexActionResult =Assert.IsType<IActionResult>(result);
             
         ViewResult viewResult = result as ViewResult;
@@ -405,6 +405,41 @@ namespace tests
             var result = controller.UserIsIn(chat);
             //Assert
             Assert.Equal(expected, result);
+        }
+        [Theory]
+        [InlineData("User1","Chat","Client")] //Dit is een client met pedagoog
+        [InlineData("User2","Index","Client")] //Dit is een client zonder pedagoog
+        [InlineData("User5","Index","Pedagoog")] //Dit is om te testen of hij leeg blijft. Anders geeft hij een error in de chatUser
+        //Ik test hier of de redirect goed wordt gedaan.
+        //Als de User geen prive chat heeft dan wordt deze toch geredirect naar de index pagina.
+        public void TestGaNaarPriveChat(string userId, string expectedPage,string role){
+            //Arrange
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,role,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+
+            //Act
+            var result = controller.GaNaarPriveChat();
+            ViewResult viewResult = result as ViewResult;
+            var ChatRedirect =Assert.IsType<RedirectToActionResult>(result);
+            //Assert
+            Assert.Equal(expectedPage,ChatRedirect.ActionName);
+        }
+        //In onderstaande test wordt de HeeftPriveChat gecheckt
+        //Als dit het geval is dan krijgt de user een true geretured
+        [Theory]
+        [InlineData("User1",true,"Client")]
+        [InlineData("User2",false,"Client")]
+        [InlineData("User5",false,"Pedagoog")]
+        public void TestheeftPriveChat(string userId,bool expectedBool,string role){
+            //arrange
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context,role,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+            //act
+            var result = controller.heeftPriveChat();
+            //assert
+            Assert.Equal(expectedBool,result);
         }
     }
 }

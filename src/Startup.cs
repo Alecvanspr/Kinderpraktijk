@@ -31,8 +31,9 @@ namespace src
             //Deze moet later verwijderd worden,Doordat we gebruik maken van een andere DB provider 
             services.AddDbContext<MijnContext>(o=>
                         o.UseSqlite("Data source= Database.db"));
+                        
 
-            //dit is nodig voor de identity. Echter is deze nog niet van toepassing
+            //dit is nodig voor de identity
             services.AddIdentity<srcUser, IdentityRole>()
                                 .AddEntityFrameworkStores<MijnContext>()
                                 .AddDefaultUI()
@@ -57,7 +58,7 @@ namespace src
                             .AllowCredentials();
                 })
             );
-                services.AddHealthChecks();
+            services.AddHealthChecks();
             services.AddRazorPages();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
@@ -98,6 +99,8 @@ namespace src
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            //Hiermee zou de database geseed moeten worden.
+            //SampleData.Initialize(app.ApplicationServices);
         }
     }
 }

@@ -17,7 +17,7 @@ public class DashboardController : Controller{
         _context = context;
     }
     //Getest
-    public IActionResult Index(){
+    public IActionResult Index(string Onderwerp){
         if(User.IsInRole("Ouder"))
         {
             return RedirectToAction("Overzicht");
@@ -25,18 +25,34 @@ public class DashboardController : Controller{
         //Hier wordt meegegeven of de user een moderator is.
         //op basis hiervan wordt bepaald of de user te zien krijgt of hij een groep aan mag maken of dat hij kan chatten met de pedagoog
         ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
+
+        //Onderstaande viewdata is voor het weergeven van de button
+        ViewData["HeeftPriveChat"] = heeftPriveChat();
+
         //met deze method haal het Id van de current User op
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        if(Onderwerp == null || Onderwerp == ""){
         return View(_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Select(x=>x.chat).ToList());
+        }
+        else{
+            return View(_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Where(x => x.chat.Onderwerp == Onderwerp).Select(x=>x.chat).Where(x=>x.type==ChatType.Room).ToList());
+        }
     }
     //Dit is voor het verkrijgen van de view voor het toevoegen van de model
     [HttpGet]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
-    public IActionResult GroepToevoegen(){
+    public IActionResult GroepToevoegen(string Naam, string Beschrijving, string Onderwerp){
         //Hieronder wordt een lijst van alle chats naarvoren gehaald die publiek zijn
+        if(Naam == null) Naam = "";
+        if(Beschrijving == null) Beschrijving = "";
+        if(Onderwerp == null) Onderwerp = "";
         var GroepenLijst = _context.Chat.Where(x=>x.type==ChatType.Room);
+        //Hier worden de 3 sorteercriteria toegepast
+        var LijstMetNaam = GroepenLijst.Where(x => x.Naam.Contains(Naam));
+        var LijstMetBeschrijving = LijstMetNaam.Where(x => x.Beschrijving.Contains(Beschrijving));
+        var LijstMetOnderwerp = LijstMetBeschrijving.Where(x => x.Onderwerp.Contains(Onderwerp));
         //Hier wordt die lijst terug geven aan de mensen
-        return View(GroepenLijst.ToList());
+        return View(LijstMetOnderwerp.ToList());
     }
     //Deze is voor de chat zelf. Hiermee kan je alle berichten zien
     [HttpGet]
@@ -56,7 +72,7 @@ public class DashboardController : Controller{
     //Deze methode is voor het aanmaken van een Chatroom
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog")]
-    public async Task<IActionResult> CreateRoom([Bind("Naam","Beschrijving")]Chat chat){
+    public async Task<IActionResult> CreateRoom([Bind("Naam","Beschrijving","Onderwerp")]Chat chat){
         if(ModelState.IsValid){
             chat.type = ChatType.Room;
             chat.Users = new List<ChatUser>();
@@ -110,7 +126,7 @@ public class DashboardController : Controller{
                 }
                 _context.Chat.Remove(chat);
                 _context.SaveChanges();
-                return RedirectToAction("DeleteRoom",new{Id= chat.Id , error=false});
+                return RedirectToAction("Index");
             }else{
                 return RedirectToAction("DeleteRoom",new{Id= chat.Id , error=true});
             }
@@ -148,7 +164,7 @@ public class DashboardController : Controller{
             chat.Beschrijving = beschrijving;
             _context.Chat.Update(chat);
             _context.SaveChanges();
-            return RedirectToAction("Details",Id);
+            return RedirectToAction("Details",new{chatId=Id});
         }
         return RedirectToAction("NotAuthorized");
     }
@@ -168,6 +184,22 @@ public class DashboardController : Controller{
         }
         return RedirectToAction("Chat",new {ChatId = id});
     }
+    public IActionResult GaNaarPriveChat(){
+        if(heeftPriveChat()){
+            var userid =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var ChatUser = _context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==userid).Where(x=>x.chat.type==ChatType.Private).SingleOrDefault();
+            return RedirectToAction("Chat",new {ChatId = ChatUser.ChatId}); //Deze doet het niet
+        }
+        return RedirectToAction("Index"); //Deze moet ook nog een foutmelding returnen
+    }
+    public bool heeftPriveChat(){
+        var userid =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        if(!User.IsInRole("Pedagoog")){
+            var ChatUser = _context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==userid).Where(x=>x.chat.type==ChatType.Private).SingleOrDefault();
+            return ChatUser!=null;
+        }
+        return false;
+    }
     
     [Authorize(Roles="Ouder")]
     public ActionResult Overzicht(){
@@ -185,25 +217,3 @@ public class DashboardController : Controller{
         return _context.ChatUsers.Where(x=>x.ChatId==ChatId).Any(x=>x.UserId==CurrentUser);
     }
 }
-
-    /*
-    //De onderstaande methode wordt niet gebruikt bij het verzenden van een bericht
-    [HttpPost]
-    [Authorize(Roles = "Moderator,Pedagoog,Client")]
-    //Deze methode is echter nog aanvalbaar 
-    public async Task<IActionResult> CreateMessage(int chatId,string message){
-        //Hierbij wordt gekeken of de user in de chat zit. Als dat niet het geval is dan wordt hij terug gestuurd naar de index pagina
-        if(UserIsIn(chatId)){
-            var NewMessage = new Message(){
-                    ChatId = chatId,
-                    Text = message,
-                    Naam = User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                    timestamp = DateTime.Now
-            };
-            _context.Messages.Add(NewMessage);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Chat",new {id=chatId});
-        }
-        return RedirectToAction("index");
-    }
-    */

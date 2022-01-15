@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -56,12 +57,13 @@ namespace src.Areas.Profile.Pages.Tabs
             return Page();
         }
         [HttpPost]
-        public IActionResult OnPostConnectWithPedagoog(string Id){
+        public async Task<IActionResult> OnPostConnectWithPedagoog(string Id){
             //Vind pedagoog
             var pedagoog = _context.Users.Where(x=>x.Id==Id).SingleOrDefault();
             if(pedagoog!=null){
                 var user = getUser();
                 user.SpecialistId = pedagoog.Id;
+                await CreateNewGroupAsync(user,pedagoog);
                 _context.SaveChanges();
                 successvolToegevoegd = true;
             }else{
@@ -73,6 +75,17 @@ namespace src.Areas.Profile.Pages.Tabs
         public srcUser getUser(){
                 var UserId =User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 return _context.Users.Where(x=>x.Id==UserId).SingleOrDefault();
+        }
+        [HttpPost]
+        public async Task<bool> CreateNewGroupAsync(srcUser user, srcUser pedagoog){
+            Chat chat = new Chat(){Naam="Prive chat "+user.LastName,Beschrijving="Dit is de prive chat tussen jou en de pedagoog", type=ChatType.Private};
+            chat.Users = new List<ChatUser>(){
+                new ChatUser(){UserId= user.Id, Role=UserRole.Member,ChatId = chat.Id},
+                new ChatUser(){UserId=pedagoog.Id, Role=UserRole.Admin, ChatId = chat.Id}
+            };
+            _context.Chat.Add(chat);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

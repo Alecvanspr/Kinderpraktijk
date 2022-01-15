@@ -9,6 +9,17 @@
             <label asp-for="Beschrijving">Geef een beschrijving van de groep
                 <input asp-for="Beschrijving" type="text" minlength="25" maxlength="250"/>
             </label>
+            <label asp-for="Onderwerp">Selecteer een Onderwerp
+                <select asp-for="Onderwerp" type="text">
+                    <option value="School">School</option>
+                    <option value="Depressief">Depressief</option>
+                    <option value="Slaaptekort">Slaaptekort</option>
+                    <option value="ADD">ADD</option>
+                    <option value="ADHD">ADHD</option>
+                    <option value="Traumas">Traumas</option>
+                    <option value="Autisme">Autisme</option>
+                </select>
+            </label>
             
             <input type="submit" value="maak nieuwe groep aan">
 </form>

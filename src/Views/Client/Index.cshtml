@@ -16,14 +16,4 @@
     <input type="submit" value="Zoek" alt="Zoek in lijst van groepen" class="btn btn-primary">
 </form>
 
-<div class="groups b-large">
-    @if(Model!=null){
-    @foreach (var client in Model)
-        {
-            <div class="group">
-                <h2>@client.Naam</h2>
-                <a class="btn btn-primary">Chat</a>
-            </div>
-        }
-    }
-</div>
+<partial name="_ZelfhulpgroepenPartial" model=@Model/> 
