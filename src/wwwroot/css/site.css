@@ -346,3 +346,14 @@ div.login-logout-tab a.nav-link {
     display: none;
   }
 }
+
+/* Large viewport navbar */
+.nav-link {
+  text-transform: uppercase;
+  border-bottom: 5px solid transparent;
+  height:100%
+}
+
+.nav-link:hover {
+  border-bottom: 5px solid #ff7240;
+}

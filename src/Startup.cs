@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -27,11 +28,10 @@ namespace src
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            
-            //Deze moet later verwijderd worden,Doordat we gebruik maken van een andere DB provider 
-            services.AddDbContext<MijnContext>(o=>
-                        o.UseSqlite("Data source= Database.db"));
-                        
+
+//Deze moet later verwijderd worden,Doordat we gebruik maken van een andere DB provider 
+            services.AddDbContext<MijnContext>(options => options.UseSqlServer(Configuration.GetConnectionString("srcContextConnection")));
+
 
             //dit is nodig voor de identity
             services.AddIdentity<srcUser, IdentityRole>()

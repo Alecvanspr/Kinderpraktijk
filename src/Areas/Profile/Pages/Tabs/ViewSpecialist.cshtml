@@ -1,0 +1,29 @@
+﻿@page
+@model src.Areas.Profile.Pages.Tabs.ViewSpecialistModel
+@{
+    ViewData["Title"] = "ViewSpecialisten";
+    Layout = "~/Areas/Profile/Pages/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="d-flex flex-wrap">
+        @foreach (var a in Model.ProfileViewModel)
+        {
+            <div class="p-3">
+            <div class="card">
+                <img class="card-img-top" src="~/img/woman.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p>
+                        <a>Specialist: @Html.DisplayFor(modelItem => a.FirstName) @Html.DisplayFor(modelItem => a.LastName)</a>
+                        <br />
+                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Specialism): @Html.DisplayFor(modelItem => a.Specialism)</a>
+                        <br />
+                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Description): @Html.DisplayFor(modelItem => a.Description)</a>
+                    </p>
+                    <a href="#" class="btn btn-outline-primary">Aanmelden</a>
+                </div>
+            </div>
+            </div>
+        }
+    </div>
+</div>
