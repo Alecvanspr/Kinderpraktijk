@@ -31,9 +31,8 @@ namespace src
             //Deze moet later verwijderd worden,Doordat we gebruik maken van een andere DB provider 
             services.AddDbContext<MijnContext>(o=>
                         o.UseSqlServer(@"Server=tcp:kinderpraktijkhijserver.database.windows.net,1433;Initial Catalog=KinderpraktijkHijdb;Persist Security Info=False;User ID=KinderpraktijkHij;Password=J0eBiden!123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
-                        
-                        
-
+                        //o.UseSqlite("Data Source=database.db"));
+            
             //dit is nodig voor de identity
             services.AddIdentity<srcUser, IdentityRole>()
                                 .AddEntityFrameworkStores<MijnContext>()
