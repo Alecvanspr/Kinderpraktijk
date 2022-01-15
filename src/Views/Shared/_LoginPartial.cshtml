@@ -6,9 +6,19 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <a id="manage" class="nav-link text-dark" asp-area="Profile" asp-page="/Tabs/Profiel" title="Manage">
-            <button class="btn btn-outline-light">Hello @UserManager.GetUserName(User)!</button>
-        </a>
+        <div class="dropdown pl-1 pr-1">
+            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Hello @User.Identity?.Name!
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Profiel">Mijn Profiel</a></li>
+                <li><a class="dropdown-item" href="/Dashboard">Chat</a></li>
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Specialist">Mijn Specialist</a></li>
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Aanmelden">Kind Aanmelden</a></li>
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Manage Gegevens</a></li>
+            </ul>
+        </div>
+
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button id="logout" type="submit" class="btn btn-outline-light">Logout</button>
         </form>

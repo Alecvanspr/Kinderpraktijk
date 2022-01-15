@@ -55,6 +55,20 @@
                     Wij verzorgen hulp zowel bij ouders en kinderen thuis, op onze verschillende locaties, en op scholen binnen de regio’s Amsterdam Amstelland, Zaanstreek Waterland , Gooi en Vechtstreek, Amersfoort en Utrecht-west.
                     Wij hebben verschillende aanpassingen gedaan op onze locaties, zodat deze ingericht zijn op de 1.5 meter-maatschappij. Wij hanteren de hoogst mogelijke hygiënevoorschriften en houden ons aan de richtlijnen van het RIVM.
                 </p>
+
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Profiel">Mijn Profiel</a></li>
+                        <li><a class="dropdown-item" href="/Dashboard">Chat</a></li>
+                        <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Specialist">Mijn Specialist</a></li>
+                        <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Aanmelden">Kind Aanmelden</a></li>
+                        <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage">Manage Gegevens</a></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>
@@ -65,44 +79,29 @@
 <div class="d-flex flex-wrap justify-content-center p-2">
     <div class="col-lg-3">
         <div class="card">
-            <img src="~/img/kidchild.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-            </ul>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card" >
-            <img src="~/img/sickchild.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-            </ul>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card" >
             <img src="~/img/mesurechild.jpg" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
+                <h5 class="card-title">Kinderen</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-            </ul>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="card">
+            <img src="~/img/sickchild.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Jongeren tot 16</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="card">
+            <img src="~/img/mesurechild.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Jong Volwassenen</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
         </div>
     </div>
 </div>
