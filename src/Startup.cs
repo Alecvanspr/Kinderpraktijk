@@ -30,8 +30,9 @@ namespace src
             services.AddControllersWithViews();
 
 //Deze moet later verwijderd worden,Doordat we gebruik maken van een andere DB provider 
-            services.AddDbContext<MijnContext>(options => options.UseSqlServer(Configuration.GetConnectionString("srcContextConnection")));
-
+            services.AddDbContext<MijnContext>(options => 
+                        //options.UseSqlServer(Configuration.GetConnectionString("srcContextConnection")));
+                        options.UseSqlite("Data Source=database.db"));
 
             //dit is nodig voor de identity
             services.AddIdentity<srcUser, IdentityRole>()
