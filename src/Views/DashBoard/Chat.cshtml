@@ -3,12 +3,10 @@
     ViewData["Title"] = @Model.Naam;
 }
     <div>
-    @if((bool)ViewData["IsModerator"]){
         <form asp-controller="Dashboard" asp-action="Details" method="get">
             <input type="hidden" value="@Model.Id" name="ChatId">
             <input type="Submit" value="Details">
         </form>
-    }
         <div id="status" class="offline">
             <a id="statusText">offline</a>
         </div>
