@@ -179,7 +179,7 @@ namespace src.Areas.Profile.Pages.Tabs
                     }
                     else
                     {
-                        return LocalRedirect(returnUrl);
+                        return RedirectToPage("/Tabs/ViewSpecialist", new { Area = "Profile" });
                     }
                 }
                 foreach (var error in result.Errors)

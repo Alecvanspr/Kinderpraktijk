@@ -10,6 +10,7 @@ using System.Linq;
 using AutoMapper;
 using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 
 namespace src.Areas.Profile.Pages.Tabs
 {
@@ -27,6 +28,7 @@ namespace src.Areas.Profile.Pages.Tabs
             _mapper = mapper;
         }
 
+        [BindProperty]
         public List<ProfileViewModel> ProfileViewModel { get; set; }
 
         public void OnGet()
@@ -37,6 +39,14 @@ namespace src.Areas.Profile.Pages.Tabs
                           select s).ToList();
 
             ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(result);
+        }
+
+        public async Task<IActionResult> OnPost(string id)
+        {
+            var user = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return RedirectToPage("/Tabs/ViewSpecialist", new { Area = "Profile" });
         }
     }
 }
