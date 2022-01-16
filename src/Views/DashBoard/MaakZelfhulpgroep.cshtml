@@ -4,12 +4,12 @@
         <form asp-action="CreateRoom">
             <div>
                 @Html.LabelFor(model => model.Naam, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.TextBoxFor(model => model.Naam, new { @class = "form-control", placeholder = "Naam van de groep", required = "required", pattern = @"^([a-zA-Z0-9]+)$"  })
+                @Html.TextBoxFor(model => model.Naam, new { @class = "form-control", placeholder = "Naam van de groep", required = "required", pattern = @"^([a-zA-Z0-9_ !?]+)$"  })
                 @Html.ValidationMessageFor(model => model.Naam, "", new { @class = "text-danger" })
             </div>
             <div>
                 @Html.LabelFor(model => model.Beschrijving, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.TextBoxFor(model => model.Beschrijving, new { @class = "form-control", placeholder = "Geef een beschrijving van de groep", required = "required", pattern = @"^([a-zA-Z0-9]+)$"  })
+                @Html.TextBoxFor(model => model.Beschrijving, new { @class = "form-control", placeholder = "Geef een beschrijving van de groep", required = "required", pattern = @"^([a-zA-Z0-9_ ?!]+)$"  })
                 @Html.ValidationMessageFor(model => model.Beschrijving, "", new { @class = "text-danger" })
             </div>
             <label asp-for="Onderwerp">Selecteer een Onderwerp

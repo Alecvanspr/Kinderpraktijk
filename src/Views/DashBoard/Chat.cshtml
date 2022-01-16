@@ -35,7 +35,7 @@
     <form onsubmit="sendMessage(event)" asp-controller="Chat" asp-action="CreateMessage" method="post">
         <input type="hidden" name="chatId" value="@Model.Id">
         <input type="hidden" name="roomName" value="@Model.Naam">
-        <input class="form-control form-control-lg" id="MessageField" type="text" name="Message">
+        <input class="form-control form-control-lg" id="MessageField" type="text" name="Message" pattern="^([a-zA-Z0-9_ ?!]+)$">
         <input class="btn btn-primary" type="submit"/>
     </form>
 </div>
