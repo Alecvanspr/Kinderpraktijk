@@ -200,10 +200,17 @@ public class DashboardController : Controller{
         }
         return false;
     }
+
+    // public bool 
     
-    [Authorize(Roles="Ouder")]
-    public ActionResult Overzicht(){
-        return View();
+    [Authorize(Roles="Ouder, Moderator")]
+    public async Task<IActionResult> Overzicht()
+    {
+        string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        string kidCurrentUserId = _context.Users.Where(p => p.ParentId == currentUserId).ToList().First().Id;
+        IList<Chat> chatsChildCurrentUser = _context.Chat.Where(p => p.Users.All(p => p.UserId == kidCurrentUserId)).ToList();
+        ViewData["ChatsLijst"] = chatsChildCurrentUser;
+        return View(await _context.Users.Where(p => p.ParentId == currentUserId).ToListAsync());
     }
     public ActionResult NotAuthorized(){
         return View();

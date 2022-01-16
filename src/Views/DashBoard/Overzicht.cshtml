@@ -1,3 +1,58 @@
+@model IEnumerable<srcUser>
 
-<h1>Overzicht</h1>
-<p>Welkom bij de overzichtspagina van uw kind</p>
+<div id="dashboardoverzicht">
+    <h1>Overzicht</h1>
+    <p>Welkom bij de overzichtspagina van uw kind</p>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    <p>Neemt deel aan chatgroepen</p>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <p>Naam chatgroep</p>
+                                    </th>
+                                    <th>
+                                        <p>Aantal verstuurd chats</p>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var chat in ViewData["ChatsLijst"] as IList<Chat>)
+                                {
+                                    <td>
+                                        @chat.Naam
+                                    </td>
+                                    <td>
+                                        @chat.Messages.Count()
+                                    </td>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
