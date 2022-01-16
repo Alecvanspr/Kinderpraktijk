@@ -68,7 +68,7 @@ namespace tests
         //BIj deze test wordt getest het aantal correcte chats opgehaald worden
         //Als het filteren en sorteren getest moet worden moeten daar ook performance testen bij gemaakt worden
         [Theory]
-        [InlineData("User1",1)]
+        [InlineData("User1",2)]
         [InlineData("User2",2)]
         [InlineData("User3",2)]
         [InlineData("User4",0)]
