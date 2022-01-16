@@ -2,13 +2,16 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreateRoom">
-            <label asp-for="Naam">De naam van de groep
-                <input asp-for="Naam" type="text" minlength="5" maxlength="25"/>
-            </label>
-
-            <label asp-for="Beschrijving">Geef een beschrijving van de groep
-                <input asp-for="Beschrijving" type="text" minlength="25" maxlength="250"/>
-            </label>
+            <div>
+                @Html.LabelFor(model => model.Naam, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(model => model.Naam, new { @class = "form-control", placeholder = "Naam van de groep", required = "required", pattern = @"^([a-zA-Z0-9]+)$"  })
+                @Html.ValidationMessageFor(model => model.Naam, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Beschrijving, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(model => model.Beschrijving, new { @class = "form-control", placeholder = "Geef een beschrijving van de groep", required = "required", pattern = @"^([a-zA-Z0-9]+)$"  })
+                @Html.ValidationMessageFor(model => model.Beschrijving, "", new { @class = "text-danger" })
+            </div>
             <label asp-for="Onderwerp">Selecteer een Onderwerp
                 <select asp-for="Onderwerp" type="text">
                     <option value="School">School</option>
