@@ -208,7 +208,7 @@ public class DashboardController : Controller{
     {
         string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
         string kidCurrentUserId = _context.Users.Where(p => p.ParentId == currentUserId).ToList().First().Id;
-        IList<Chat> chatsChildCurrentUser = _context.Chat.Where(p => p.Users.All(p => p.UserId == kidCurrentUserId)).ToList();
+        IList<Chat> chatsChildCurrentUser = _context.Chat.Include(p => p.Messages).Where(p => p.Users.All(p => p.UserId == kidCurrentUserId)).ToList();
         ViewData["ChatsLijst"] = chatsChildCurrentUser;
         return View(await _context.Users.Where(p => p.ParentId == currentUserId).ToListAsync());
     }
