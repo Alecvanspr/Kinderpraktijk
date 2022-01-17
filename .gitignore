@@ -366,3 +366,4 @@ FodyWeavers.xsd
 bin
 obj
 config
+database.db
