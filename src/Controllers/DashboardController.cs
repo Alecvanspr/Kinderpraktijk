@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 [Authorize]
 public class DashboardController : Controller{
     private MijnContext _context;
+    private static bool success = false;
+    private static string message;
     public DashboardController(MijnContext context){
         //Deze moet achteraf ook aangepast worden door de database die we van plan zijn
         //te gebruiken
@@ -28,6 +30,11 @@ public class DashboardController : Controller{
 
         //Onderstaande viewdata is voor het weergeven van de button
         ViewData["HeeftPriveChat"] = heeftPriveChat();
+        
+        ViewData["Success"] = success;
+        ViewData["SuccessMessage"] = message;
+        success = false;
+        message = "";
 
         //met deze method haal het Id van de current User op
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -54,6 +61,7 @@ public class DashboardController : Controller{
         //Hier wordt die lijst terug geven aan de mensen
         return View(LijstMetOnderwerp.ToList());
     }
+
     //Deze is voor de chat zelf. Hiermee kan je alle berichten zien
     [HttpGet]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
@@ -81,9 +89,10 @@ public class DashboardController : Controller{
             Role = UserRole.Admin,
             ChatId = chat.Id
             });
-                
             _context.Chat.Add(chat);
             await _context.SaveChangesAsync();
+            success = true;
+            message = "De groep is successvol aangemaakt";
             return RedirectToAction("Index");
         }else{
             Console.WriteLine("modelstate is niet valid");
@@ -93,11 +102,12 @@ public class DashboardController : Controller{
     //Deze methode laat de gegevens van de huidige chat zien
     //Dit is een get Als een user hier geen toegang tot heeft wordt hij ook geweigerd
     [HttpGet]
-    [Authorize(Roles = "Moderator,Pedagoog,Admin")]
+    [Authorize(Roles = "Moderator,Pedagoog,Admin,Client")]
     public IActionResult Details(int chatId){
         //Misschien voor de zekerheid een check hier doen
         if(UserIsIn(chatId)){
             ViewData["Users"] =  _context.Chat.Where(x=>x.Id==chatId).Include(x=>x.Users).Single().Users.Count();
+            ViewData["IsPedagoog"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
             return View(_context.Chat.Where(x=>x.Id==chatId).Single());
         }
         return RedirectToAction("NotAuthorized");
@@ -126,6 +136,8 @@ public class DashboardController : Controller{
                 }
                 _context.Chat.Remove(chat);
                 _context.SaveChanges();
+                success = true;
+                message = "De groep is successvol verwijderd";
                 return RedirectToAction("Index");
             }else{
                 return RedirectToAction("DeleteRoom",new{Id= chat.Id , error=true});
@@ -133,14 +145,26 @@ public class DashboardController : Controller{
         }
         return RedirectToAction("NotAuthorized");
     }
+    [HttpGet]
+    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+    public IActionResult RemoveRoomFromList(int Id,bool error){
+        if(UserIsIn(Id)){
+            ViewData["Gelukt"] = error;
+            return View(_context.Chat.Where(x=>x.Id==Id).Single());
+            }
+        return RedirectToAction("NotAuthorized");
+    }
     //Remove room from list
     //Als je een owner bent van de 
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
-    public IActionResult RemoveRoomFromList(int chatId){
-        if(UserIsIn(chatId)){
+    public IActionResult RemoveRoomFromList(string ChatRoomName, int ChatRoomId){
+        if(UserIsIn(ChatRoomId)){
+            if(_context.Chat.Where(x=>x.Id==ChatRoomId).Single().Naam!=ChatRoomName){
+                return RedirectToAction("RemoveRoomFromList", new{Id=ChatRoomId,error=true});
+            }
             var userid =User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var ChatUser = _context.ChatUsers.Where(x=>x.ChatId==chatId).Where(x=>x.UserId==userid).Single();
+            var ChatUser = _context.ChatUsers.Where(x=>x.ChatId==ChatRoomId).Where(x=>x.UserId==userid).Single();
             _context.ChatUsers.Remove(ChatUser);
             _context.SaveChanges();
         }
@@ -164,6 +188,8 @@ public class DashboardController : Controller{
             chat.Beschrijving = beschrijving;
             _context.Chat.Update(chat);
             _context.SaveChanges();
+            success = true;
+            message= "De groep is successvol bewerkt";
             return RedirectToAction("Details",new{chatId=Id});
         }
         return RedirectToAction("NotAuthorized");

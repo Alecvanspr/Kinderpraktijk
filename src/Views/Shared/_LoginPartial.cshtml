@@ -3,25 +3,61 @@
 @inject SignInManager<srcUser> SignInManager
 @inject UserManager<srcUser> UserManager
 
-<ul class="navbar-nav">
+    <div class="d-flex">
     @if (SignInManager.IsSignedIn(User))
     {
-        <div class="dropdown pl-1 pr-1">
-            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Hello @User.Identity?.Name!
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Profiel">Mijn Profiel</a></li>
                 <li><a class="dropdown-item" href="/Dashboard">Chat</a></li>
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/ViewSpecialist">Overzicht Specialisten</a></li>
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Specialist">Mijn Specialist</a></li>
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/AddSpecialist">Specialist Aanmelden</a></li>
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Manage Gegevens</a></li>
+            </ul>
+            </div>
+        }
+        else if(User.IsInRole("Client"))
+        {
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Hello @User.Identity?.Name!
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Profiel">Mijn Profiel</a></li>
+                <li><a class="dropdown-item" href="/Dashboard">Chat</a></li>
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/ViewSpecialist">Overzicht Specialisten</a></li>
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Specialist">Mijn Specialist</a></li>
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Manage Gegevens</a></li>
+            </ul>
+            </div>
+        }
+        else
+        {
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Hello @User.Identity?.Name!
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Profiel">Mijn Profiel</a></li>
+                <li><a class="dropdown-item" href="/Dashboard">Chat</a></li>
+                <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/ViewSpecialist">Overzicht Specialisten</a></li>
                 <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Specialist">Mijn Specialist</a></li>
                 <li><a class="dropdown-item" asp-area="Profile" asp-page="/Tabs/Aanmelden">Kind Aanmelden</a></li>
                 <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Manage Gegevens</a></li>
             </ul>
-        </div>
-
+            </div>
+        }
+        <div class="pl-2">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button id="logout" type="submit" class="btn btn-outline-light">Logout</button>
         </form>
+        </div>
     }
     else
     {
@@ -29,4 +65,4 @@
             <button class="btn btn-dark my-2 my-sm-0" type="submit"><i class="bi bi-person-circle"></i> Mijn ZMDH</button>
         </a>
     }
-</ul>
+    </div>
