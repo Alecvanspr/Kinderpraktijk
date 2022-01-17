@@ -366,3 +366,5 @@ FodyWeavers.xsd
 bin
 obj
 config
+/src/Database.db-shm
+/src/Database.db-wal
