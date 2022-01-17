@@ -10,7 +10,7 @@
     <label for="PedagoogId">Uw connectieCode is:</label>
     <input id="PedagoogId" type="text" value="@Model.pedagoog.Id" readonly>
     }else if(Model.heeftPedagoog){
-    <h2>De gegevens van de pedagoog</h2>
+    <h2 class="pb-2">De gegevens van de pedagoog</h2>
     @if(Model.getSuccessvol()){
         <div class="alert alert-success" role="alert">
         De pedagoog is successvol toegevoegd!
@@ -30,14 +30,6 @@
             </dt>
             <dd class = "col-sm-6">
                 @Html.DisplayFor(model => model.pedagoog.Email)
-            </dd>
-        </dl>
-        <dl class="row">
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.pedagoog.PhoneNumber)
-            </dt>
-            <dd class = "col-sm-6">
-                @Html.DisplayFor(model => model.pedagoog.PhoneNumber)
             </dd>
         </dl>
 }else{

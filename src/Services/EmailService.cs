@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNet.Identity;
-using MiNET.Blocks;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Configuration;
