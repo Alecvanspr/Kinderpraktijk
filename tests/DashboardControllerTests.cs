@@ -253,17 +253,17 @@ namespace tests
         }
         //leave room test\\
         [Theory]
-        [InlineData("User1",1)]
-        [InlineData("User2",1)]
-        [InlineData("User2",2)]
-        public void TestLeaveRoom(string userId, int chatId){
+        [InlineData("User1",1,"Chat1")]
+        [InlineData("User2",1,"Chat1")]
+        [InlineData("User2",2,"Chat2")]
+        public void TestLeaveRoom(string userId, int chatId, string ChatRoomName){
             //arrange
             MijnContext context = GetDatabase();
             DashboardController controller = getController(context,"Pedagoog",userId);
             var User = context.Users.Where(x=>x.Id==userId).Single();
 
             //Act
-            var result = controller.RemoveRoomFromList(chatId);
+            var result = controller.RemoveRoomFromList(ChatRoomName,chatId);
 
             //Assert
             ViewResult viewResult = result as ViewResult;
@@ -280,13 +280,14 @@ namespace tests
             //arrange
             var userId = "User1";
             var chatId = 2;
+            var ChatRoomName = "RoomId";
             MijnContext context = GetDatabase();
             DashboardController controller = getController(context,"Pedagoog",userId);
             var User = context.Users.Where(x=>x.Id==userId).Single();
             var expectedUsers = context.ChatUsers.Where(x=>x.ChatId==chatId).Count();
             //Act
             //de user zit niet in de chat 2
-            var result = controller.RemoveRoomFromList(chatId);
+            var result = controller.RemoveRoomFromList(ChatRoomName,chatId);
 
             //Assert
             ViewResult viewResult = result as ViewResult;

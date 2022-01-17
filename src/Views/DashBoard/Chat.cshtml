@@ -55,7 +55,6 @@
 
         //In de methode hieronder wordt bij het ontvangen van een bericht het bericht toegevoegd aan de html
     connection.on("ReceiveMessage", (data) => {
-        console.log("time "+data.timestamp); //Deze klopt
         var message = messageBuilder() //Hier werkt de methode niet meer
             .createMessage()
             .withHeader(data.naam)

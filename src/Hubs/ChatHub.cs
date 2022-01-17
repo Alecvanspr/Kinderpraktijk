@@ -7,8 +7,6 @@ public class ChatHub : Hub
     //Deze methode send een message 
         public async Task SendMessage(string user, string message, string roomId)
         {
-            Console.WriteLine(message); //deze wordt niet gevonden
-            Console.WriteLine(user);
             await Clients.Group(roomId).SendAsync("ReceiveMessage", user, message);
             //await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
