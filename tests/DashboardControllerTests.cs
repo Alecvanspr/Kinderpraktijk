@@ -269,13 +269,12 @@ namespace tests
         }
         //leave room test\\
         [Theory]
-        [InlineData("User1", 1)]
-        [InlineData("User2", 1)]
-        [InlineData("User2", 2)]
-        public void TestLeaveRoom(string userId, int chatId)
+        [InlineData("User1", 1,"Chat1")]
+        [InlineData("User2", 1,"Chat1")]
+        [InlineData("User2", 2,"Chat2")]
+        public void TestLeaveRoom(string userId, int chatId,string ChatRoomName)
         {
             //arrange
-            var ChatRoomName = "";
             MijnContext context = GetDatabase();
             DashboardController controller = getController(context,Pedagoog,userId);
             var User = context.Users.Where(x=>x.Id==userId).Single();
