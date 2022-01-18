@@ -368,3 +368,6 @@ obj
 config
 /src/Database.db-shm
 /src/Database.db-wal
+
+/src/src.sln
+/tests/tests.sln
