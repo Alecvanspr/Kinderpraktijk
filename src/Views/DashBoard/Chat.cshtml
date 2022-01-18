@@ -3,12 +3,10 @@
     ViewData["Title"] = @Model.Naam;
 }
     <div>
-    @if((bool)ViewData["IsModerator"]){
         <form asp-controller="Dashboard" asp-action="Details" method="get">
             <input type="hidden" value="@Model.Id" name="ChatId">
             <input type="Submit" value="Details">
         </form>
-    }
         <div id="status" class="offline">
             <a id="statusText">offline</a>
         </div>
@@ -35,7 +33,7 @@
     <form onsubmit="sendMessage(event)" asp-controller="Chat" asp-action="CreateMessage" method="post">
         <input type="hidden" name="chatId" value="@Model.Id">
         <input type="hidden" name="roomName" value="@Model.Naam">
-        <input class="form-control form-control-lg" id="MessageField" type="text" name="Message">
+        <input class="form-control form-control-lg" id="MessageField" type="text" name="Message" pattern="^([a-zA-Z0-9_ ?!]+)$">
         <input class="btn btn-primary" type="submit"/>
     </form>
 </div>
@@ -57,7 +55,6 @@
 
         //In de methode hieronder wordt bij het ontvangen van een bericht het bericht toegevoegd aan de html
     connection.on("ReceiveMessage", (data) => {
-        console.log("time "+data.timestamp); //Deze klopt
         var message = messageBuilder() //Hier werkt de methode niet meer
             .createMessage()
             .withHeader(data.naam)

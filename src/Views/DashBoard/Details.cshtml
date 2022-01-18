@@ -1,14 +1,20 @@
 @model Chat
 
 <h1>Informatie over de chat</h1>
-<div>
+<div class="row">
+    @if((bool)ViewData["IsPedagoog"]){
     <form asp-action="Edit" method="get">
         <input type="hidden" name="Id" value="@Model.Id">
-        <input class="btn btn-primary" type="Submit" value="Edit">
+        <input class="btn btn-primary" type="Submit" value="Edit" aria-label="Bewerk de gegevens van de groep">
     </form>
     <form asp-action="DeleteRoom" method="get">
         <input type="hidden" name="Id" value="@Model.Id">
-        <input class="btn btn-primary" type="Submit" value="Delete">
+        <input class="btn btn-danger" type="Submit" value="Delete" aria-label="Verwijder de groep">
+    </form>
+    }
+    <form asp-action="RemoveRoomFromList" method="get">
+        <input type="hidden" name="Id" value="@Model.Id">
+        <input class="btn btn-danger" type="Submit" value="Verlaat groep">
     </form>
 </div>
 

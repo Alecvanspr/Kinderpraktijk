@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
 namespace src.Areas.Profile.ViewModels
@@ -21,5 +23,7 @@ namespace src.Areas.Profile.ViewModels
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Telefoonnummer")]
         public string PhoneNumber { get; set; }
+        public string Specialism { get; set; }
+        public string Description { get; set; }
     }
 }

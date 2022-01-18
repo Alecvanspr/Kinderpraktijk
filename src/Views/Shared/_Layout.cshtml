@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,19 +11,19 @@
 <body>
     <header>
         <div class="d-flex justify-content-center">
-            <img class="align-content-center" src="~/img/logo zmdh.png" alt="Logo">
+            <img class="align-content-center img-fluid" src="~/img/logo.jpg" alt="Logo">
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #007a78">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation" alt="Menu">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <div class="collapse navbar-collapse pr" id="navbarTogglerDemo03">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
-                    <li class="nav-item active">
                         <a class="nav-link text-white font-weight-bold" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item active topnav">
                     <li class="nav-item">
                         <a class="nav-link text-white font-weight-bold" href="/Problemen">Problemen</a>
                     </li>
@@ -36,15 +36,14 @@
                     <li class="nav-item">
                         <a class="nav-link text-white font-weight-bold" href="/Contact">Contact</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white font-weight-bold" asp-controller="Dashboard" asp-action="Index">Chat</a>
-                    </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
+
+                <form class="form-inline my-2 my-lg-0 pr-2">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="bi bi-search"></i> Search</button>
                 </form>
                 <partial name="_LoginPartial" />
+
             </div>
 
         </nav>
@@ -71,13 +70,13 @@
         <div class="container">
             <div class="d-flex justify-content-between text-white">
                 <div>
-                    &copy; 2021 - Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+                    &copy; 2021 - ZMDH - <a style="color:white;" asp-area="" asp-page="/Privacy">Privacy</a>
                 </div>
                 <div>
                     <ul class="justify-content-around list-unstyled d-flex">
-                        <li class="ms-3 p-2"><a class="text-muted" style=" fill: white;" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter" /></svg></a></li>
-                        <li class="ms-3 p-2"><a class="text-muted" style=" fill: white;" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram" /></svg></a></li>
-                        <li class="ms-3 p-2"><a class="text-muted" style=" fill: white;" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook" /></svg></a></li>
+                        <li class="ms-3 p-2"><a class="text-muted" style=" fill: white;" href="#"><svg class="bi" width="24" height="24"><use aria-label="link twitter" xlink:href="#twitter" /></svg></a></li>
+                        <li class="ms-3 p-2"><a class="text-muted" style=" fill: white;" href="#"><svg class="bi" width="24" height="24"><use aria-label="link instagram" xlink:href="#instagram" /></svg></a></li>
+                        <li class="ms-3 p-2"><a class="text-muted" style=" fill: white;" href="#"><svg class="bi" width="24" height="24"><use aria-label="link facebook" xlink:href="#facebook" /></svg></a></li>
                     </ul>
                 </div>
             </div>
@@ -85,8 +84,13 @@
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
