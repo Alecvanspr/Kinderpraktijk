@@ -8,7 +8,7 @@ namespace src.Areas.Profile.Pages.Tabs
         public IActionResult OnGet()
         {
             return RedirectToPage("/Account/Manage/Index", new { Area = "Identity" });
-            return RedirectToPage("/Tabs/Specialist", new { Area = "Profile" });
+            //return RedirectToPage("/Tabs/Specialist", new { Area = "Profile" });
         }
     }
 }
