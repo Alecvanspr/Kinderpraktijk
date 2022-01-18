@@ -104,9 +104,6 @@ namespace tests
         ViewResult viewResult = result as ViewResult;
         var model = Assert.IsAssignableFrom<List<Chat>>(viewResult.ViewData.Model);
 
-            ViewResult viewResult = result as ViewResult;
-            var model = Assert.IsAssignableFrom<List<Chat>>(viewResult.ViewData.Model);
-
             Assert.Equal(model.First().Naam, "Chat1");
         }
 
