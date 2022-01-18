@@ -21,11 +21,13 @@ namespace src.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<srcUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly GooglereCAPTCHAService _GoogleReCHAPTCHAService;
 
-        public LoginModel(SignInManager<srcUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<srcUser> signInManager, ILogger<LoginModel> logger,GooglereCAPTCHAService googlereCAPTCHAService)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _GoogleReCHAPTCHAService = googlereCAPTCHAService;
         }
 
         /// <summary>
@@ -82,6 +84,7 @@ namespace src.Areas.Identity.Pages.Account
             /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+            public string Token{get;set;}
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -106,6 +109,15 @@ namespace src.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            
+            //Google ReCAPTCHA
+            var _GoogleReCHAPTCHA= _GoogleReCHAPTCHAService.VertifyResponse(Input.Token);
+
+            //Hier wordt gekeken of het resultaat is gelukt. en of de score van de ReCAPTCHA boven de 0.5 is.
+            if(!_GoogleReCHAPTCHA.Result.success && _GoogleReCHAPTCHA.Result.score<=0.5){
+                    ModelState.AddModelError(string.Empty, "ReCAPTCHA gefaald, probeer opnieuw.");
+                    return Page();
+            }
 
             if (ModelState.IsValid)
             {
