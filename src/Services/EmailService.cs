@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
+﻿/*using Microsoft.AspNet.Identity;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Configuration;
@@ -39,4 +39,4 @@ namespace src.Services
             }
         }
     }
-}
+}*/

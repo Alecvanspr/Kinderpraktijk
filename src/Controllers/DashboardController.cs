@@ -19,7 +19,11 @@ public class DashboardController : Controller{
         _context = context;
     }
     //Getest
-    public IActionResult Index(string Onderwerp){
+    public IActionResult Index(string Onderwerp, string Leeftijdscategorie){
+        if(Onderwerp != null)
+        ViewData["Onderwerp"] = Onderwerp;
+        if(Leeftijdscategorie != null)
+        ViewData["Leeftijdscategorie"] = Leeftijdscategorie;
         if(User.IsInRole("Ouder"))
         {
             return RedirectToAction("Overzicht");
@@ -38,28 +42,41 @@ public class DashboardController : Controller{
 
         //met deze method haal het Id van de current User op
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //Hier wordt het zoekfilter van onderwerp en leeftijdscategorie toegevoegd
+        IQueryable<Chat> lijst;
+        IQueryable<ChatUser> lijst2;
         if(Onderwerp == null || Onderwerp == ""){
-        return View(_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Select(x=>x.chat).ToList());
+        lijst2 = (_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser));
         }
         else{
-            return View(_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Where(x => x.chat.Onderwerp == Onderwerp).Select(x=>x.chat).Where(x=>x.type==ChatType.Room).ToList());
+        lijst2 = _context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Where(x => x.chat.Onderwerp == Onderwerp);
         }
+        if(Leeftijdscategorie == null || Leeftijdscategorie == ""){
+            lijst = lijst2.Select(x => x.chat);
+        }
+        else{
+            lijst = lijst2.Where(x => x.chat.Leeftijdscategorie == Leeftijdscategorie).Select(x => x.chat);
+        }
+
+        return View(lijst.ToList());
     }
     //Dit is voor het verkrijgen van de view voor het toevoegen van de model
     [HttpGet]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
-    public IActionResult GroepToevoegen(string Naam, string Beschrijving, string Onderwerp){
+    public IActionResult GroepToevoegen(string Naam, string Beschrijving, string Onderwerp, string Leeftijdscategorie){
         //Hieronder wordt een lijst van alle chats naarvoren gehaald die publiek zijn
         if(Naam == null) Naam = "";
         if(Beschrijving == null) Beschrijving = "";
         if(Onderwerp == null) Onderwerp = "";
+        if(Leeftijdscategorie == null) Leeftijdscategorie = "";
         var GroepenLijst = _context.Chat.Where(x=>x.type==ChatType.Room);
         //Hier worden de 3 sorteercriteria toegepast
         var LijstMetNaam = GroepenLijst.Where(x => x.Naam.Contains(Naam));
         var LijstMetBeschrijving = LijstMetNaam.Where(x => x.Beschrijving.Contains(Beschrijving));
         var LijstMetOnderwerp = LijstMetBeschrijving.Where(x => x.Onderwerp.Contains(Onderwerp));
+        var LijstMetLeeftijd = LijstMetOnderwerp.Where(x => x.Leeftijdscategorie.Contains(Leeftijdscategorie));
         //Hier wordt die lijst terug geven aan de mensen
-        return View(LijstMetOnderwerp.ToList());
+        return View(LijstMetLeeftijd.ToList());
     }
 
     //Deze is voor de chat zelf. Hiermee kan je alle berichten zien
@@ -80,7 +97,7 @@ public class DashboardController : Controller{
     //Deze methode is voor het aanmaken van een Chatroom
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog")]
-    public async Task<IActionResult> CreateRoom([Bind("Naam","Beschrijving","Onderwerp")]Chat chat){
+    public async Task<IActionResult> CreateRoom([Bind("Naam","Beschrijving","Onderwerp","Leeftijdscategorie")]Chat chat){
         if(ModelState.IsValid){
             chat.type = ChatType.Room;
             chat.Users = new List<ChatUser>();

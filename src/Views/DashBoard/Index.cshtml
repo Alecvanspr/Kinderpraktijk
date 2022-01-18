@@ -27,7 +27,7 @@
             }
         </div>
         </div>
-        <h3>Sorteerd Categorieën</h3>
+        <h3>Sorteerd Categorieï¿½n</h3>
         <div class="row">
             <div class="mx-auto">
             <a class="main-knop btn btn-primary" asp-action="Index" asp-route-Onderwerp ="School" aria-label="Sorteren op school">School</a>
@@ -37,6 +37,15 @@
             <a class="main-knop btn btn-warning" asp-action="Index" asp-route-Onderwerp ="ADHD" aria-label="Sorteren op ADHD">ADHD</a>
             <a class="main-knop btn btn-info" asp-action="Index" asp-route-Onderwerp ="Traumas" aria-label="Sorteren op traumas">Traumas</a>
             <a class="main-knop btn btn-dark" asp-action="Index" asp-route-Onderwerp ="Autisme" aria-label="Sorteren op autisme">Autisme</a>
+            </div>
+        </div>
+        <h3>Leeftijdscategorie</h3>
+        <div class="row">
+            <div class="mx-auto">
+                <a class="main-knop btn btn-primary" asp-action="Index" asp-route-Leeftijdscategorie = "-14" aria-label="Chats voor gebruikers jonger dan 14">14 jaar of jonger</a>
+                <a class="main-knop btn btn-primary" asp-action="Index" asp-route-Leeftijdscategorie = "14-17" aria-label="Chats voor gebruikers tussen de 14 en 17 jaar">14 tot 17 jaar</a>
+                <a class="main-knop btn btn-primary" asp-action="Index" asp-route-Leeftijdscategorie = "18-21" aria-label="Chats voor gebruikers tussen de 18 en 21 jaar">18 tot 21 jaar</a>
+                <a class="main-knop btn btn-primary" asp-action="Index" asp-route-Leeftijdscategorie = "21+" aria-label="Chats voor gebruikers ouder dan 21 jaar">Ouder dan 21 jaar</a>
             </div>
         </div>
 

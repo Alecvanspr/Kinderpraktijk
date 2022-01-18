@@ -36,6 +36,15 @@
                         <option value="Autisme">Autisme</option>
                     </select>
                 </label>
+                <label asp-for="Leeftijdscategorie">
+                    Selecteer een leeftijdscategorie
+                    <select asp-for="Leeftijdscategorie" type="text">
+                        <option value="-14">14 jaar of jonger</option>
+                        <option value="14-17">14 tot 17 jaar</option>
+                        <option value="18-21">18 tot 21 jaar</option>
+                        <option value="21+">21 jaar of ouder</option>
+                    </select>
+                </label>
                 <br/>
                 <input class="btn btn-success" type="submit" value="maak nieuwe groep aan">
             </form>
