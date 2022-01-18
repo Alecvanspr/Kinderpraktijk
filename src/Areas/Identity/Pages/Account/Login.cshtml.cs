@@ -116,10 +116,7 @@ namespace src.Areas.Identity.Pages.Account
             //Hier wordt gekeken of het resultaat is gelukt. en of de score van de ReCAPTCHA boven de 0.5 is.
             if(!_GoogleReCHAPTCHA.Result.success && _GoogleReCHAPTCHA.Result.score>=0.5){
                     ModelState.AddModelError(string.Empty, "ReCAPTCHA gefaald, probeer opnieuw.");
-                    return Page();
-            }
-
-            if (ModelState.IsValid)
+            } else if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
