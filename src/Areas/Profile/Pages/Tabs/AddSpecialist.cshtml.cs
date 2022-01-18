@@ -134,15 +134,7 @@ namespace src.Areas.Profile.Pages.Tabs
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                //var user = CreateUser();
-                var user = new srcUser
-                {
-                    FirstName = Input.FirstName,
-                    LastName = Input.LastName,
-                    Age = Input.Age,
-                    Specialism = Input.Specialism,
-                    Description = Input.Description
-                };
+                var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -197,11 +189,18 @@ namespace src.Areas.Profile.Pages.Tabs
             return await _userManager.IsInRoleAsync(user, "Pedagoog");
         }
 
-        private srcUser CreateUser()
+        public  srcUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<srcUser>();
+                return new srcUser
+                {
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Age = Input.Age,
+                    Specialism = Input.Specialism,
+                    Description = Input.Description
+                };
             }
             catch
             {

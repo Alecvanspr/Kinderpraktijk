@@ -37,13 +37,20 @@ namespace tests
             };
             return controller;
         }
+        //Hieronder staan strings die worden gebruikt als roletoekenning.
+        //Als er een role in naam veranderd kan het op deze manier makkelijker ontdekt worden
+        private string Ouder = "Ouder";
+        private string Client = "Client";
+        private string Pedagoog = "Pedagoog";
+        private string Moderator = "Moderator";
+
         //Index Tests\\
         //Met deze test, test ik of als je de role hebt van ouder dat deze dan geridirect wordt naar de overzichtspagina
         [Fact]
         public void IndexOuderTest()
         {
             //arrange
-            DashboardController controller = getController(GetDatabase(), "Ouder", "User1");
+            DashboardController controller = getController(GetDatabase(),Ouder,"User1");
             var index = controller.Index("");
             //act
             var IndexActionResult = Assert.IsType<RedirectToActionResult>(index);
@@ -71,13 +78,12 @@ namespace tests
         //BIj deze test wordt getest het aantal correcte chats opgehaald worden
         //Als het filteren en sorteren getest moet worden moeten daar ook performance testen bij gemaakt worden
         [Theory]
-        [InlineData("User1", 2)]
-        [InlineData("User2", 2)]
-        [InlineData("User3", 2)]
-        [InlineData("User4", 0)]
-        public void TestIndexChatList(string user, int ChatAmount)
-        {
-            DashboardController controller = getController(GetDatabase(), "Pedagoog", user);
+        [InlineData("User1",2)]
+        [InlineData("User2",2)]
+        [InlineData("User3",2)]
+        [InlineData("User4",0)]
+        public void TestIndexChatList(string user, int ChatAmount){ 
+        DashboardController controller = getController(GetDatabase(),Pedagoog,user);
 
             var result = controller.Index("");
 
@@ -90,11 +96,13 @@ namespace tests
 
         //In onderstaande tests wordt gekeken of de gegevens uit de chat toeghangelijk zijn
         [Fact]
-        public void TestInhoudTest()
-        {
-            DashboardController controller = getController(GetDatabase(), "Pedagoog", "User1");
-            var result = controller.Index("");
-            //var IndexActionResult =Assert.IsType<IActionResult>(result);
+        public void TestInhoudTest(){
+        DashboardController controller = getController(GetDatabase(),Pedagoog,"User1");
+        var result = controller.Index("");
+        //var IndexActionResult =Assert.IsType<IActionResult>(result);
+            
+        ViewResult viewResult = result as ViewResult;
+        var model = Assert.IsAssignableFrom<List<Chat>>(viewResult.ViewData.Model);
 
             ViewResult viewResult = result as ViewResult;
             var model = Assert.IsAssignableFrom<List<Chat>>(viewResult.ViewData.Model);
@@ -105,14 +113,13 @@ namespace tests
         //Chat tests\\
         //In deze test testen wij of de juiste chat wordt meegegeven
         [Theory]
-        [InlineData("User1", 1, "Chat1")]
-        [InlineData("User2", 1, "Chat1")]
-        [InlineData("User2", 2, "Chat2")]
-        [InlineData("User3", 1, "Chat1")]
-        [InlineData("User3", 2, "Chat2")]
-        public void TestChat1(string user, int ChatId, string expectedChatName)
-        {
-            DashboardController controller = getController(GetDatabase(), "Pedagoog", user);
+        [InlineData("User1",1,"Chat1")]
+        [InlineData("User2",1,"Chat1")]
+        [InlineData("User2",2,"Chat2")]
+        [InlineData("User3",1,"Chat1")]
+        [InlineData("User3",2,"Chat2")]
+        public void TestChat1(string user,int ChatId,string expectedChatName){
+            DashboardController controller = getController(GetDatabase(),Pedagoog,user);
             var result = controller.Chat(ChatId);
 
             ViewResult viewResult = result as ViewResult;
@@ -121,9 +128,8 @@ namespace tests
         }
         //Hier testen wij of de user wordt geredirect wordt naar de juiste pagina
         [Fact]
-        public void TestChat2()
-        {
-            DashboardController controller = getController(GetDatabase(), "Client", "User1");
+        public void TestChat2(){
+            DashboardController controller = getController(GetDatabase(),Client,"User1");
             var result = controller.Chat(2);
             var ChatRedirect = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Index", ChatRedirect.ActionName);
@@ -137,8 +143,8 @@ namespace tests
             //Arrange
             var userId = "User1";
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
             string expectedChatName = "TestChat";
             string expectedChatBeschrijving = "Deze chat is om te testen of de chat het goed doet";
             //Act
@@ -161,8 +167,8 @@ namespace tests
         public void TestDetails(string userId, int Chat, string expectedChatName)
         {
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
 
             //Act
             var result = controller.Details(Chat);
@@ -181,8 +187,8 @@ namespace tests
             //arrange
             var userId = "User1";
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
 
             //Act
             //de user zit niet in de chat 2
@@ -203,8 +209,8 @@ namespace tests
         {
             //arrange
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
 
             //Act
             //de user zit niet in de chat 2
@@ -224,8 +230,8 @@ namespace tests
             var userId = "User1";
             var chatId = 2;
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
 
             //Act
             //de user zit niet in de chat 2
@@ -248,8 +254,8 @@ namespace tests
             var userId = "User1";
             var chatId = 1;
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
 
             //Act
             //de user zit niet in de chat 2
@@ -274,8 +280,8 @@ namespace tests
             //arrange
             var ChatRoomName = "";
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
 
             //Act
             var result = controller.RemoveRoomFromList(ChatRoomName, chatId);
@@ -298,9 +304,9 @@ namespace tests
             var chatId = 2;
             var ChatRoomName = "RoomId";
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
-            var expectedUsers = context.ChatUsers.Where(x => x.ChatId == chatId).Count();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+            var expectedUsers = context.ChatUsers.Where(x=>x.ChatId==chatId).Count();
             //Act
             //de user zit niet in de chat 2
             var result = controller.RemoveRoomFromList(ChatRoomName, chatId);
@@ -328,9 +334,9 @@ namespace tests
             var ExpectedChatName = "Veranderde Chat";
             var expectedChatBeschrijving = "Dit is de nieuwe beschrijving voor de nieuwe chat";
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
-            var expectedUsers = context.ChatUsers.Where(x => x.ChatId == chatId).Count();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+            var expectedUsers = context.ChatUsers.Where(x=>x.ChatId==chatId).Count();
             //Act
             var result = controller.Edit(chatId, ExpectedChatName, expectedChatBeschrijving);
             var chat = context.Chat.Where(x => x.Id == chatId).SingleOrDefault();
@@ -352,9 +358,9 @@ namespace tests
             var expectedChatName = "Chat2";
             var expectedChatBeschrijving = "Dit is een chat applicatie";
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", userId);
-            var User = context.Users.Where(x => x.Id == userId).Single();
-            var expectedUsers = context.ChatUsers.Where(x => x.ChatId == chatId).Count();
+            DashboardController controller = getController(context,Pedagoog,userId);
+            var User = context.Users.Where(x=>x.Id==userId).Single();
+            var expectedUsers = context.ChatUsers.Where(x=>x.ChatId==chatId).Count();
 
             //Act
             var result = controller.Edit(chatId, "Een gloednieuwe Chat", "Nieuwe Omschrijving van De Chat");
@@ -375,9 +381,9 @@ namespace tests
         {
             //Arrange
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", user);
-            var User = context.Users.Where(x => x.Id == user).Single();
-
+            DashboardController controller = getController(context,Pedagoog,user);
+            var User = context.Users.Where(x=>x.Id==user).Single();
+            
             //Act
             var result = controller.JoinChat(chatOmTeJoinen);
 
@@ -393,9 +399,9 @@ namespace tests
         {
             //Arrange
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", "User1");
-            var User = context.Users.Where(x => x.Id == "User1").Single();
-
+            DashboardController controller = getController(context,Pedagoog,"User1");
+            var User = context.Users.Where(x=>x.Id=="User1").Single();
+            
             //Act
             var result = controller.JoinChat(1);
 
@@ -420,9 +426,9 @@ namespace tests
         {
             //Arrange
             MijnContext context = GetDatabase();
-            DashboardController controller = getController(context, "Pedagoog", user);
-            var User = context.Users.Where(x => x.Id == user).Single();
-
+            DashboardController controller = getController(context,Pedagoog,user);
+            var User = context.Users.Where(x=>x.Id==user).Single();
+            
             //Act
             var result = controller.UserIsIn(chat);
             //Assert
