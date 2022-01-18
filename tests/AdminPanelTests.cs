@@ -40,6 +40,7 @@ namespace tests
             return new AddSpecialistModel(userManager,GetStore(),null,null,null,context);
         }
         private async Task<bool> returnValue(){
+            await Task.Delay(2);
             return true;
         }
         //met onderstaande methode wordt getest of de Rol correct wordt toegewezen aan de user
