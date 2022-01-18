@@ -42,6 +42,7 @@ namespace tests
         private async Task<bool> returnValue(){
             return true;
         }
+        //met onderstaande methode wordt getest of de Rol correct wordt toegewezen aan de user
         [Fact]
         public async Task TestSetRoleAsync(){
             MijnContext _context = GetDatabase();
@@ -57,6 +58,8 @@ namespace tests
             mockUser.Verify(x=>x.AddToRoleAsync(It.IsAny<srcUser>(),It.IsAny<string>()),Times.Once);
             mockUser.Verify(x=>x.IsInRoleAsync(It.IsAny<srcUser>(),It.IsAny<string>()),Times.Once);
         }
+        //Met onderstaande test wordt getest of een user correct wordt aangemaakt.
+        //Hier me wordt bedoeld dat alle ingevoerde velden kloppen
         [Fact]
         public void TestCreateUser()
         {
