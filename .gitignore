@@ -369,5 +369,5 @@ config
 /src/Database.db-shm
 /src/Database.db-wal
 
-/src/src.sln
+/Kinderpraktijk.sln
 /tests/tests.sln
