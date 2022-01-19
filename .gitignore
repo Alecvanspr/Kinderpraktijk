@@ -366,5 +366,12 @@ FodyWeavers.xsd
 bin
 obj
 config
+/src/Database.db
 /src/Database.db-shm
 /src/Database.db-wal
+
+/Kinderpraktijk.sln
+/tests/tests.sln
+/src/src.proj
+/src/src.proj.user
+/test/tests.csproj

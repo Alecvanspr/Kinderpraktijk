@@ -31,6 +31,7 @@ public class AanmeldenTest{
             return new AanmeldenModel(userManager,GetStore(),null,null,null,context);
         }
         private async Task<bool> returnValue(){
+            await Task.Delay(2);
             return true;
         }
 

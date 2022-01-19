@@ -31,13 +31,15 @@ namespace src.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<srcUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly GooglereCAPTCHAService _GoogleReCHAPTCHAService;
 
         public RegisterModel(
             UserManager<srcUser> userManager,
             IUserStore<srcUser> userStore,
             SignInManager<srcUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            GooglereCAPTCHAService googlereCAPTCHAService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,6 +47,7 @@ namespace src.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _GoogleReCHAPTCHAService = googlereCAPTCHAService;
         }
 
         /// <summary>
@@ -117,6 +120,7 @@ namespace src.Areas.Identity.Pages.Account
             [SixteenAndOlder]
             [Display(Name = "Geboortedatum")]
             public DateTime Age { get; set; }
+            public string Token {get;set;}
         }
 
 
@@ -131,10 +135,15 @@ namespace src.Areas.Identity.Pages.Account
 
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
-            {
-                
+            
+            //Google ReCAPTCHA
+            var _GoogleReCHAPTCHA= _GoogleReCHAPTCHAService.VertifyResponse(Input.Token);
 
+            //Hier wordt gekeken of het resultaat is gelukt. en of de score van de ReCAPTCHA boven de 0.5 is.
+            if(!_GoogleReCHAPTCHA.Result.success && _GoogleReCHAPTCHA.Result.score>=0.5){
+                    ModelState.AddModelError(string.Empty, "ReCAPTCHA gefaald, probeer opnieuw.");
+            }else if (ModelState.IsValid)
+            {
                 var user = new srcUser
                 {
                     FirstName = Input.FirstName,

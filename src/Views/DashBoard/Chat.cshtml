@@ -49,7 +49,7 @@
     //De naam van de Chathub is case sensitive
     //hierbij moet ook de link veranderd worden zodra het kan
     const connection = new signalR.HubConnectionBuilder()
-                                    .withUrl("https://localhost:5001/chathub")
+                                    .withUrl("https://kinderpraktijkhij.azurewebsites.net/chathub")
                                     .configureLogging(signalR.LogLevel.Information)
                                     .build();
 

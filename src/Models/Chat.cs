@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations;
 public class Chat{
     public int Id{get;set;}
     public string Onderwerp{get; set;}
+    
     [Required]
     [MinLength(5)]
     [MaxLength(30)]
-    //[RegularExpression(@"^[a-zA-Z0-9]{1,40}$")]
     public string Naam{get;set;}
+
     [Required]
     [MinLength(5)]
     [MaxLength(250)]
-    //[RegularExpression(@"^[a-zA-Z0-9]{1,40}$")]
     public string Beschrijving{get;set;}
     public ICollection<Message> Messages{get;set;} //Dit zijn de berichten die zijn geplaatst
     public ICollection<ChatUser> Users{get;set;} //Dit zijn de Users voor de app
