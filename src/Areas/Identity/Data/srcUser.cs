@@ -14,10 +14,12 @@ public class srcUser : IdentityUser
     [ForeignKey("srcUser")]
     [Column(TypeName = "nvarchar(450)")]
     public string ParentId { get; set; }
+    public srcUser Parent{get;set;}
 
     [ForeignKey("srcUser")]
     [Column(TypeName = "nvarchar(450)")]
     public string SpecialistId { get; set; }
+    public srcUser Specialist{get;set;}
 
     public bool UserBlocked { get; set; }
 
@@ -41,9 +43,11 @@ public class srcUser : IdentityUser
     [Column(TypeName = "nvarchar(256)")]
     [Display(Name = "Beschrijving")]
     public string Description { get; set; }
-
+    [Display(Name = "Kinderen")]
     public ICollection<srcUser> Childeren { get; set;}
+    [Display(Name = "Patiënten")]
     public ICollection<srcUser> Clients { get; set; }
+    [Display(Name = "Chats")]
     public ICollection<ChatUser> Chats{get;set;}
 }
 

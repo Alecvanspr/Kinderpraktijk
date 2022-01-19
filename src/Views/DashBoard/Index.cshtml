@@ -21,8 +21,11 @@
             @if((bool)ViewData["HeeftPriveChat"]){
             <a class="main-knop btn btn-outline-primary" asp-action="GaNaarPriveChat" aria-label="Ga naar de chat met jouw pedagoog">Chat met pedagoog</a>
             }
-            <button class="main-knop btn btn-outline-primary">Praat annoniem</button>
             }
+            @if(User.IsInRole("Moderator")){
+            <a class="main-knop btn btn-outline-primary" asp-controller="Melding" asp-action="Index" aria-label="Ga naar meldingen overzicht">Melding overzicht</a>
+            }
+            <a class="main-knop btn btn-outline-primary" asp-controller="Melding" asp-action="Create" aria-label="Maak een nieuwe melding">Melding maken</a>
         </div>
         </div>
         <h3>Sorteerd Categorie�n</h3>
