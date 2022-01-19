@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using src.Models;
 
 public class MijnContext : IdentityDbContext<srcUser>{
 
@@ -9,6 +10,7 @@ public class MijnContext : IdentityDbContext<srcUser>{
     public DbSet<Chat> Chat {get;set;}
     public DbSet<Message> Messages {get;set;}
     public DbSet<ChatUser> ChatUsers{get;set;}
+    public DbSet<AanmeldingClient> AanmeldingenClients { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

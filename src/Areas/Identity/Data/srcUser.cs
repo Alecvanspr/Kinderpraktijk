@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using src.Models;
 
 // Add profile data for application users by adding properties to the srcUser class
 public class srcUser : IdentityUser
@@ -45,5 +46,6 @@ public class srcUser : IdentityUser
     public ICollection<srcUser> Childeren { get; set;}
     public ICollection<srcUser> Clients { get; set; }
     public ICollection<ChatUser> Chats{get;set;}
+    public ICollection<AanmeldingClient> AanmeldingenClients { get; set; }
 }
 

@@ -11,6 +11,8 @@ using AutoMapper;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using src.Interfaces;
+using src.Models;
 
 namespace src.Areas.Profile.Pages.Tabs
 {
@@ -30,15 +32,20 @@ namespace src.Areas.Profile.Pages.Tabs
 
         [BindProperty]
         public List<ProfileViewModel> ProfileViewModel { get; set; }
+        public bool checkAanmelding { get; set; }
 
         public void OnGet()
         {
-
             var result = (from s in _context.Users
                           where !String.IsNullOrEmpty(s.Specialism)
                           select s).ToList();
 
             ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(result);
+
+            checkAanmelding = (from l in _context.AanmeldingenClients
+                                   where !String.IsNullOrEmpty(_userManager.GetUserId(User))
+                                   where !String.IsNullOrEmpty(_userManager.GetUserId(User)) && (l.IsAangemeld.Equals(false) && l.IsAfgemeld.Equals(false))
+                                   select l).Any();                              
         }
 
         public async Task<IActionResult> OnPost(string id)
@@ -48,5 +55,16 @@ namespace src.Areas.Profile.Pages.Tabs
             _context.SaveChanges();
             return RedirectToPage("/Tabs/ViewSpecialist", new { Area = "Profile" });
         }
+
+        public async Task<IActionResult> OnPostRegister(string id)
+        {
+            var date = DateTime.Now;
+            AanmeldingClient aanmelding = new AanmeldingClient { Aanmelding = date, ClientId = _userManager.GetUserId(User), srcUserId = id };
+            _context.AanmeldingenClients.Add(aanmelding);
+            _context.SaveChanges();
+            return RedirectToPage("/Tabs/ViewSpecialist", new { Area = "Profile" });
+        }
+
+
     }
 }
