@@ -114,7 +114,7 @@ namespace src.Areas.Identity.Pages.Account
             var _GoogleReCHAPTCHA= _GoogleReCHAPTCHAService.VertifyResponse(Input.Token);
 
             //Hier wordt gekeken of het resultaat is gelukt. en of de score van de ReCAPTCHA boven de 0.5 is.
-            if(!_GoogleReCHAPTCHA.Result.success && _GoogleReCHAPTCHA.Result.score>=0.5){
+            if(!_GoogleReCHAPTCHA.Result.success && _GoogleReCHAPTCHA.Result.score<=0.5){
                     ModelState.AddModelError(string.Empty, "ReCAPTCHA gefaald, probeer opnieuw.");
             }else if (ModelState.IsValid)
             {
