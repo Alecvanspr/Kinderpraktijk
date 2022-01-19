@@ -366,6 +366,7 @@ FodyWeavers.xsd
 bin
 obj
 config
+Migrations
 /src/Database.db-shm
 /src/Database.db-wal
 
