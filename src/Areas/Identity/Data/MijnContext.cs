@@ -10,6 +10,7 @@ public class MijnContext : IdentityDbContext<srcUser>{
     public DbSet<Message> Messages {get;set;}
     public DbSet<ChatUser> ChatUsers{get;set;}
     public DbSet<Melding> Meldingen{get;set;}
+    public DbSet<AanmeldingClient> Aanmeldingen{get;set;}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

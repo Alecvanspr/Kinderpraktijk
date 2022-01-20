@@ -99,8 +99,15 @@ public class MeldingenTest{
             //arrange
             MijnContext _context = GetDatabase();
             MeldingController controller = getController(_context,"Moderator","User1");
+            var expectedCount = _context.Meldingen.Count()-1;
+            var verwijderId = 3;
             //Act
+            var result = controller.Delete(verwijderId);
             //Assert
+            //met onderstaande test testen we of er iets is verwijderd
+            Assert.Equal(expectedCount,_context.Meldingen.Count());
+            //Met onderstaande test testen we of hij niet per ongeluk de verkeerde heeft verwijderd
+            Assert.False(_context.Meldingen.Any(x=>x.Id==verwijderId));
         }
         //Hierbij checken we wat er gebeurt als je het verkeerde ID doorgeeft.
         [Fact]

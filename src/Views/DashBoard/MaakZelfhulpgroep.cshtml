@@ -1,6 +1,5 @@
 @model Chat
-
-<div class="container p-3">
+<div class = "container p-3">
     <div class="row">
         <div class="col-md-6 mx-auto">
             <form asp-action="CreateRoom">
@@ -27,6 +26,8 @@
                         <option value="Autisme">Autisme</option>
                     </select>
                 </label>
+                </tr>
+                <tr>
                 <label asp-for="Leeftijdscategorie">
                     Selecteer een leeftijdscategorie
                     <select asp-for="Leeftijdscategorie" type="text">
@@ -36,6 +37,9 @@
                         <option value="21+">21 jaar of ouder</option>
                     </select>
                 </label>
+                </tr>
+                </tbody>
+        </table>
                 <br/>
                 <input class="btn btn-success" type="submit" value="maak nieuwe groep aan">
             </form>

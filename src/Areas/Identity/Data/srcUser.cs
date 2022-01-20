@@ -16,6 +16,7 @@ public class srcUser : IdentityUser
     public string ParentId { get; set; }
     public srcUser Parent{get;set;}
 
+
     [ForeignKey("srcUser")]
     [Column(TypeName = "nvarchar(450)")]
     public string SpecialistId { get; set; }
@@ -43,11 +44,18 @@ public class srcUser : IdentityUser
     [Column(TypeName = "nvarchar(256)")]
     [Display(Name = "Beschrijving")]
     public string Description { get; set; }
-    [Display(Name = "Kinderen")]
-    public ICollection<srcUser> Childeren { get; set;}
-    [Display(Name = "Patiënten")]
-    public ICollection<srcUser> Clients { get; set; }
-    [Display(Name = "Chats")]
-    public ICollection<ChatUser> Chats{get;set;}
-}
 
+    [Column(TypeName = "nvarchar(450)")]
+    [Display(Name = "IBAN")]
+    public string IBAN { get; set; }
+
+    [Column(TypeName = "nvarchar(450)")]
+    [Display(Name = "BSN")]
+    public string BSN { get; set; }
+
+    public ICollection<srcUser> Childeren { get; set;}
+    public ICollection<srcUser> Clients { get; set; }
+    public ICollection<ChatUser> Chats{get;set;}
+    public ICollection<AanmeldingClient> AanmeldingenClients { get; set; }
+
+}

@@ -18,6 +18,38 @@ namespace src.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("AanmeldingClient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("Aanmelding")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Afmelding")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsAangemeld")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAfgemeld")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("srcUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("srcUserId");
+
+                    b.ToTable("Aanmeldingen");
+                });
+
             modelBuilder.Entity("Chat", b =>
                 {
                     b.Property<int>("Id")
@@ -29,6 +61,9 @@ namespace src.Migrations
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Leeftijdscategorie")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Naam")
                         .IsRequired()
@@ -257,6 +292,9 @@ namespace src.Migrations
                     b.Property<DateTime>("Age")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("BSN")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -273,6 +311,9 @@ namespace src.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("IBAN")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(100)");
@@ -337,6 +378,13 @@ namespace src.Migrations
                     b.HasIndex("SpecialistId");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("AanmeldingClient", b =>
+                {
+                    b.HasOne("srcUser", null)
+                        .WithMany("AanmeldingenClients")
+                        .HasForeignKey("srcUserId");
                 });
 
             modelBuilder.Entity("ChatUser", b =>
@@ -444,6 +492,8 @@ namespace src.Migrations
 
             modelBuilder.Entity("srcUser", b =>
                 {
+                    b.Navigation("AanmeldingenClients");
+
                     b.Navigation("Chats");
 
                     b.Navigation("Childeren");
