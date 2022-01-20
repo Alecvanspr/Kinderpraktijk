@@ -94,32 +94,34 @@ public class MeldingenTest{
             Assert.Equal("Index", CreateRedirect.ActionName);
         }
         //Met deze methode testen we of we een melding kunnen verwijderen
-        /*
         [Fact]
-        public void TestDelete(){
+        public void TestDeleteConfirm(){
             //arrange
             MijnContext _context = GetDatabase();
             MeldingController controller = getController(_context,"Moderator","User1");
             var expectedCount = _context.Meldingen.Count()-1;
             var verwijderId = 3;
             //Act
-            var result = controller.Delete(verwijderId);
+            var result = controller.DeleteConfirmed(verwijderId);
             //Assert
             //met onderstaande test testen we of er iets is verwijderd
             Assert.Equal(expectedCount,_context.Meldingen.Count());
             //Met onderstaande test testen we of hij niet per ongeluk de verkeerde heeft verwijderd
             Assert.False(_context.Meldingen.Any(x=>x.Id==verwijderId));
         }
-        //Hierbij checken we wat er gebeurt als je het verkeerde ID doorgeeft.
-        [Fact]
-        public void TestNietBestaandId(){
-
-        }
         //hiermee testen we of een melding bestaat
-        /*
         [Theory]
-        public void TestMeldingexist(){
-
+        [InlineData(1,true)]
+        [InlineData(3,true)]
+        [InlineData(8,false)]
+        [InlineData(89347,false)]
+        public void TestMeldingexist(int id,bool expected){
+            //arrange
+            MijnContext _context = GetDatabase();
+            MeldingController controller = getController(_context,"Moderator","User1");
+            //act
+            var result = controller.MeldingExists(id);
+            //assert
+            Assert.Equal(expected,result);
+            }
         }
-        */
-}

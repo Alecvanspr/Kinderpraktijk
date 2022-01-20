@@ -102,7 +102,7 @@ namespace src.views_Melding
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MeldingExists(int id)
+        public bool MeldingExists(int id)
         {
             return _context.Meldingen.Any(e => e.Id == id);
         }
