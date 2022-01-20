@@ -108,8 +108,10 @@ public class MeldingenTest{
 
         }
         //hiermee testen we of een melding bestaat
+        /*
         [Theory]
         public void TestMeldingexist(){
 
         }
+        */
 }
