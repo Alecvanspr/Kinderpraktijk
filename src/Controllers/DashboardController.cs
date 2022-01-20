@@ -19,15 +19,17 @@ public class DashboardController : Controller{
         _context = context;
     }
     //Getest
-    public IActionResult Index(string Onderwerp, string Leeftijdscategorie,bool? m){
-        if(Onderwerp != null)
-        ViewData["Onderwerp"] = Onderwerp;
-        if(Leeftijdscategorie != null)
-        ViewData["Leeftijdscategorie"] = Leeftijdscategorie;
+    public IActionResult Index(string onderwerp, string leeftijdscategorie,bool? m){
+        if(onderwerp != null)
+        ViewData["Onderwerp"] = onderwerp;
+        if(leeftijdscategorie != null)
+        ViewData["Leeftijdscategorie"] = leeftijdscategorie;
         if(User.IsInRole("Ouder"))
         {
             return RedirectToAction("Overzicht");
         }
+        //Dit heeft betrekking op het plaatsten van een annonieme melding
+        //Als er een annonieme melding is geplaatst dan geeft deze de melding weer
         ViewData["meldingGeplaatst"] = m==null?false: true;
         //Hier wordt meegegeven of de user een moderator is.
         //op basis hiervan wordt bepaald of de user te zien krijgt of hij een groep aan mag maken of dat hij kan chatten met de pedagoog
@@ -42,41 +44,50 @@ public class DashboardController : Controller{
 
         //met deze method haal het Id van de current User op
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //Hier wordt het zoekfilter van onderwerp en leeftijdscategorie toegevoegd
-        IQueryable<Chat> lijst;
-        IQueryable<ChatUser> lijst2;
-        if(Onderwerp == null || Onderwerp == ""){
-        lijst2 = (_context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser));
-        }
-        else{
-        lijst2 = _context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Where(x => x.chat.Onderwerp == Onderwerp);
-        }
-        if(Leeftijdscategorie == null || Leeftijdscategorie == ""){
-            lijst = lijst2.Select(x => x.chat);
-        }
-        else{
-            lijst = lijst2.Where(x => x.chat.Leeftijdscategorie == Leeftijdscategorie).Select(x => x.chat);
-        }
-
-        return View(lijst.ToList());
+        //Hier wordt het zoekfilter van onderwerp en leeftijdscategorie toegevoegd        
+        return View(LeeftijdsCatagorie(Onderwerp(GetChats(),onderwerp),leeftijdscategorie).ToList());
     }
+    //Dit is voor het filteren van de titel uit de lijst
+    public IQueryable<Chat> FilterTitel(IQueryable<Chat> lijst,string titel){
+        if(titel == null || titel == ""){
+            return lijst;
+        }
+        return lijst.Where(x => x.Naam.Contains(titel));
+    }
+    public IQueryable<Chat> FilterBeschrijving(IQueryable<Chat> lijst,string beschrijving){
+        if(beschrijving == null || beschrijving == ""){
+            return lijst;
+        }
+        return lijst.Where(x => x.Beschrijving.Contains(beschrijving));
+    }
+
+    //Dit is de sorteer Query van de leeftijd waarop gesorteerd kan worden
+    public IQueryable<Chat>  LeeftijdsCatagorie(IQueryable<Chat> lijst,string leeftijdsCatagorie){
+        if(leeftijdsCatagorie == null || leeftijdsCatagorie == ""){
+            return lijst;
+        }
+        return lijst.Where(x => x.Leeftijdscategorie == leeftijdsCatagorie);
+    }
+    //Dit is de Query van het onderwerp waarop gesorteerd kan worden
+    public IQueryable<Chat>  Onderwerp(IQueryable<Chat> lijst,string onderwerp){
+        if(onderwerp == null || onderwerp == ""){
+            return lijst;
+        }
+        return lijst.Where(x => x.Onderwerp == onderwerp);
+    }
+    //Met onderstaande methode wordt gekeken in welke lists de user staat ingeschreven
+    public IQueryable<Chat> GetChats(){
+        var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return _context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Select(x=>x.chat).Where(x=>x.type==ChatType.Room);
+    }
+
     //Dit is voor het verkrijgen van de view voor het toevoegen van de model
     [HttpGet]
     [Authorize(Roles = "Moderator,Pedagoog,Client")]
-    public IActionResult GroepToevoegen(string Naam, string Beschrijving, string Onderwerp, string Leeftijdscategorie){
-        //Hieronder wordt een lijst van alle chats naarvoren gehaald die publiek zijn
-        if(Naam == null) Naam = "";
-        if(Beschrijving == null) Beschrijving = "";
-        if(Onderwerp == null) Onderwerp = "";
-        if(Leeftijdscategorie == null) Leeftijdscategorie = "";
-        var GroepenLijst = _context.Chat.Where(x=>x.type==ChatType.Room);
-        //Hier worden de 3 sorteercriteria toegepast
-        var LijstMetNaam = GroepenLijst.Where(x => x.Naam.Contains(Naam));
-        var LijstMetBeschrijving = LijstMetNaam.Where(x => x.Beschrijving.Contains(Beschrijving));
-        var LijstMetOnderwerp = LijstMetBeschrijving.Where(x => x.Onderwerp.Contains(Onderwerp));
-        var LijstMetLeeftijd = LijstMetOnderwerp.Where(x => x.Leeftijdscategorie.Contains(Leeftijdscategorie));
+    public IActionResult GroepToevoegen(string Naam, string Beschrijving, string onderwerp, string Leeftijdscategorie){
+
         //Hier wordt die lijst terug geven aan de mensen
-        return View(LijstMetLeeftijd.ToList());
+        return View(LeeftijdsCatagorie(Onderwerp(FilterBeschrijving(FilterTitel(GetChats(),Naam),Beschrijving),onderwerp),Leeftijdscategorie).ToList());
     }
 
     //Deze is voor de chat zelf. Hiermee kan je alle berichten zien

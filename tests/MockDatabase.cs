@@ -27,17 +27,17 @@ public class MockDatabase{
                         new ChatUser{UserId = Alec.Id ,User=Alec ,Role=UserRole.Admin},
                         new ChatUser{UserId = Jeremy.Id, User= Jeremy, Role= UserRole.Member},
                         new ChatUser{UserId= Claudio.Id, User=Claudio, Role= UserRole.Member}
-                    }, type= ChatType.Room};
+                    }, type= ChatType.Room ,Onderwerp="ADD", Leeftijdscategorie="-14"};
 
 
                     Chat chat2= new Chat(){
-                    Id=2,Naam="Chat2",Beschrijving="Dit is een chat applicatie", Messages= new List<Message>(){
+                    Id=2,Naam="Chat2",Beschrijving="Dit is een chat applicatie2", Messages= new List<Message>(){
                         new Message{ Naam="Claudio",Text="GG",timestamp=DateTime.Now},
                         new Message{Naam="Jeremy",Text="EZ",timestamp=DateTime.Now},
                     },Users = new List<ChatUser>(){
                         new ChatUser{UserId = Claudio.Id ,User=Claudio ,Role=UserRole.Admin},
                         new ChatUser{UserId = Jeremy.Id, User = Jeremy, Role= UserRole.Member}
-                    }, type= ChatType.Room};
+                    }, type= ChatType.Room, Onderwerp="Slaaptekort",Leeftijdscategorie="18-21"};
 
                     Chat chat3= new Chat(){
                     Id=3,Naam="Chat3",Beschrijving="Dit is een prive chat", Messages= new List<Message>(){
