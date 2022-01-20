@@ -22,12 +22,30 @@ namespace src.views_Melding
 
         // GET: Melding
         [Authorize(Roles = "Moderator")]
-        public IActionResult Index()
+        public IActionResult Index(string volgorde,string zoek)
         {
             ViewData["Verwijderd"] = verwijderd;
             verwijderd = false;
-            return View(_context.Meldingen.OrderByDescending(x=>x.Datum).ToList());
+            return View(Volgorde(ZoekenOp(_context.Meldingen.AsQueryable(),zoek),volgorde).ToList());
         }
+        public IQueryable<Melding> ZoekenOp(IQueryable<Melding> lijst,string trefwoord){
+            if(trefwoord==""||trefwoord==null){
+                return lijst;
+            }
+            return lijst.Where(x=>x.Titel.Contains(trefwoord));
+        }
+        public IQueryable<Melding> Volgorde(IQueryable<Melding> lijst,string type){
+            if(type==""||type==null||type=="DatumOplopend"){
+                return lijst.OrderBy(x=>x.Datum);
+            }else if(type=="DatumAflopend"){
+                return lijst.OrderByDescending(x=>x.Datum);
+            }else if(type =="TitelAflopend"){
+                return lijst.OrderByDescending(x=>x.Titel);
+            }else{
+                return lijst.OrderBy(x=>x.Titel);
+            }
+        }
+
         // GET: Melding/Details/5
         [Authorize(Roles = "Moderator")]
         public IActionResult Details(int? id)

@@ -57,10 +57,10 @@ public class MockDatabase{
             context.Chat.Add(chat3);
             context.SaveChanges();
             //Onderstaande code is voor de tests
-            context.Meldingen.Add(new Melding(){Id=1,Titel="Melding1",Bericht="Dit is het eerste bericht om te testen of alles werkt",Datum=DateTime.Now});
             context.Meldingen.Add(new Melding(){Id=2,Titel="Melding2",Bericht="Hierin klaagt iemand over een bom ofzo",Datum=DateTime.Now});
-            context.Meldingen.Add(new Melding(){Id=3,Titel="Melding3",Bericht="Een functie in de app werkt niet",Datum=DateTime.Now});
+            context.Meldingen.Add(new Melding(){Id=1,Titel="Melding1",Bericht="Dit is het eerste bericht om te testen of alles werkt",Datum=DateTime.Now});
             context.Meldingen.Add(new Melding(){Id=4,Titel="Melding4",Bericht="Deze klaagt dat gratis dingen niet kloppen",Datum=DateTime.Now});
+            context.Meldingen.Add(new Melding(){Id=3,Titel="Melding3",Bericht="Een functie in de app werkt niet",Datum=DateTime.Now});
             context.SaveChanges();
             return GetCleanContext(false);
         }

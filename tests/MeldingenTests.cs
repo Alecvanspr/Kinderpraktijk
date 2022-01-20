@@ -43,7 +43,7 @@ public class MeldingenTest{
             MijnContext _context = GetDatabase();
             MeldingController controller = getController(_context,"Moderator","User1");
             var expectedAantal = _context.Meldingen.Count();
-            var result = controller.Index();
+            var result = controller.Index("","");
             //act
             ViewResult viewResult = result as ViewResult;
             var model = Assert.IsAssignableFrom<List<Melding>>(viewResult.ViewData.Model);
@@ -51,6 +51,12 @@ public class MeldingenTest{
             //assert
             Assert.Equal(expectedAantal,aantalChats);
         }
+
+
+
+
+
+        
         //hieronder wordt getest of het meegegeven model helemaal klopt.
         //Hier kijken we dan naar of niet telkens de eerste melding wordt meegegeven
         [Theory]
@@ -123,5 +129,18 @@ public class MeldingenTest{
             var result = controller.MeldingExists(id);
             //assert
             Assert.Equal(expected,result);
+            }
+            [Theory]
+            //Deze 2 zijn voor het filteren op de titel
+            [InlineData("TitelOplopend","Melding1")]
+            [InlineData("TitelAflopend","Melding4")]
+            //Deze 2 zijn voor het filteren op datum
+            [InlineData("DatumOplopend","Melding2")]
+            [InlineData("DatumAflopend","Melding3")]
+            public void TestVolgorde(string volgorde,string expectedTitel){
+            //arrange
+            MijnContext _context = GetDatabase();
+            MeldingController controller = getController(_context,"Moderator","User1");
+
             }
         }
