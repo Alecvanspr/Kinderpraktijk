@@ -6,7 +6,11 @@
 <div class="container">
 <h1>Meldingen overzicht</h1>
 <p>Hieronder staat een lijst met annonieme meldingen die zijn gemaakt over deze app</p>
-
+@if((bool)ViewData["Verwijderd"]){
+        <div class="alert alert-success" role="alert">
+            Uw melding is successvol verwijderd!
+        </div>
+}
 <table class="table">
     <thead>
         <tr>

@@ -10,6 +10,11 @@
                 @ViewData["SuccessMessage"]
             </div>
        }
+       @if((bool)ViewData["meldingGeplaatst"]){
+        <div class="alert alert-success" role="alert">
+            Uw melding is successvol geplaatst!
+        </div>
+}
         <h2>Wat wilt u doen?</h2>
         <div class="row">
             <div class="mx-auto">

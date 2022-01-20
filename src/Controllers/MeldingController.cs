@@ -13,6 +13,7 @@ namespace src.views_Melding
     public class MeldingController : Controller
     {
         private readonly MijnContext _context;
+        private bool verwijderd;
 
         public MeldingController(MijnContext context)
         {
@@ -21,21 +22,23 @@ namespace src.views_Melding
 
         // GET: Melding
         [Authorize(Roles = "Moderator")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Meldingen.OrderByDescending(x=>x.Datum).ToListAsync());
+            ViewData["Verwijderd"] = verwijderd;
+            verwijderd = false;
+            return View(_context.Meldingen.OrderByDescending(x=>x.Datum).ToList());
         }
         // GET: Melding/Details/5
         [Authorize(Roles = "Moderator")]
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var melding = await _context.Meldingen
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var melding = _context.Meldingen
+                .FirstOrDefault(m => m.Id == id);
             if (melding == null)
             {
                 return NotFound();
@@ -55,14 +58,14 @@ namespace src.views_Melding
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titel,Bericht")] Melding melding)
+        public IActionResult Create([Bind("Id,Titel,Bericht")] Melding melding)
         {
             if (ModelState.IsValid)
             {
                 melding.Datum = DateTime.Now;
                 _context.Add(melding);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Dashboard", new { area = "" });
+                 _context.SaveChanges();
+                return RedirectToAction("Index", "Dashboard", new { m="true" });
             }
             return View(melding);
         }
@@ -95,6 +98,7 @@ namespace src.views_Melding
             var melding = await _context.Meldingen.FindAsync(id);
             _context.Meldingen.Remove(melding);
             await _context.SaveChangesAsync();
+            verwijderd = true;
             return RedirectToAction(nameof(Index));
         }
 

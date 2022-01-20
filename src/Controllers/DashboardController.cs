@@ -19,11 +19,12 @@ public class DashboardController : Controller{
         _context = context;
     }
     //Getest
-    public IActionResult Index(string Onderwerp){
+    public IActionResult Index(string Onderwerp,bool? m){
         if(User.IsInRole("Ouder"))
         {
             return RedirectToAction("Overzicht");
         }
+        ViewData["meldingGeplaatst"] = m==null?false: true;
         //Hier wordt meegegeven of de user een moderator is.
         //op basis hiervan wordt bepaald of de user te zien krijgt of hij een groep aan mag maken of dat hij kan chatten met de pedagoog
         ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");

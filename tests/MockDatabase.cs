@@ -61,7 +61,7 @@ public class MockDatabase{
             context.Meldingen.Add(new Melding(){Id=2,Titel="Melding2",Bericht="Hierin klaagt iemand over een bom ofzo",Datum=DateTime.Now});
             context.Meldingen.Add(new Melding(){Id=3,Titel="Melding3",Bericht="Een functie in de app werkt niet",Datum=DateTime.Now});
             context.Meldingen.Add(new Melding(){Id=4,Titel="Melding4",Bericht="Deze klaagt dat gratis dingen niet kloppen",Datum=DateTime.Now});
-            context.Meldingen.SingleAsync();
+            context.SaveChanges();
             return GetCleanContext(false);
         }
         //Dit zorgt ervoor dat je een schone context hebt.
