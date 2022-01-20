@@ -15,16 +15,16 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="Input.FirstName"></label>
-                <input asp-for="Input.FirstName" class="form-control" />
+                <label id="naam1"asp-for="Input.FirstName"></label>
+                <input id="naam1"asp-for="Input.FirstName" class="form-control" />
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="Input.LastName"></label>
-                <input asp-for="Input.LastName" class="form-control" />
+                <label id="naam2" asp-for="Input.LastName"></label>
+                <input id="naam2" asp-for="Input.LastName" class="form-control" />
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
         </div>
@@ -41,16 +41,16 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="Input.Age"></label>
-                <input asp-for="Input.Age" class="form-control" />
+                <label id="lft" asp-for="Input.Age"></label>
+                <input id="lft" asp-for="Input.Age" class="form-control" />
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="Input.IBAN"></label>
-                <input asp-for="Input.IBAN" class="form-control" />
+                <label id="iba" asp-for="Input.IBAN"></label>
+                <input id="iba" asp-for="Input.IBAN" class="form-control" />
                 <span asp-validation-for="Input.IBAN" class="text-danger"></span>
             </div>
         </div>
@@ -58,8 +58,8 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="Input.BSN"></label>
-                <input asp-for="Input.BSN" class="form-control" />
+                <label id="bsn" asp-for="Input.BSN"></label>
+                <input id="bsn" asp-for="Input.BSN" class="form-control" />
                 <span asp-validation-for="Input.IBAN" class="text-danger"></span>
             </div>
         </div>
@@ -82,7 +82,7 @@
         <input asp-for="Input.Token" type="hidden" />
     </div>
 
-    <button type="submit" class="btn btn-success">Registreer</button>
+    <button type="submit" onclick="dataNaarApi()"class="btn btn-success">Registreer</button>
 </form>
 
 @section Scripts {
@@ -96,4 +96,49 @@
     });
 
 </script>
+    <script>
+        // Example POST method implementation:
+        async function postData(url = '', data = {}) {
+         // Default options are marked with *
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+            }
+            //unused method, chooses highest property in array, and adds 1
+            function getMax(arr, prop) {
+            var max;
+            for (var i=0 ; i<arr.length ; i++) {
+                if (!max || parseInt(arr[i][prop]) > parseInt(max[prop]))
+            max = arr[i];
+    }
+    return max+1;
+}
+            //easy request for postdata, to process data put into api
+            function dataNaarApi(){
+            postData('https://orthopedagogie-zmdh.herokuapp.com/clienten?sleutel=814362922&', {
+                "clientid": Math.floor(Math.random() * 9999999),
+                "volledigenaam": document.getElementById('naam1').innerHTML + document.getElementById('naam2').innerHTML,
+                "IBAN": document.getElementById('iba').innerHTML,
+                "BSN": document.getElementById('bsn').innerHTML,
+                "gebdatum": document.getElementById('lft').innerHTML,
+                })
+            .then(data => {
+                console.log(data); // JSON data parsed by `data.json()` call
+            });
+            }
+
+
+
+    </script>
 }  
