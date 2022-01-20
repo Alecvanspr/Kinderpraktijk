@@ -24,6 +24,14 @@ public class DashboardController : Controller{
         {
             return RedirectToAction("Overzicht");
         }
+
+        string UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        srcUser user = _context.Users.Where(p => p.Id == UserId).FirstOrDefault();
+        if(user.UserBlocked)
+        {
+            return RedirectToAction("NotAuthorized");
+        }
+        
         //Hier wordt meegegeven of de user een moderator is.
         //op basis hiervan wordt bepaald of de user te zien krijgt of hij een groep aan mag maken of dat hij kan chatten met de pedagoog
         ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
