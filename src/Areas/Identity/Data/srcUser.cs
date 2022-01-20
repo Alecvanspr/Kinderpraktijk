@@ -43,6 +43,14 @@ public class srcUser : IdentityUser
     [Display(Name = "Beschrijving")]
     public string Description { get; set; }
 
+    [Column(TypeName = "nvarchar(450)")]
+    [Display(Name = "IBAN")]
+    public string IBAN { get; set; }
+
+    [Column(TypeName = "nvarchar(450)")]
+    [Display(Name = "BSN")]
+    public string BSN { get; set; }
+
     public ICollection<srcUser> Childeren { get; set;}
     public ICollection<srcUser> Clients { get; set; }
     public ICollection<ChatUser> Chats{get;set;}

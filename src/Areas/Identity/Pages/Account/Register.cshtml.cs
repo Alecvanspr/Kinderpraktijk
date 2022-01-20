@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -17,6 +18,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using src.Areas.Identity.Data;
 using src.Helpers;
@@ -114,6 +116,15 @@ namespace src.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Achternaam")]
             public string LastName { get; set; }
+
+            [Required]
+            [StringLength(50)]
+            [Display(Name = "IBAN")]
+            public string IBAN { get; set; }
+
+            [Required]
+            [Display(Name = "BSN")]
+            public string BSN { get; set; }
 
             [Required]
             [DataType(DataType.Date)]

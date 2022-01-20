@@ -8,6 +8,7 @@ using AutoMapper;
 using System.Collections.Generic;
 using src.Models;
 using System.Threading.Tasks;
+using System;
 
 namespace src.Areas.Profile.Pages.Tabs
 {
@@ -29,52 +30,12 @@ namespace src.Areas.Profile.Pages.Tabs
         public List<AanmeldingClient> Aanmeldingen { get; set; } = new List<AanmeldingClient>();
         public List<srcUser> Clienten { get; set; } = new List<srcUser>();
         public List<ClientListAanmelding> ClientList { get; set; } = new List<ClientListAanmelding>();
+        public List<ClientRelations> ClientRelations { get; set; } = new List<ClientRelations>();
         public string SpecialistName { get; set; }
 
-        public async void OnGetAsync()
+        public void OnGet(bool af, bool aan)
         {
-            var parent = await (from s in _context.Users
-                          where s.Id == _userManager.GetUserId(User)
-                          select s).SingleAsync();
-
-
-            var child = await (from s in _context.Users
-                         where s.ParentId == _userManager.GetUserId(User)
-                         select s).ToListAsync();
-
-            Aanmeldingen = await (from l in _context.AanmeldingenClients
-                            where l.srcUserId == _userManager.GetUserId(User)
-                            select l).ToListAsync();
-
-            Clienten =  await (from l in _context.Users
-                        where l.Id == Aanmeldingen.Select(x=>x.ClientId).DefaultIfEmpty("").First().ToString()
-                        select l).ToListAsync();
-
-            ClientList = Aanmeldingen.Join(
-                Clienten,
-                client => client.ClientId,
-                user => user.Id,
-                (client, user) => new ClientListAanmelding
-                {
-                    ClientName = user.FirstName + " " + user.LastName,
-                    ClientId = client.ClientId,
-                    DateAanmelding = client.Aanmelding,
-                    DateAfmelding = client.Afmelding,
-                    IsAangemeld = client.IsAangemeld,
-                    IsAfgemeld = client.IsAfgemeld
-                }).ToList();
-
-
-            ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(child);
-            MijnProfiel = _mapper.Map<srcUser, ProfileViewModel>(parent);
-
-            var myProfile = (from l in _context.Users
-                                 where l.Id == _userManager.GetUserId(User)
-                                 select l.SpecialistId).FirstOrDefault();
-
-            SpecialistName = (from l in _context.Users
-                                 where l.Id == myProfile
-                                 select l.FirstName + " " + l.LastName).FirstOrDefault();
+            GetUserProfileInfo(af, aan);
         }
 
         public async Task<IActionResult> OnPostMeldAan(string id)
@@ -89,6 +50,7 @@ namespace src.Areas.Profile.Pages.Tabs
                 .FirstOrDefaultAsync();
 
             query.IsAangemeld = true;
+            query.Aanmelding = DateTime.UtcNow;
 
             _context.AanmeldingenClients.Update(query);
             _context.Users.Update(user);
@@ -104,10 +66,88 @@ namespace src.Areas.Profile.Pages.Tabs
                 .FirstOrDefaultAsync();
 
             query.IsAfgemeld = true;
+            query.Afmelding = DateTime.UtcNow;
 
             _context.AanmeldingenClients.Update(query);
             _context.SaveChanges();
             return RedirectToPage("/Tabs/Profiel", new { Area = "Profile" });
+        }
+
+        public IActionResult OnPostFilter(bool af, bool aan)
+        {
+            GetUserProfileInfo(af, aan);
+            return RedirectToPage("/Tabs/Profiel", new { Area = "Profile" });
+        }
+
+        public async void GetUserProfileInfo(bool af, bool aan)
+        {
+            var parent = await(from s in _context.Users
+                               where s.Id == _userManager.GetUserId(User)
+                               select s).SingleAsync();
+
+
+            var child = await(from s in _context.Users
+                              where s.ParentId == _userManager.GetUserId(User)
+                              select s).ToListAsync();
+
+            Aanmeldingen = await(from l in _context.AanmeldingenClients
+                                 where l.srcUserId == _userManager.GetUserId(User)
+                                 select l).ToListAsync();
+
+            Clienten = await(from l in _context.Users
+                             where l.Id == Aanmeldingen.Select(x => x.ClientId).DefaultIfEmpty("").First().ToString()
+                             select l).ToListAsync();
+
+            ClientList = Aanmeldingen.Join(
+                Clienten,
+                client => client.ClientId,
+                user => user.Id,
+                (client, user) => new ClientListAanmelding
+                {
+                    ClientName = user.FirstName + " " + user.LastName,
+                    ClientId = client.ClientId,
+                    DateAanmelding = client.Aanmelding,
+                    DateAfmelding = client.Afmelding,
+                    IsAangemeld = client.IsAangemeld,
+                    IsAfgemeld = client.IsAfgemeld
+                }).ToList();
+
+            ClientRelations = (from a in _context.Users
+                               join b in _context.AanmeldingenClients on a.Id equals b.ClientId
+                               join c in _context.Users on b.srcUserId equals c.Id
+                               select new ClientRelations
+                               {
+                                   ClientName = a.FirstName + " " + a.LastName,
+                                   SpecialistName = c.FirstName + " " + c.LastName,
+                                   DateAanmelding = b.Aanmelding,
+                                   DateAfmelding = b.Afmelding,
+                                   IsAangemeld = b.IsAangemeld,
+                                   IsAfgemeld = b.IsAfgemeld
+                               }).ToList();
+
+            //foreach (var x in ClientRelations)
+            //{
+            //    if (x.IsAangemeld == aan)
+            //    {
+            //        ClientRelations.Remove(x);
+            //    }
+            //    if (x.IsAfgemeld == af)
+            //    {
+            //        ClientRelations.Remove(x);
+            //    }
+            //}
+
+
+            ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(child);
+            MijnProfiel = _mapper.Map<srcUser, ProfileViewModel>(parent);
+
+            var myProfile = (from l in _context.Users
+                             where l.Id == _userManager.GetUserId(User)
+                             select l.SpecialistId).FirstOrDefault();
+
+            SpecialistName = (from l in _context.Users
+                              where l.Id == myProfile
+                              select l.FirstName + " " + l.LastName).FirstOrDefault();
         }
     }
 }
