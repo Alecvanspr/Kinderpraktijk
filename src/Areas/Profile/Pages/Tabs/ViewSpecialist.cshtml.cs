@@ -42,7 +42,7 @@ namespace src.Areas.Profile.Pages.Tabs
 
             ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(result);
 
-            checkAanmelding = (from l in _context.AanmeldingenClients
+            checkAanmelding = (from l in _context.Aanmeldingen
                                    where !String.IsNullOrEmpty(_userManager.GetUserId(User))
                                    where !String.IsNullOrEmpty(_userManager.GetUserId(User)) && (l.IsAangemeld.Equals(false) && l.IsAfgemeld.Equals(false))
                                    select l).Any();                              
@@ -60,7 +60,7 @@ namespace src.Areas.Profile.Pages.Tabs
         {
             var date = DateTime.Now;
             AanmeldingClient aanmelding = new AanmeldingClient { Aanmelding = date, ClientId = _userManager.GetUserId(User), srcUserId = id };
-            _context.AanmeldingenClients.Add(aanmelding);
+            _context.Aanmeldingen.Add(aanmelding);
             _context.SaveChanges();
             return RedirectToPage("/Tabs/ViewSpecialist", new { Area = "Profile" });
         }

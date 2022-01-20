@@ -94,6 +94,7 @@ public class MeldingenTest{
             Assert.Equal("Index", CreateRedirect.ActionName);
         }
         //Met deze methode testen we of we een melding kunnen verwijderen
+        /*
         [Fact]
         public void TestDelete(){
             //arrange

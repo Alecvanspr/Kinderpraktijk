@@ -19,19 +19,20 @@
                     <a>@Html.DisplayNameFor(model => Model.MijnProfiel.Email): @Html.DisplayFor(model => Model.MijnProfiel.Email)</a>
                     <br />
                     <a>@Html.DisplayNameFor(model => Model.MijnProfiel.PhoneNumber): @Html.DisplayFor(model => Model.MijnProfiel.PhoneNumber)</a>
-
+                    @if(Model.ProfileViewModel!=null){
                     @foreach (var a in Model.ProfileViewModel)
-                    {
-                        <br />
-                        <h4>Mijn Kind</h4>
+                        {
+                            <br />
+                            <h4>Mijn Kind</h4>
 
-                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].FirstName): @Html.DisplayFor(modelItem => a.FirstName)</a>
-                        <br />
-                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].LastName): @Html.DisplayFor(modelItem => a.LastName)</a>
-                        <br />
-                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Email): @Html.DisplayFor(modelItem => a.Email)</a>
-                        <br />
-                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].PhoneNumber): @Html.DisplayFor(modelItem => a.PhoneNumber)</a>
+                            <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].FirstName): @Html.DisplayFor(modelItem => a.FirstName)</a>
+                            <br />
+                            <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].LastName): @Html.DisplayFor(modelItem => a.LastName)</a>
+                            <br />
+                            <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Email): @Html.DisplayFor(modelItem => a.Email)</a>
+                            <br />
+                            <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].PhoneNumber): @Html.DisplayFor(modelItem => a.PhoneNumber)</a>
+                        }
                     }
                 </div>
             </div>

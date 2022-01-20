@@ -43,7 +43,7 @@ namespace src.Areas.Profile.Pages.Tabs
             var user = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
             user.SpecialistId = _userManager.GetUserId(User);
 
-            var query = await _context.AanmeldingenClients
+            var query = await _context.Aanmeldingen
                 .Where(x => x.ClientId == id)
                 .Where(x => x.srcUserId == _userManager.GetUserId(User))
                 .OrderByDescending(x=> x.Id)
@@ -52,7 +52,7 @@ namespace src.Areas.Profile.Pages.Tabs
             query.IsAangemeld = true;
             query.Aanmelding = DateTime.UtcNow;
 
-            _context.AanmeldingenClients.Update(query);
+            _context.Aanmeldingen.Update(query);
             _context.Users.Update(user);
             _context.SaveChanges();
             return RedirectToPage("/Tabs/Profiel", new { Area = "Profile" });
@@ -60,7 +60,7 @@ namespace src.Areas.Profile.Pages.Tabs
 
         public async Task<IActionResult> OnPostMeldAf(string id)
         {
-            var query = await _context.AanmeldingenClients
+            var query = await _context.Aanmeldingen
                 .Where(x => x.ClientId == id && x.srcUserId == _userManager.GetUserId(User))
                 .OrderByDescending(x => x.Id)
                 .FirstOrDefaultAsync();
@@ -68,7 +68,7 @@ namespace src.Areas.Profile.Pages.Tabs
             query.IsAfgemeld = true;
             query.Afmelding = DateTime.UtcNow;
 
-            _context.AanmeldingenClients.Update(query);
+            _context.Aanmeldingen.Update(query);
             _context.SaveChanges();
             return RedirectToPage("/Tabs/Profiel", new { Area = "Profile" });
         }
@@ -90,7 +90,7 @@ namespace src.Areas.Profile.Pages.Tabs
                               where s.ParentId == _userManager.GetUserId(User)
                               select s).ToListAsync();
 
-            Aanmeldingen = await(from l in _context.AanmeldingenClients
+            Aanmeldingen = await(from l in _context.Aanmeldingen
                                  where l.srcUserId == _userManager.GetUserId(User)
                                  select l).ToListAsync();
 
@@ -113,7 +113,7 @@ namespace src.Areas.Profile.Pages.Tabs
                 }).ToList();
 
             ClientRelations = (from a in _context.Users
-                               join b in _context.AanmeldingenClients on a.Id equals b.ClientId
+                               join b in _context.Aanmeldingen on a.Id equals b.ClientId
                                join c in _context.Users on b.srcUserId equals c.Id
                                select new ClientRelations
                                {
