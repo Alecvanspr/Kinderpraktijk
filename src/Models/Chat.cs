@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 public class Chat{
     public int Id{get;set;}
     public string Onderwerp{get; set;}
+    
     [Required]
     [MinLength(5)]
     [MaxLength(30)]
     public string Naam{get;set;}
+
     [Required]
     [MinLength(5)]
     [MaxLength(250)]

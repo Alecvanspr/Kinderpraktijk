@@ -4,36 +4,175 @@
     ViewData["Title"] = "Profiel";
     Layout = "~/Areas/Profile/Pages/_Layout.cshtml";
 }
-<div class="card">
+
+<div class="card m-3">
     <div class="card-body">
-        <div class="container">
-        @foreach (var a in Model.ProfileViewModel)
-        {
-            
-                <div class="row">
-                    <div class="col-12">
-                        @if (String.IsNullOrEmpty(a.ParentId))
-                        {
-                            <H1>Mijn Gegevens</H1>
-                        }
-                        else
-                        {
-                            <h4>Mijn Kind</h4>
-                        }
-                    
-                        <ul>
-                            <li>@Html.DisplayNameFor(a => a.ProfileViewModel[0].FirstName): @Html.DisplayFor(modelItem => a.FirstName)</li>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <H1>Mijn Gegevens</H1>
 
-                            <li>@Html.DisplayNameFor(a => a.ProfileViewModel[0].LastName): @Html.DisplayFor(modelItem => a.LastName)</li>
+                    <a>@Html.DisplayNameFor(model => Model.MijnProfiel.FirstName): @Html.DisplayFor(model => Model.MijnProfiel.FirstName)</a>
+                    <br />
+                    <a>@Html.DisplayNameFor(model => Model.MijnProfiel.LastName): @Html.DisplayFor(model => Model.MijnProfiel.LastName)</a>
+                    <br />
+                    <a>@Html.DisplayNameFor(model => Model.MijnProfiel.Email): @Html.DisplayFor(model => Model.MijnProfiel.Email)</a>
+                    <br />
+                    <a>@Html.DisplayNameFor(model => Model.MijnProfiel.PhoneNumber): @Html.DisplayFor(model => Model.MijnProfiel.PhoneNumber)</a>
 
-                            <li>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Email): @Html.DisplayFor(modelItem => a.Email)</li>
+                    @foreach (var a in Model.ProfileViewModel)
+                    {
+                        <br />
+                        <h4>Mijn Kind</h4>
 
-                            <li>@Html.DisplayNameFor(a => a.ProfileViewModel[0].PhoneNumber): @Html.DisplayFor(modelItem => a.PhoneNumber)</li>
-                        </ul>
-                    </div>
+                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].FirstName): @Html.DisplayFor(modelItem => a.FirstName)</a>
+                        <br />
+                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].LastName): @Html.DisplayFor(modelItem => a.LastName)</a>
+                        <br />
+                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Email): @Html.DisplayFor(modelItem => a.Email)</a>
+                        <br />
+                        <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].PhoneNumber): @Html.DisplayFor(modelItem => a.PhoneNumber)</a>
+                    }
                 </div>
-            
-        }
+            </div>
         </div>
     </div>
 </div>
+
+@if (User.IsInRole("Pedagoog"))
+{
+    <div class="card m-3">
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Clienten</h3>
+                        <div class="row align-items-center">
+                            @foreach (var a in Model.ClientList)
+                            {
+                                if (a.IsAfgemeld == false)
+                                {
+                                    <div class="col-12">
+                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientList[0].ClientName): </a>
+
+                                        <a>@Html.DisplayFor(modelItem => a.ClientName) </a>
+                                        <br>
+                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientList[0].DateAanmelding): </a>
+
+                                        <a>@Html.DisplayFor(modelItem => a.DateAanmelding) </a>
+                                        <br>
+                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientList[0].IsAangemeld): </a>
+
+                                        <a>@Html.DisplayFor(modelItem => a.IsAangemeld)</a>
+                                    </div>
+                                    if (a.IsAangemeld == false)
+                                    {
+                                        <div class="col-md-12">
+                                            <form method="post" asp-page-handler="MeldAan">
+                                                <input type="hidden" asp-for="@a.ClientId" name="id" />
+                                                <button type="submit" value="Delete" class="btn btn-success btn-sm">Aanmelden</button>
+                                            </form>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-12">
+                                            <form method="post" asp-page-handler="MeldAf">
+                                                <input type="hidden" asp-for="@a.ClientId" name="id" />
+                                                <button type="submit" value="Delete" class="btn btn-danger btn-sm">Afmelden</button>
+                                            </form>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (User.IsInRole("Moderator"))
+{
+    <div class="card m-3">
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Client Specialist Relaties</h3>
+
+                        <div class="row align-items-center p-2">
+                            <form method="post" asp-page-handler="Filter">
+                                <div class="col-md-auto">
+                                    <input type="radio" id="aan" name="aan"><a class="p-2">Aangemeld</a>
+                                </div>
+                                <div class="col-md-auto">
+                                    <input type="radio" id="af" name="af"><a class="p-2">Afgemeld</a>
+                                </div>
+                                <div class="col-md-auto p-2">
+                                    <button type="submit" value="Delete" class="btn btn-success btn-sm">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        @foreach (var a in Model.ClientRelations)
+                        {
+                            <div class="row align-items-center border-bottom">
+                                <div class="col-md-auto">
+                                    <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].ClientName): </a>
+
+
+                                    <a>@Html.DisplayFor(modelItem => a.ClientName) </a>
+                                </div>
+                                <div class="col-md-auto">
+                                    <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].DateAanmelding): </a>
+
+                                    <a>@Html.DisplayFor(modelItem => a.DateAanmelding) </a>
+                                </div>
+                                <div class="col-md-auto">
+                                    <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].IsAangemeld): </a>
+
+                                    <a>@Html.DisplayFor(modelItem => a.IsAangemeld)</a>
+                                </div>
+                                <div class="col-md-auto">
+                                    <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].DateAfmelding): </a>
+
+                                    <a>@Html.DisplayFor(modelItem => a.DateAfmelding) </a>
+                                </div>
+                                <div class="col-md-auto">
+                                    <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].IsAfgemeld): </a>
+
+                                    <a>@Html.DisplayFor(modelItem => a.IsAangemeld)</a>
+                                </div>
+                                <div class="col-md-auto">
+                                    <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].SpecialistName): </a>
+
+                                    <a>@Html.DisplayFor(modelItem => a.SpecialistName)</a>
+                                </div>
+                                <hr />
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (User.IsInRole("Client"))
+{
+    <div class="card m-3">
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">
+                        <h3>Aangemeld Bij Specialist</h3>
+                        <a>@Model.SpecialistName</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

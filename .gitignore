@@ -368,6 +368,7 @@ obj
 config
 Migrations
 Database.db
+/src/Database.db
 /src/Database.db-shm
 /src/Database.db-wal
 
