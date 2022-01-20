@@ -15,9 +15,11 @@ using System.Threading;
 using System.Xml.Linq;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace src.Areas.Profile.Pages.Tabs
 {
+    [Authorize(Roles = "Client, Ouder, Moderator, Pedagoog")]
     public class AanmeldenModel : PageModel
     {
         private MijnContext _context;
