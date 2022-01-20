@@ -1,5 +1,6 @@
 @model IEnumerable<srcUser>
-
+    <div class="container p-3">
+@if(Model!=null){
 <div id="dashboardoverzicht">
     <h1>Overzicht</h1>
     <p>Welkom bij de overzichtspagina van uw kind</p>
@@ -55,4 +56,9 @@
             }
         </tbody>
     </table>
+</div>
+}else{
+    <h1>U heeft nog geen kind aangemeld</h1> 
+    <p>Meld een kind aan krijg hier een overzicht van uw kind.</p>
+}
 </div>
