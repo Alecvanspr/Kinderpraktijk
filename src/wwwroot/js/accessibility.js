@@ -7,9 +7,9 @@ function font(e) {
 
 	if (e == 'a') {
 		el.style.fontSize = (fontSize + 1) + 'px';
-		el2.style.fontSize = (fontSize + 1) + 'px';
-	} else if ('d') {
-		el.style.fontSize = (fontSize + 1) - 'px';
-		el2.style.fontSize = (fontSize + 1) - 'px';
+		//el2.style.fontSize = (fontSize + 1) + 'px';
+	} else if (e== 'd') {
+		el.style.fontSize = (fontSize - 1) + 'px';
+		//el2.style.fontSize = (fontSize + 1) - 'px';
 	}
 }

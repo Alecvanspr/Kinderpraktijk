@@ -92,8 +92,6 @@ namespace src.Areas.Profile.Pages.Tabs
 
         public IActionResult OnPostFilter(bool af, bool aan)
         {
-            
-
             Aangemeld = aan;
             Afgemeld = af;
             
