@@ -13,7 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using src.Areas.Identity.Data;
-using src.Services;
 
 namespace src
 {
@@ -55,8 +54,8 @@ namespace src
             // requires
             // using Microsoft.AspNetCore.Identity.UI.Services;
             // using WebPWrecover.Services;
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.Configure<AuthMessageSenderOptions>(Configuration);
+            //services.AddTransient<IEmailSender, EmailSender>();
+            //services.Configure<AuthMessageSenderOptions>(Configuration);
 
             /* 
                 Dit moet worden gedaan doordat het framework een preventie

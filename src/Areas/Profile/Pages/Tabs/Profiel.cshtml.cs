@@ -83,7 +83,6 @@ namespace src.Areas.Profile.Pages.Tabs
             query.IsAfgemeld = true;
             query.Afmelding = DateTime.UtcNow;
 
-
             _context.Aanmeldingen.Update(query);
             _context.Users.Update(clearSpecialistId);
             _context.SaveChanges();
@@ -92,22 +91,11 @@ namespace src.Areas.Profile.Pages.Tabs
 
         public IActionResult OnPostFilter(bool af, bool aan)
         {
+            
+
             Aangemeld = aan;
             Afgemeld = af;
-            
-            ClientList = Aanmeldingen.Join(
-                Clienten,
-                client => client.ClientId,
-                user => user.Id,
-                (client, user) => new ClientListAanmelding
-                {
-                    ClientName = user.FirstName + " " + user.LastName,
-                    ClientId = client.ClientId,
-                    DateAanmelding = client.Aanmelding,
-                    DateAfmelding = client.Afmelding,
-                    IsAangemeld = client.IsAangemeld,
-                    IsAfgemeld = client.IsAfgemeld
-                }).ToList();
+
             return RedirectToPage("/Tabs/Profiel", new { Area = "Profile", aan = Aangemeld, af = Afgemeld});
         }
 

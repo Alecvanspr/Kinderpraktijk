@@ -281,6 +281,69 @@ namespace src.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("src.Models.ClientListAanmelding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAanmelding")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateAfmelding")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAangemeld")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAfgemeld")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClientListAanmeldingen");
+                });
+
+            modelBuilder.Entity("src.Models.ClientRelations", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAanmelding")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateAfmelding")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAangemeld")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAfgemeld")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SpecialistName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClientRelationship");
+                });
+
             modelBuilder.Entity("srcUser", b =>
                 {
                     b.Property<string>("Id")

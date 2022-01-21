@@ -12,6 +12,8 @@ public class MijnContext : IdentityDbContext<srcUser>{
     public DbSet<ChatUser> ChatUsers{get;set;}
     public DbSet<Melding> Meldingen{get;set;}
     public DbSet<AanmeldingClient> Aanmeldingen{get;set;}
+    public DbSet<ClientListAanmelding> ClientListAanmeldingen{get;set;}
+    public DbSet<ClientRelations> ClientRelationship{get;set;}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

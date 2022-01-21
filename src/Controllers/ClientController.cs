@@ -28,7 +28,7 @@ private MijnContext _context;
     }
     //TODO De user moet automatisch gelinkt worden met de pedagoog bij het aanmelden.
     //Bij het aanmelden van de user en de pedagoog moet deze groep automatisch aangemaakt 
-    public ActionResult Index(string? zoek){
+    public ActionResult Index(string zoek){
         //hiermee worden alle privé chats toegevoegd
         ViewData["ZoekTerm"] = zoek;
         return View(ZoekOp(GetClients(),zoek).ToList());

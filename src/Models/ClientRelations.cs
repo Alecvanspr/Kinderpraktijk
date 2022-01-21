@@ -6,6 +6,7 @@ namespace src.Models
 {
     public class ClientRelations
     {
+            public int Id{get;set;}
             [Display(Name = "Naam")]
             public string ClientName { get; set; }
             public string SpecialistName { get; set; }
