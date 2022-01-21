@@ -96,15 +96,7 @@ namespace src.Areas.Profile.Pages.Tabs
 
             Aangemeld = aan;
             Afgemeld = af;
-
-            Aanmeldingen = await(from l in _context.Aanmeldingen
-                                 where l.srcUserId == _userManager.GetUserId(User)
-                                 select l).ToListAsync();
-
-            Clienten = await(from l in _context.Users
-                             where l.Id == Aanmeldingen.Select(x => x.ClientId).DefaultIfEmpty("").First().ToString()
-                             select l).ToListAsync();
-
+            
             ClientList = Aanmeldingen.Join(
                 Clienten,
                 client => client.ClientId,
@@ -160,7 +152,7 @@ namespace src.Areas.Profile.Pages.Tabs
                              where l.Id == _userManager.GetUserId(User)
                              select l.SpecialistId).FirstOrDefault();
 
-            Aanmeldingen = await (from l in _context.AanmeldingenClients
+            Aanmeldingen = await (from l in _context.Aanmeldingen
                                   where l.srcUserId == _userManager.GetUserId(User)
                                   select l).ToListAsync();
 
