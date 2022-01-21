@@ -51,12 +51,6 @@ public class MeldingenTest{
             //assert
             Assert.Equal(expectedAantal,aantalChats);
         }
-
-
-
-
-
-        
         //hieronder wordt getest of het meegegeven model helemaal klopt.
         //Hier kijken we dan naar of niet telkens de eerste melding wordt meegegeven
         [Theory]
@@ -137,10 +131,45 @@ public class MeldingenTest{
             //Deze 2 zijn voor het filteren op datum
             [InlineData("DatumOplopend","Melding2")]
             [InlineData("DatumAflopend","Melding3")]
+            [InlineData("DatumOplopend","Melding2")]
             public void TestVolgorde(string volgorde,string expectedTitel){
             //arrange
             MijnContext _context = GetDatabase();
             MeldingController controller = getController(_context,"Moderator","User1");
-
+            //Act
+            var result = controller.Volgorde(_context.Meldingen,volgorde).ToList();
+            var resultItem = result.First();
+            //assert
+            Assert.Equal(expectedTitel,resultItem.Titel);
+            }
+            [Theory]
+            //Deze test is om te kiken of hij kan zoeken met een deel
+            [InlineData("Melding3","Melding",4)]
+            //hier test hij iets met de hele titel
+            [InlineData("Melding4","Melding4",1)]
+            //Hier test hij het met een gedeelte
+            [InlineData("Melding2","2",1)]
+            public void TestZoeken(string expectedMelding, string zoekTerm,int expectedCount){
+            //arrange
+            MijnContext _context = GetDatabase();
+            MeldingController controller = getController(_context,"Moderator","User1");
+            //Act
+            var result = controller.ZoekenOp(_context.Meldingen,zoekTerm).ToList();
+            var resultItem = result.First();
+            //assert
+            Assert.Equal(expectedCount,result.Count());
+            Assert.Equal(expectedMelding,resultItem.Titel);
+            }
+            [Fact]
+            public void TestZoekenLeeg(){
+             //arrange
+             var expectedCount = 4;
+            MijnContext _context = GetDatabase();
+            MeldingController controller = getController(_context,"Moderator","User1");
+            //Act
+            var result = controller.ZoekenOp(_context.Meldingen,"").ToList();
+            var resultItem = result.First();
+            //assert
+            Assert.Equal(expectedCount,result.Count());
             }
         }
