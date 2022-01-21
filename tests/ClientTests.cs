@@ -5,9 +5,14 @@ public class ClientTests{
         MockDatabase m = new MockDatabase();
         return m.CreateContext();
     }
-    //Deze methode is nog niet af doordat het gekoppeld moet worden aan bepaalde componenten van de applicatie
+    //Testen of de methode CreateRoom wordt gemaakt
     [Fact]
-    public void testclass1(){
+    public void TestGetClients(){
 
     }
+    //Testen of de method GetClients werkt
+
+    //Testen of de methode Zoeken op werkt
+
+    //Testen of de methode index in zijn geheel werkt
 }

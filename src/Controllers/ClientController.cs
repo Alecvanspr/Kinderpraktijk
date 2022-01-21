@@ -28,18 +28,25 @@ private MijnContext _context;
     }
     //TODO De user moet automatisch gelinkt worden met de pedagoog bij het aanmelden.
     //Bij het aanmelden van de user en de pedagoog moet deze groep automatisch aangemaakt 
-    public ActionResult Index(){
+    public ActionResult Index(string? zoek){
         //hiermee worden alle privé chats toegevoegd
-        var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-        //Hier in de list wordt gekeken of de users in de chat zitten.
+        ViewData["ZoekTerm"] = zoek;
+        return View(ZoekOp(GetClients(),zoek).ToList());
+    }
+    public IQueryable<Chat> ZoekOp(IQueryable<Chat> lijst, string trefwoord){
+        return lijst.Where(x=>x.Naam.Contains(trefwoord));
+    }
+    public IQueryable<Chat> GetClients(){
+         //Hier in de list wordt gekeken of de users in de chat zitten.
         //dan wordt gekeken of de chat een private chat is
-        var PrivateLists = _context.ChatUsers.Include(x=>x.chat)
+        var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        return _context.ChatUsers.Include(x=>x.chat)
                                                                         .Where(x=>x.UserId==CurrentUser)
                                                                         .Select(x=>x.chat)
                                                                         .Where(x=>x.type==ChatType.Private);
-        return View(PrivateLists.ToList());
     }
+
+
   //TODO tests maken voor deze room
     [HttpPost]
     [Authorize(Roles = "Moderator,Pedagoog")]
