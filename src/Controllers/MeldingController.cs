@@ -25,6 +25,7 @@ namespace src.views_Melding
         public IActionResult Index(string volgorde,string zoek)
         {
             ViewData["Verwijderd"] = verwijderd;
+            ViewData["Selected"] = volgorde;
             verwijderd = false;
             return View(Volgorde(ZoekenOp(_context.Meldingen.AsQueryable(),zoek),volgorde).ToList());
         }
