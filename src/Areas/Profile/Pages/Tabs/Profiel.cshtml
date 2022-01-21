@@ -13,26 +13,26 @@
                         <div class="col-12">
                             <H1>Mijn Gegevens</H1>
 
-                            <a>@Html.DisplayNameFor(model => Model.MijnProfiel.FirstName): @Html.DisplayFor(model => Model.MijnProfiel.FirstName)</a>
+                            <a>@Html.DisplayNameFor(model => Model.CurrentUser.FirstName): @Html.DisplayFor(model => Model.CurrentUser.FirstName)</a>
                             <br />
-                            <a>@Html.DisplayNameFor(model => Model.MijnProfiel.LastName): @Html.DisplayFor(model => Model.MijnProfiel.LastName)</a>
+                            <a>@Html.DisplayNameFor(model => Model.CurrentUser.LastName): @Html.DisplayFor(model => Model.CurrentUser.LastName)</a>
                             <br />
-                            <a>@Html.DisplayNameFor(model => Model.MijnProfiel.Email): @Html.DisplayFor(model => Model.MijnProfiel.Email)</a>
+                            <a>@Html.DisplayNameFor(model => Model.CurrentUser.Email): @Html.DisplayFor(model => Model.CurrentUser.Email)</a>
                             <br />
-                            <a>@Html.DisplayNameFor(model => Model.MijnProfiel.PhoneNumber): @Html.DisplayFor(model => Model.MijnProfiel.PhoneNumber)</a>
+                            <a>@Html.DisplayNameFor(model => Model.CurrentUser.PhoneNumber): @Html.DisplayFor(model => Model.MijnProfiel.PhoneNumber)</a>
                             <br />
-                            @foreach (var a in Model.ProfileViewModel)
+                            @foreach (var a in Model.CurrentUser.Childeren)
                             {
                                 <br />
                                 <h4>Mijn Kind</h4>
 
-                                <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].FirstName): @Html.DisplayFor(modelItem => a.FirstName)</a>
+                                <a>@Html.DisplayNameFor(modelItem => a.FirstName): @Html.DisplayFor(modelItem => a.FirstName)</a>
                                 <br />
-                                <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].LastName): @Html.DisplayFor(modelItem => a.LastName)</a>
+                                <a>@Html.DisplayNameFor(modelItem => a.LastName): @Html.DisplayFor(modelItem => a.LastName)</a>
                                 <br />
-                                <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Email): @Html.DisplayFor(modelItem => a.Email)</a>
+                                <a>@Html.DisplayNameFor(modelItem => a.Email): @Html.DisplayFor(modelItem => a.Email)</a>
                                 <br />
-                                <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].PhoneNumber): @Html.DisplayFor(modelItem => a.PhoneNumber)</a>
+                                <a>@Html.DisplayNameFor(modelItem => a.PhoneNumber): @Html.DisplayFor(modelItem => a.PhoneNumber)</a>
                             }
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <H1>Chat Frequentie</H1>
+                                <h1>Chat Frequentie</h1>
 
                                 
                             </div>
@@ -67,20 +67,20 @@
                         <div class="col-md-6">
                             <h3>Clienten</h3>
                             <div class="row align-items-center">
-                                @foreach (var a in Model.ClientList)
+                                @foreach (var a in Model.Aanmeldingen)
                                 {
                                     if (a.IsAfgemeld == false)
                                     {
                                         <div class="col-12">
-                                            <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientList[0].ClientName): </a>
+                                            <a style="font-weight: bold;">@Html.DisplayNameFor(modelitem => a.Client.LastName): </a>
 
-                                            <a>@Html.DisplayFor(modelItem => a.ClientName) </a>
+                                            <a>@Html.DisplayFor(modelItem => a.Client.LastName) </a>
                                             <br>
-                                            <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientList[0].DateAanmelding): </a>
+                                            <a style="font-weight: bold;">@Html.DisplayNameFor(modelItem=> a.AanmeldingDatum): </a>
 
-                                            <a>@Html.DisplayFor(modelItem => a.DateAanmelding) </a>
+                                            <a>@Html.DisplayFor(modelItem => a.AanmeldingDatum) </a>
                                             <br>
-                                            <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientList[0].IsAangemeld): </a>
+                                            <a style="font-weight: bold;">@Html.DisplayNameFor(modelItem=> a.IsAangemeld): </a>
 
                                             <a>@Html.DisplayFor(modelItem => a.IsAangemeld)</a>
                                         </div>
@@ -135,38 +135,38 @@
                                 </form>
                             </div>
 
-                            @foreach (var a in Model.ClientRelations)
+                            @foreach (var a in Model.Aanmeldingen)
                             {
                                 <div class="row align-items-center border-bottom">
                                     <div class="col-md-auto">
-                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].ClientName): </a>
+                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.Aanmeldingen[0].Client.LastName): </a>
 
-                                        <a>@Html.DisplayFor(modelItem => a.ClientName) </a>
+                                        <a>@Html.DisplayFor(modelItem => a.Client.LastName) </a>
                                     </div>
                                     <div class="col-md-auto">
-                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].DateAanmelding): </a>
+                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.Aanmeldingen[0].AanmeldingDatum): </a>
 
-                                        <a>@Html.DisplayFor(modelItem => a.DateAanmelding) </a>
+                                        <a>@Html.DisplayFor(modelItem => a.AanmeldingDatum) </a>
                                     </div>
                                     <div class="col-md-auto">
-                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].IsAangemeld): </a>
+                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.Aanmeldingen[0].IsAangemeld): </a>
 
                                         <a>@Html.DisplayFor(modelItem => a.IsAangemeld)</a>
                                     </div>
                                     <div class="col-md-auto">
-                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].DateAfmelding): </a>
+                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.Aanmeldingen[0].AfmeldingDatum): </a>
 
-                                        <a>@Html.DisplayFor(modelItem => a.DateAfmelding) </a>
+                                        <a>@Html.DisplayFor(modelItem => a.AfmeldingDatum) </a>
                                     </div>
                                     <div class="col-md-auto">
-                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].IsAfgemeld): </a>
+                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.Aanmeldingen[0].IsAfgemeld): </a>
 
                                         <a>@Html.DisplayFor(modelItem => a.IsAangemeld)</a>
                                     </div>
                                     <div class="col-md-auto">
-                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.ClientRelations[0].SpecialistName): </a>
+                                        <a style="font-weight: bold;">@Html.DisplayNameFor(a => a.Aanmeldingen[0].Pedagoog.LastName): </a>
 
-                                        <a>@Html.DisplayFor(modelItem => a.SpecialistName)</a>
+                                        <a>@Html.DisplayFor(modelItem => a.Pedagoog.LastName)</a>
                                     </div>
                                     <hr />
                                 </div>

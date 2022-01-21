@@ -62,6 +62,10 @@ public class MockDatabase{
             context.Meldingen.Add(new Melding(){Id=4,Titel="Melding4",Bericht="Deze klaagt dat gratis dingen niet kloppen",Datum=DateTime.Now});
             context.Meldingen.Add(new Melding(){Id=3,Titel="Melding3",Bericht="Een functie in de app werkt niet",Datum=DateTime.Now});
             context.SaveChanges();
+            context.Aanmeldingen.Add(new Aanmelding(){Id=1,Client=Alec,Pedagoog=Emma,AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
+            context.Aanmeldingen.Add(new Aanmelding(){Id=2,Client=Claudio,Pedagoog=Emma,AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
+            context.Aanmeldingen.Add(new Aanmelding(){Id=3,Client=Jeremy,Pedagoog=Emma,AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
+            context.SaveChanges();
             return GetCleanContext(false);
         }
         //Dit zorgt ervoor dat je een schone context hebt.

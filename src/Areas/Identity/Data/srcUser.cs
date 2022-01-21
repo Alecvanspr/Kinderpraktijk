@@ -57,6 +57,6 @@ public class srcUser : IdentityUser
     public ICollection<srcUser> Childeren { get; set;}
     public ICollection<srcUser> Clients { get; set; }
     public ICollection<ChatUser> Chats{get;set;}
-    public ICollection<AanmeldingClient> AanmeldingenClients { get; set; }
-
+    public ICollection<Aanmelding> AanmeldingenClients { get; set; }
+    public ICollection<Aanmelding> AanmeldingPedagoog{get;set;}
 }

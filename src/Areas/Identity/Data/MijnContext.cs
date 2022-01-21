@@ -11,9 +11,7 @@ public class MijnContext : IdentityDbContext<srcUser>{
     public DbSet<Message> Messages {get;set;}
     public DbSet<ChatUser> ChatUsers{get;set;}
     public DbSet<Melding> Meldingen{get;set;}
-    public DbSet<AanmeldingClient> Aanmeldingen{get;set;}
-    public DbSet<ClientListAanmelding> ClientListAanmeldingen{get;set;}
-    public DbSet<ClientRelations> ClientRelationship{get;set;}
+    public DbSet<Aanmelding> Aanmeldingen{get;set;}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -26,5 +24,13 @@ public class MijnContext : IdentityDbContext<srcUser>{
         builder.Entity<srcUser>()
                     .HasMany(x=>x.Clients)
                     .WithOne(x=>x.Specialist);
+        builder.Entity<Aanmelding>()
+                    .HasOne(x=>x.Client)
+                    .WithMany(x=>x.AanmeldingenClients)
+                    .HasForeignKey(x=>x.ClientId);
+        builder.Entity<Aanmelding>()
+                    .HasOne(x=>x.Pedagoog)
+                    .WithMany(x=>x.AanmeldingPedagoog)
+                    .HasForeignKey(x=>x.PedagoogId);
     }
 }

@@ -59,7 +59,7 @@ namespace src.Areas.Profile.Pages.Tabs
         public async Task<IActionResult> OnPostRegister(string id)
         {
             var date = DateTime.Now;
-            AanmeldingClient aanmelding = new AanmeldingClient { Aanmelding = date, ClientId = _userManager.GetUserId(User), srcUserId = id };
+            Aanmelding aanmelding = new Aanmelding { AanmeldingDatum = date, ClientId = _userManager.GetUserId(User), PedagoogId = id };
             _context.Aanmeldingen.Add(aanmelding);
             _context.SaveChanges();
             return RedirectToPage("/Tabs/ViewSpecialist", new { Area = "Profile" });
