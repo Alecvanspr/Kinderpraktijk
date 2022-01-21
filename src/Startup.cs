@@ -31,7 +31,7 @@ namespace src
 
             //Hier Halen wij de naam van de database uit de Usersecrets
             services.AddDbContext<MijnContext>(o=>
-                        o.UseSqlServer(Configuration.GetConnectionString("DatabaseName")));
+                        o.UseSqlServer("Server=tcp:kinderpraktijkhijserver.database.windows.net,1433;Initial Catalog=KinderpraktijkHijdb;Persist Security Info=False;User ID=KinderpraktijkHij;Password=J0eBiden!123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
                         //o.UseSqlite("Data Source=database.db"));
             
             //dit is nodig voor de identity
