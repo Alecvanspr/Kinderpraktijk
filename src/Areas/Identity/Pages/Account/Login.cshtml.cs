@@ -125,7 +125,8 @@ namespace src.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return RedirectToPage("/Tabs/Profiel", new { Area = "Profile" });
+                    //return LocalRedirect(returnUrl);
                     //return LocalRedirect("/Profile/Tabs/Profiel");    Deze is van claudion
                 }
                 if (result.RequiresTwoFactor)

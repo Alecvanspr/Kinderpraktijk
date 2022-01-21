@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using src.Areas.Identity.Data;
+using src.Services;
 
 namespace src
 {
@@ -49,6 +51,12 @@ namespace src
                      o.ReCAPTCHA_Sectret_Key = "6LcZdx8eAAAAAOIa93IF8r7aAZfh5HVjZWx8fmxP";
                 });
             services.AddTransient<GooglereCAPTCHAService>();
+
+            // requires
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            // using WebPWrecover.Services;
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
 
             /* 
                 Dit moet worden gedaan doordat het framework een preventie

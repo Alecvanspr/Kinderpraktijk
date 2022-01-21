@@ -363,3 +363,7 @@ div.login-logout-tab a.nav-link {
   margin: auto;
   padding: 10px;
 }
+
+.acessibilidade {
+    font-size: inherit;
+}
