@@ -43,7 +43,7 @@ public class MeldingenTest{
             MijnContext _context = GetDatabase();
             MeldingController controller = getController(_context,"Moderator","User1");
             var expectedAantal = _context.Meldingen.Count();
-            var result = controller.Index();
+            var result = controller.Index("","");
             //act
             ViewResult viewResult = result as ViewResult;
             var model = Assert.IsAssignableFrom<List<Melding>>(viewResult.ViewData.Model);
@@ -94,32 +94,82 @@ public class MeldingenTest{
             Assert.Equal("Index", CreateRedirect.ActionName);
         }
         //Met deze methode testen we of we een melding kunnen verwijderen
-        /*
         [Fact]
-        public void TestDelete(){
+        public void TestDeleteConfirm(){
             //arrange
             MijnContext _context = GetDatabase();
             MeldingController controller = getController(_context,"Moderator","User1");
             var expectedCount = _context.Meldingen.Count()-1;
             var verwijderId = 3;
             //Act
-            var result = controller.Delete(verwijderId);
+            var result = controller.DeleteConfirmed(verwijderId);
             //Assert
             //met onderstaande test testen we of er iets is verwijderd
             Assert.Equal(expectedCount,_context.Meldingen.Count());
             //Met onderstaande test testen we of hij niet per ongeluk de verkeerde heeft verwijderd
             Assert.False(_context.Meldingen.Any(x=>x.Id==verwijderId));
         }
-        //Hierbij checken we wat er gebeurt als je het verkeerde ID doorgeeft.
-        [Fact]
-        public void TestNietBestaandId(){
-
-        }
         //hiermee testen we of een melding bestaat
-        /*
         [Theory]
-        public void TestMeldingexist(){
-
+        [InlineData(1,true)]
+        [InlineData(3,true)]
+        [InlineData(8,false)]
+        [InlineData(89347,false)]
+        public void TestMeldingexist(int id,bool expected){
+            //arrange
+            MijnContext _context = GetDatabase();
+            MeldingController controller = getController(_context,"Moderator","User1");
+            //act
+            var result = controller.MeldingExists(id);
+            //assert
+            Assert.Equal(expected,result);
+            }
+            [Theory]
+            //Deze 2 zijn voor het filteren op de titel
+            [InlineData("TitelOplopend","Melding1")]
+            [InlineData("TitelAflopend","Melding4")]
+            //Deze 2 zijn voor het filteren op datum
+            [InlineData("DatumOplopend","Melding2")]
+            [InlineData("DatumAflopend","Melding3")]
+            [InlineData("DatumOplopend","Melding2")]
+            public void TestVolgorde(string volgorde,string expectedTitel){
+            //arrange
+            MijnContext _context = GetDatabase();
+            MeldingController controller = getController(_context,"Moderator","User1");
+            //Act
+            var result = controller.Volgorde(_context.Meldingen,volgorde).ToList();
+            var resultItem = result.First();
+            //assert
+            Assert.Equal(expectedTitel,resultItem.Titel);
+            }
+            [Theory]
+            //Deze test is om te kiken of hij kan zoeken met een deel
+            [InlineData("Melding3","Melding",4)]
+            //hier test hij iets met de hele titel
+            [InlineData("Melding4","Melding4",1)]
+            //Hier test hij het met een gedeelte
+            [InlineData("Melding2","2",1)]
+            public void TestZoeken(string expectedMelding, string zoekTerm,int expectedCount){
+            //arrange
+            MijnContext _context = GetDatabase();
+            MeldingController controller = getController(_context,"Moderator","User1");
+            //Act
+            var result = controller.ZoekenOp(_context.Meldingen,zoekTerm).ToList();
+            var resultItem = result.First();
+            //assert
+            Assert.Equal(expectedCount,result.Count());
+            Assert.Equal(expectedMelding,resultItem.Titel);
+            }
+            [Fact]
+            public void TestZoekenLeeg(){
+             //arrange
+             var expectedCount = 4;
+            MijnContext _context = GetDatabase();
+            MeldingController controller = getController(_context,"Moderator","User1");
+            //Act
+            var result = controller.ZoekenOp(_context.Meldingen,"").ToList();
+            var resultItem = result.First();
+            //assert
+            Assert.Equal(expectedCount,result.Count());
+            }
         }
-        */
-}

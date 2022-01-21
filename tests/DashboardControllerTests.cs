@@ -74,7 +74,7 @@ namespace tests
 
             Assert.Equal(expected, viewData + "");
         }
-
+        /*
         //BIj deze test wordt getest het aantal correcte chats opgehaald worden
         //Als het filteren en sorteren getest moet worden moeten daar ook performance testen bij gemaakt worden
         [Theory]
@@ -106,6 +106,7 @@ namespace tests
 
             Assert.Equal(model.First().Naam, "Chat1");
         }
+        */
 
         //Chat tests\\
         //In deze test testen wij of de juiste chat wordt meegegeven
@@ -352,7 +353,7 @@ namespace tests
             var userId = "User1";
             var chatId = 2;
             var expectedChatName = "Chat2";
-            var expectedChatBeschrijving = "Dit is een chat applicatie";
+            var expectedChatBeschrijving = "Dit is een chat applicatie2";
             MijnContext context = GetDatabase();
             DashboardController controller = getController(context,Pedagoog,userId);
             var User = context.Users.Where(x=>x.Id==userId).Single();

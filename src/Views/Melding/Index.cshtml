@@ -11,6 +11,29 @@
             Uw melding is successvol verwijderd!
         </div>
 }
+   <form asp-action="Index" method="get" class="filter-box">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label for="ZoekVeld">Zoek op title</label></td>
+                    <td><input name="zoek" id="ZoekVeld" type="text" placeholder="Titel naam" aria-label="zoek meldingen op basis van de titel" /></td>
+                </tr>
+                <tr>
+                    <td><label for="LijstVolgorde">Sorteren op</label></td>
+                    <td>
+                        <select name="volgorde" id="LijstVolgorde" type="text">
+                            <option value='@ViewData["Selected"]' hidden>@ViewData["Selected"]</option>
+                            <option value="TitelOplopend">A-Z</option>
+                            <option value="TitelAflopend">Z-A</option>
+                            <option value="DatumAflopend">Nieuwste eerst</option>
+                            <option value="DatumOplopend">Oudste eerst</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="submit" value="Zoek" aria-label="Zoek in lijst van Meldingen" class="btn btn-primary">
+    </form>
 <table class="table">
     <thead>
         <tr>
