@@ -161,7 +161,9 @@ namespace src.Areas.Identity.Pages.Account
                 {
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    Age = Input.Age
+                    Age = Input.Age,
+                    IBAN = Input.IBAN,
+                    BSN = Input.BSN
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

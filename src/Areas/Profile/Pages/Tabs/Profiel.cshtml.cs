@@ -43,9 +43,8 @@ namespace src.Areas.Profile.Pages.Tabs
 
         public async Task OnGetAsync(bool aan, bool af)
         {
-            UserProfileInfo();
-            //Dit moet later aangepast worden als het kan
-            FilterAanmeldingen(true, af);          
+            //Als er een filter functie is deze aanpassen
+            UserProfileInfo(true, af);
         }
 
         public async Task<IActionResult> OnPostMeldAan(string id)
@@ -98,7 +97,7 @@ namespace src.Areas.Profile.Pages.Tabs
             return RedirectToPage("/Tabs/Profiel", new { Area = "Profile", aan = Aangemeld, af = Afgemeld});
         }
     
-        public async void UserProfileInfo()
+        public async void UserProfileInfo(bool aan, bool af)
         {
             //Dit is de Current User
             var currentUserId = _userManager.GetUserId(User);
@@ -116,23 +115,17 @@ namespace src.Areas.Profile.Pages.Tabs
                             .Include(x=>x.Specialist)
                             .Select(x=>x.Specialist);
             //Hiermee wordt een lijst met de actieve aanmeldingen gegenereerd
-            Aanmeldingen = GetAanmeldingen(currentUserId);
+            Aanmeldingen = GetAanmeldingen(currentUserId,aan,af);
 
             ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(child);
             MijnProfiel = _mapper.Map<srcUser, ProfileViewModel>(CurrentUser);      
         }
         //Hiermee wordt de actieve lijst gehaald met alle Aanmeldingen
-        public List<Aanmelding> GetAanmeldingen(string currentUserId){
+        public List<Aanmelding> GetAanmeldingen(string currentUserId,bool aan, bool af){
                 return _context.Aanmeldingen
                                             .Include(x=>x.Client)
                                             .Include(x=>x.Pedagoog)
-                                            .Where(x=>x.PedagoogId==currentUserId).ToList();
-        }
-        //Hier kan op gefilterd worden. Aan is alle geaccepteerde filters
-        public void FilterAanmeldingen(bool aan, bool af){
-            Aanmeldingen = _context.Aanmeldingen
-                                            .Where(x=>x.IsAfgemeld==af)
-                                            .Where(x=>x.IsAangemeld==aan)
+                                            .Where(x=>x.PedagoogId==currentUserId)
                                             .ToList();
         }
     }
