@@ -29,9 +29,9 @@ namespace src
         {
             services.AddControllersWithViews();
 
-            //Deze moet later verwijderd worden,Doordat we gebruik maken van een andere DB provider 
+            //Hier Halen wij de naam van de database uit de Usersecrets
             services.AddDbContext<MijnContext>(o=>
-                        o.UseSqlServer(@"Server=tcp:kinderpraktijkhijserver.database.windows.net,1433;Initial Catalog=KinderpraktijkHijdb;Persist Security Info=False;User ID=KinderpraktijkHij;Password=J0eBiden!123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+                        o.UseSqlServer(Configuration.GetConnectionString("DatabaseName")));
                         //o.UseSqlite("Data Source=database.db"));
             
             //dit is nodig voor de identity
@@ -44,8 +44,10 @@ namespace src
             //Dit is nodig voor het gebruik van signal R
             services.AddSignalR();
 
-            services.Configure<ReCAPTCHASettings>(Configuration.GetSection("GooglereCAPTCHA"));
-
+                services.Configure<ReCAPTCHASettings>(o=>{
+                     o.ReCAPTCHA_Site_Key = "6LcZdx8eAAAAAJRJY92iPPyF0Zn548LKM5us_LTT";
+                     o.ReCAPTCHA_Sectret_Key = "6LcZdx8eAAAAAOIa93IF8r7aAZfh5HVjZWx8fmxP";
+                });
             services.AddTransient<GooglereCAPTCHAService>();
 
             /* 

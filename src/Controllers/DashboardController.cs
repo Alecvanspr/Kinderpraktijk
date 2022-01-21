@@ -88,6 +88,9 @@ public class DashboardController : Controller{
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
         return _context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Select(x=>x.chat).Where(x=>x.type==ChatType.Room);
     }
+    public IQueryable<Chat> GetAllChats(){
+        return _context.Chat.Where(x=>x.type==ChatType.Room);
+    }
 
     //Dit is voor het verkrijgen van de view voor het toevoegen van de model
     [HttpGet]
@@ -95,7 +98,7 @@ public class DashboardController : Controller{
     public IActionResult GroepToevoegen(string Naam, string Beschrijving, string onderwerp, string Leeftijdscategorie){
 
         //Hier wordt die lijst terug geven aan de mensen
-        return View(LeeftijdsCatagorie(Onderwerp(FilterBeschrijving(FilterTitel(GetChats(),Naam),Beschrijving),onderwerp),Leeftijdscategorie).ToList());
+        return View(LeeftijdsCatagorie(Onderwerp(FilterBeschrijving(FilterTitel(GetAllChats(),Naam),Beschrijving),onderwerp),Leeftijdscategorie).ToList());
     }
 
     //Deze is voor de chat zelf. Hiermee kan je alle berichten zien

@@ -18,10 +18,9 @@ public class GooglereCAPTCHAService{
             response = _Token,
             secret = _settings.ReCAPTCHA_Sectret_Key
         };
-
         HttpClient client = new HttpClient();
         //Hier wordt een response gevraagd van de google ReCAPTCHA site.
-        var response = await client.GetStringAsync($"https://www.google.com/recaptcha/api/siteverify?=secret="+_MyData.secret+"&response="+_MyData.response);
+        var response = await client.GetStringAsync($"https://www.google.com/recaptcha/api/siteverify?secret="+_MyData.secret+"&response="+_MyData.response);
 
         //Hieronder wordt het resultaat wat binnenkomt als een Json omgezet naar een GoogleResponse
         var ReCAPTCHAResponse =  JsonConvert.DeserializeObject<GoogleResponse>(response);
