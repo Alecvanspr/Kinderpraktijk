@@ -357,3 +357,7 @@ div.login-logout-tab a.nav-link {
 .nav-link:hover {
   border-bottom: 5px solid #ff7240;
 }
+
+.acessibilidade {
+    font-size: inherit;
+}

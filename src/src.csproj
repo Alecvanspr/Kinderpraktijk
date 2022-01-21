@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
 	  <RollForward>Major</RollForward>
+    <UserSecretsId>09b6950e-254b-4915-9bb3-539db8cfa3c8</UserSecretsId>
   </PropertyGroup>
 	
   <ItemGroup>

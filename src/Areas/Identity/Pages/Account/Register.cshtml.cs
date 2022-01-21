@@ -131,6 +131,9 @@ namespace src.Areas.Identity.Pages.Account
             [SixteenAndOlder]
             [Display(Name = "Geboortedatum")]
             public DateTime Age { get; set; }
+
+            [Display(Name = "Bent u een ouder?")]
+            public bool Parent { get; set; }
             public string Token {get;set;}
         }
 
@@ -207,8 +210,16 @@ namespace src.Areas.Identity.Pages.Account
             return Page();
         }
         public async Task<bool> SetRoleAsync(srcUser user){
-             await _userManager.AddToRoleAsync(user,"Client");
-            return  await _userManager.IsInRoleAsync(user,"Client");
+            if(Input.Parent)
+            {
+                await _userManager.AddToRoleAsync(user, "Client");
+                return await _userManager.IsInRoleAsync(user, "Client");
+            }
+            else
+            {
+                await _userManager.AddToRoleAsync(user, "Ouder");
+                return await _userManager.IsInRoleAsync(user, "Ouder");
+            }
         }
 
         private IUserEmailStore<srcUser> GetEmailStore()
