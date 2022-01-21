@@ -28,8 +28,10 @@ var messageBuilder = function () {
             return this;
         },
         withFooter: function (text) {
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes();
             footer = document.createElement("footer")
-            footer.appendChild(document.createTextNode(text)) 
+            footer.appendChild(document.createTextNode(time)) 
             return this;
         },
         build: function () {
