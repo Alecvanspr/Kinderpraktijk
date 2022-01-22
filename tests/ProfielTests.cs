@@ -47,7 +47,7 @@ public class ProfielTests{
             ProfielModel controller = getController(context);
             var expectedCount = 3;
             //Act
-            var userLijst = controller.GetAanmeldingen("User5");
+            var userLijst = controller.GetAanmeldingen("User5",true,false);
             var UserCount = userLijst.Count();
             //Assert
             Assert.Equal(expectedCount,UserCount);

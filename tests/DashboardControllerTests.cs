@@ -74,11 +74,10 @@ namespace tests
 
             Assert.Equal(expected, viewData + "");
         }
-        /*
         //BIj deze test wordt getest het aantal correcte chats opgehaald worden
         //Als het filteren en sorteren getest moet worden moeten daar ook performance testen bij gemaakt worden
         [Theory]
-        [InlineData("User1",2)]
+        [InlineData("User1",1)]
         [InlineData("User2",2)]
         [InlineData("User3",2)]
         [InlineData("User4",0)]
@@ -106,7 +105,6 @@ namespace tests
 
             Assert.Equal(model.First().Naam, "Chat1");
         }
-        */
 
         //Chat tests\\
         //In deze test testen wij of de juiste chat wordt meegegeven
