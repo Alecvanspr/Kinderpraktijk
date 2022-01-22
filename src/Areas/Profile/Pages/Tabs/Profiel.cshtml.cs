@@ -33,10 +33,12 @@ namespace src.Areas.Profile.Pages.Tabs
         //Dit geeft set de CurrentUser
         public srcUser CurrentUser{get;set;}
 
+        //Deze worden automatisch geset
+        //Door deze filter zie je al gelijk de dingen die geactiveerd zijn
         [BindProperty]
-        public bool Aangemeld { get; set; }
+        public bool Aangemeld { get; set; } = true;
         [BindProperty]
-        public bool Afgemeld { get; set; }
+        public bool Afgemeld { get; set; } = false;
 
         public string SpecialistName { get; set; }
         
@@ -44,24 +46,27 @@ namespace src.Areas.Profile.Pages.Tabs
         public async Task OnGetAsync(bool aan, bool af)
         {
             //Als er een filter functie is deze aanpassen
-            UserProfileInfo(true, af);
+            var currentUserId = _userManager.GetUserId(User);
+            SetCurrentUser(currentUserId);
+            //Hiermee wordt een lijst met de actieve aanmeldingen gegenereerd
+            //Daarvoor moet je de speciale FilterList aanroepe
+            Aanmeldingen = GetAanmeldingen(currentUserId).ToList();
         }
 
         public async Task<IActionResult> OnPostMeldAan(string id)
         {
             CurrentUser = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
             CurrentUser.SpecialistId = _userManager.GetUserId(User);
+            //hier wordt de laatste aanmelding die is gemaakt geopend
+            var LaasteAanmelding = GetAanmeldingen(CurrentUser.SpecialistId)
+                                                     .First();
+            
+            //Hier wordt de laatste aanmelding op waar gezet
+            LaasteAanmelding.IsAangemeld = true;
+            LaasteAanmelding.AfmeldingDatum =  DateTime.Now;
 
-            var query = await _context.Aanmeldingen
-                .Where(x => x.ClientId == id)
-                .Where(x => x.PedagoogId == _userManager.GetUserId(User))
-                .OrderByDescending(x=> x.Id)
-                .FirstOrDefaultAsync();
-
-            query.IsAangemeld = true;
-            query.AanmeldingDatum = DateTime.UtcNow;
-
-            _context.Aanmeldingen.Update(query);
+            //Hier wordt de aanmelding die gedaan wordt opgeslagen
+            _context.Aanmeldingen.Update(LaasteAanmelding);
             _context.Users.Update(CurrentUser);
             _context.SaveChanges();
             return RedirectToPage("/Tabs/Profiel", new { Area = "Profile" });
@@ -69,49 +74,29 @@ namespace src.Areas.Profile.Pages.Tabs
 
         public async Task<IActionResult> OnPostMeldAf(string id)
         {
-            var query = await _context.Aanmeldingen
-                .Where(x => x.ClientId == id && x.PedagoogId == _userManager.GetUserId(User))
-                .OrderByDescending(x => x.Id)
-                .FirstOrDefaultAsync();
+            CurrentUser = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
 
-            var clearSpecialistId = await _context.Users
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
+            var LaasteAanmelding = GetFilters(GetAanmeldingen(CurrentUser.SpecialistId))
+                                                     .First();
+            //Hier wordt de Specialist van de Current User verwiderd
+            CurrentUser.SpecialistId = null;
 
-            clearSpecialistId.SpecialistId = "";
+            //hier wordt de afmelding waar gemaakt
+            LaasteAanmelding.IsAfgemeld = true;
+            LaasteAanmelding.AfmeldingDatum = DateTime.Now;
 
-            query.IsAfgemeld = true;
-            query.AfmeldingDatum = DateTime.UtcNow;
-
-            _context.Aanmeldingen.Update(query);
-            _context.Users.Update(clearSpecialistId);
+            _context.Aanmeldingen.Update(LaasteAanmelding);
+            _context.Users.Update(CurrentUser);
             _context.SaveChanges();
             return RedirectToPage("/Tabs/Profiel", new { Area = "Profile" });
         }
 
-        public IActionResult OnPostFilter(bool af, bool aan)
+        public IActionResult OnPostFilter(bool aan, bool af)
         {
             Aangemeld = aan;
             Afgemeld = af;
 
             return RedirectToPage("/Tabs/Profiel", new { Area = "Profile", aan = Aangemeld, af = Afgemeld});
-        }
-    
-        public async void UserProfileInfo(bool aan, bool af)
-        {
-                        //Dit is de Current User
-            var currentUserId = _userManager.GetUserId(User);
-            SetCurrentUser(currentUserId);
-            var child = await GetChildAsync(currentUserId);
-            //Dit is het specialist id
-            var specialist = _context.Users
-                            .Include(x=>x.Specialist)
-                            .Select(x=>x.Specialist);
-            //Hiermee wordt een lijst met de actieve aanmeldingen gegenereerd
-            Aanmeldingen = GetAanmeldingen(currentUserId,aan,af);
-
-            //ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(child);
-            //MijnProfiel = _mapper.Map<srcUser, ProfileViewModel>(CurrentUser);      
         }
         public void SetCurrentUser(string currentUserId){
             CurrentUser = _context.Users
@@ -124,13 +109,16 @@ namespace src.Areas.Profile.Pages.Tabs
                                         .Where(x => x.ParentId == currentUserId)
                                         .ToListAsync();
         }
-        //Hiermee wordt de actieve lijst gehaald met alle Aanmeldingen
-        public List<Aanmelding> GetAanmeldingen(string currentUserId,bool aan, bool af){
+        //Hier kan je filters toevoegen van aan de Aanmeldingen lijst
+        public IQueryable<Aanmelding> GetFilters(IQueryable<Aanmelding> lijst){
+                return lijst.Where(x=>x.IsAangemeld==Aangemeld).Where(x=>x.IsAfgemeld==Afgemeld);
+        }
+        //Hier wordt een lijst van alle aanmeldingen gegeven
+        public IQueryable<Aanmelding> GetAanmeldingen(string PedagoogId){
                 return _context.Aanmeldingen
                                             .Include(x=>x.Client)
                                             .Include(x=>x.Pedagoog)
-                                            .Where(x=>x.PedagoogId==currentUserId)
-                                            .ToList();
+                                            .Where(x=>x.PedagoogId==PedagoogId);
         }
     }
 }

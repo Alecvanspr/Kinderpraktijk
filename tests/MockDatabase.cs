@@ -61,10 +61,11 @@ public class MockDatabase{
             context.Meldingen.Add(new Melding(){Id=1,Titel="Melding1",Bericht="Dit is het eerste bericht om te testen of alles werkt",Datum=DateTime.Now});
             context.Meldingen.Add(new Melding(){Id=4,Titel="Melding4",Bericht="Deze klaagt dat gratis dingen niet kloppen",Datum=DateTime.Now});
             context.Meldingen.Add(new Melding(){Id=3,Titel="Melding3",Bericht="Een functie in de app werkt niet",Datum=DateTime.Now});
-            context.SaveChanges();
-            context.Aanmeldingen.Add(new Aanmelding(){Id=1,Client=Alec,Pedagoog=Emma,AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
-            context.Aanmeldingen.Add(new Aanmelding(){Id=2,Client=Claudio,Pedagoog=Emma,AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
-            context.Aanmeldingen.Add(new Aanmelding(){Id=3,Client=Jeremy,Pedagoog=Emma,AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
+            context.SaveChanges();            
+            context.Aanmeldingen.Add(new Aanmelding(){Id=1,Client=Alec, ClientId="User1",Pedagoog=Emma,PedagoogId="User5",AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=true});
+            context.Aanmeldingen.Add(new Aanmelding(){Id=2,Client=Alec,ClientId="User1",Pedagoog=Emma,PedagoogId="User5",AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
+            context.Aanmeldingen.Add(new Aanmelding(){Id=3,Client=Claudio,ClientId="User2",Pedagoog=Emma,PedagoogId="User5",AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
+            context.Aanmeldingen.Add(new Aanmelding(){Id=4,Client=Jeremy,ClientId="User3",Pedagoog=Emma,PedagoogId="User5",AanmeldingDatum=DateTime.Now,IsAangemeld=false,IsAfgemeld=false});
             context.SaveChanges();
             return GetCleanContext(false);
         }
