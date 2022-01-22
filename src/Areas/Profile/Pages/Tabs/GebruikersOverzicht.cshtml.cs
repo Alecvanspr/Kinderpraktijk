@@ -28,17 +28,22 @@ namespace src.Areas.Profile.Pages.Tabs
             users = _context.Users.ToList();
         }
 
-        public async Task<IActionResult> OnPost(string id)
+        public void Blokkeren(srcUser user)
         {
-            srcUser user = await _context.Users.Where(p => p.Id == id).FirstOrDefaultAsync();
             if(user.UserBlocked)
             {
                 user.UserBlocked = false;
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
             } else {
                 user.UserBlocked = true;
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IActionResult> OnPost(string id)
+        {
+            srcUser user = await _context.Users.Where(p => p.Id == id).FirstOrDefaultAsync();
+            Blokkeren(user);
             return RedirectToPage("/Tabs/GebruikersOverzicht");
         }
     }
