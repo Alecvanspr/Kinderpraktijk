@@ -25,9 +25,9 @@ namespace src.Areas.Profile.Pages.Tabs
             _mapper = mapper;
         }
 
-        public List<ProfileViewModel> ProfileViewModel { get; set; }
+        public List<ProfileViewModel> ProfileViewModel { get; set; } = new List<ProfileViewModel>();
         //Dit is het profiel van de ingelogde gebruiker
-        public ProfileViewModel MijnProfiel { get; set; }   
+        public ProfileViewModel MijnProfiel { get; set; }
         //Dit geeft een lijst weer van alle aanmeldingen     
         public List<Aanmelding> Aanmeldingen {get;set;} = new List<Aanmelding>();    
         //Dit geeft set de CurrentUser
@@ -99,17 +99,10 @@ namespace src.Areas.Profile.Pages.Tabs
     
         public async void UserProfileInfo(bool aan, bool af)
         {
-            //Dit is de Current User
+                        //Dit is de Current User
             var currentUserId = _userManager.GetUserId(User);
-            CurrentUser = _context.Users
-                                        .Include(x=>x.Childeren)
-                                        .Where(x=>x.Id== currentUserId).SingleOrDefault();
-
-            //HIermee wordt een lijst van alle kinderen van de user opgevraagd
-            var child = await _context.Users
-                                        .Where(x => x.ParentId == currentUserId)
-                                        .ToListAsync();
-
+            SetCurrentUser(currentUserId);
+            var child = await GetChildAsync(currentUserId);
             //Dit is het specialist id
             var specialist = _context.Users
                             .Include(x=>x.Specialist)
@@ -117,8 +110,19 @@ namespace src.Areas.Profile.Pages.Tabs
             //Hiermee wordt een lijst met de actieve aanmeldingen gegenereerd
             Aanmeldingen = GetAanmeldingen(currentUserId,aan,af);
 
-            ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(child);
-            MijnProfiel = _mapper.Map<srcUser, ProfileViewModel>(CurrentUser);      
+            //ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(child);
+            //MijnProfiel = _mapper.Map<srcUser, ProfileViewModel>(CurrentUser);      
+        }
+        public void SetCurrentUser(string currentUserId){
+            CurrentUser = _context.Users
+                                        .Include(x=>x.Childeren)
+                                        .Where(x=>x.Id== currentUserId).SingleOrDefault();
+        }
+        //Hier wordt een lijst met kinderen opgevraagd
+        public async Task<List<srcUser>> GetChildAsync(string currentUserId){ 
+           return await _context.Users
+                                        .Where(x => x.ParentId == currentUserId)
+                                        .ToListAsync();
         }
         //Hiermee wordt de actieve lijst gehaald met alle Aanmeldingen
         public List<Aanmelding> GetAanmeldingen(string currentUserId,bool aan, bool af){

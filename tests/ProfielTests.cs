@@ -40,16 +40,32 @@ public class ProfielTests{
             await Task.Delay(2);
             return true;
         }
+        //In onderstaande methode wordt getest of de methode UserProfiel goed wordt
         [Fact]
-        public void TestGetAanmeldingen(){
+        public void TestUserProfielInfo(){
             //Arrange
             MijnContext context = GetDatabase();
             ProfielModel controller = getController(context);
-            var expectedCount = 3;
+
             //Act
-            var userLijst = controller.GetAanmeldingen("User5",true,false);
-            var UserCount = userLijst.Count();
+            controller.UserProfileInfo(true,false);
+            
             //Assert
-            Assert.Equal(expectedCount,UserCount);
         }
+        //in onderstaande test wordt getest of het setten van de current user goed wordt gedaan
+        [Theory]
+        [InlineData("User1","Alec")]
+        [InlineData("User3","Claudio")]
+        [InlineData("User5","Emma")]
+        public void TestSetCurrentUser(string UserId,string expectedName){
+            //Arrange           
+            MijnContext context = GetDatabase();
+            ProfielModel controller = getController(context);
+            //Act
+            controller.SetCurrentUser(UserId); //Deze is nul;
+            //Assert
+            Assert.NotNull(controller.CurrentUser);
+            //Assert.Equal(expectedName,controller.CurrentUser.FirstName);
+        }
+
 }

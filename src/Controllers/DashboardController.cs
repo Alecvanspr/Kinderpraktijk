@@ -265,15 +265,19 @@ public class DashboardController : Controller{
         }
         return false;
     }
-
-    // public bool 
     
     [Authorize(Roles="Ouder, Moderator")]
     public async Task<IActionResult> Overzicht()
     {
         string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        string kidCurrentUserId = _context.Users.Where(p => p.ParentId == currentUserId).ToList().First().Id;
-        IList<Chat> chatsChildCurrentUser = _context.Chat.Include(p => p.Messages).Where(p => p.Users.All(p => p.UserId == kidCurrentUserId)).ToList();
+        var kid = _context.Users.Where(p => p.ParentId == currentUserId).FirstOrDefault(); //Deze is null
+        IList<Chat> chatsChildCurrentUser = new List<Chat>();
+        if(kid!=null){
+             chatsChildCurrentUser = _context.Chat.Include(p => p.Messages)
+                .Include(x => x.Users)
+                .Where(p => p.Users.All(p => p.UserId == kid.Id))
+                .ToList();
+        }
         ViewData["ChatsLijst"] = chatsChildCurrentUser;
         return View(await _context.Users.Where(p => p.ParentId == currentUserId).ToListAsync());
     }
