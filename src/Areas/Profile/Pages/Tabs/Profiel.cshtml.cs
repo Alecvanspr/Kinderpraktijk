@@ -50,7 +50,7 @@ namespace src.Areas.Profile.Pages.Tabs
             SetCurrentUser(currentUserId);
             //Hiermee wordt een lijst met de actieve aanmeldingen gegenereerd
             //Daarvoor moet je de speciale FilterList aanroepe
-            Aanmeldingen = GetAanmeldingen(currentUserId).ToList();
+            Aanmeldingen = GetFilters(GetAanmeldingen(currentUserId)).ToList();
         }
 
         public async Task<IActionResult> OnPostMeldAan(string id)
