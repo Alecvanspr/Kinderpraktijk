@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'kinderpraktijkhij2'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FF49FDC8F7D44440AF75DB3DC874A477 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AAD11C6269C341028FCC45A7E244671D }}
           package: .
