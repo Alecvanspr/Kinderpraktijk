@@ -128,10 +128,10 @@
             function dataNaarApi(){
             postData('https://orthopedagogie-zmdh.herokuapp.com/clienten?sleutel=814362922&', {
                 "clientid": Math.floor(Math.random() * 9999999),
-                "volledigenaam": document.getElementById('naam1').innerHTML + document.getElementById('naam2').innerHTML,
-                "IBAN": document.getElementById('iba').innerHTML,
-                "BSN": document.getElementById('bsn').innerHTML,
-                "gebdatum": document.getElementById('lft').innerHTML,
+                "volledigenaam": document.getElementById('naam1').value + document.getElementById('naam2').value,
+                "IBAN": document.getElementById('iba').value,
+                "BSN": document.getElementById('bsn').value,
+                "gebdatum": document.getElementById('lft').value,
                 })
             .then(data => {
                 console.log(data); // JSON data parsed by `data.json()` call
