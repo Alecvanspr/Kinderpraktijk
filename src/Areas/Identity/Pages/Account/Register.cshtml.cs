@@ -117,12 +117,10 @@ namespace src.Areas.Identity.Pages.Account
             [Display(Name = "Achternaam")]
             public string LastName { get; set; }
 
-            [Required]
             [StringLength(50)]
             [Display(Name = "IBAN")]
             public string IBAN { get; set; }
 
-            [Required]
             [Display(Name = "BSN")]
             public string BSN { get; set; }
 
@@ -157,14 +155,25 @@ namespace src.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, "ReCAPTCHA gefaald, probeer opnieuw.");
             }else if (ModelState.IsValid)
             {
-                var user = new srcUser
-                {
-                    FirstName = Input.FirstName,
-                    LastName = Input.LastName,
-                    Age = Input.Age,
-                    IBAN = Input.IBAN,
-                    BSN = Input.BSN
-                };
+                srcUser user;
+                //hier wordt gekeken of de gene die het veld invoerd een parent is
+                if(Input.Parent){
+                user = new srcUser
+                    {
+                        FirstName = Input.FirstName,
+                        LastName = Input.LastName,
+                        Age = Input.Age,
+                        IBAN = Input.IBAN,
+                        BSN = Input.BSN
+                    };
+                }else{
+                    user = new srcUser
+                    {
+                        FirstName = Input.FirstName,
+                        LastName = Input.LastName,
+                        Age = Input.Age
+                    };
+                }
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -211,13 +220,13 @@ namespace src.Areas.Identity.Pages.Account
         public async Task<bool> SetRoleAsync(srcUser user){
             if(Input.Parent)
             {
-                await _userManager.AddToRoleAsync(user, "Client");
-                return await _userManager.IsInRoleAsync(user, "Client");
+                await _userManager.AddToRoleAsync(user, "Ouder");
+                return await _userManager.IsInRoleAsync(user, "Ouder");
             }
             else
             {
-                await _userManager.AddToRoleAsync(user, "Ouder");
-                return await _userManager.IsInRoleAsync(user, "Ouder");
+                await _userManager.AddToRoleAsync(user, "Client");
+                return await _userManager.IsInRoleAsync(user, "Client");
             }
         }
 
