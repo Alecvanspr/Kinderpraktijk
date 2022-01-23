@@ -1,21 +1,17 @@
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using src.Areas.Identity.Data;
-using src.Areas.Profile.ViewModels;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using System.Linq;
-using AutoMapper;
-using System.Collections.Generic;
+using src.Areas.Profile.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using src.Models;
 
 namespace src.Areas.Profile.Pages.Tabs
 {
-    
+
     public class ViewSpecialistModel : PageModel
     {
 
@@ -43,17 +39,16 @@ namespace src.Areas.Profile.Pages.Tabs
 
             ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(result);
 
-            
+
             checkAanmelding = _context.Aanmeldingen
-                                                .Where(x=>!x.IsAfgemeld)
-                                                .Any(x=>x.ClientId==currentUserID);
-                                                
-                    /*                            
-            checkAanmelding = (from l in _context.Aanmeldingen
-                                   where !String.IsNullOrEmpty(_userManager.GetUserId(User))
-                                   where !String.IsNullOrEmpty(_userManager.GetUserId(User)) && (l.IsAangemeld.Equals(false) && l.IsAfgemeld.Equals(false))
-                                   select l).Any(); 
-                                   */        
+                                                .Where(x => !x.IsAfgemeld)
+                                                .Any(x => x.ClientId == currentUserID);
+            /*                            
+    checkAanmelding = (from l in _context.Aanmeldingen
+                           where !String.IsNullOrEmpty(_userManager.GetUserId(User))
+                           where !String.IsNullOrEmpty(_userManager.GetUserId(User)) && (l.IsAangemeld.Equals(false) && l.IsAfgemeld.Equals(false))
+                           select l).Any(); 
+                           */
         }
 
         public async Task<IActionResult> OnPost(string id)
