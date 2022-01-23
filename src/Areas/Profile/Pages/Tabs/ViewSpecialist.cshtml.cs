@@ -11,7 +11,6 @@ using AutoMapper;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
-using src.Interfaces;
 using src.Models;
 
 namespace src.Areas.Profile.Pages.Tabs
