@@ -157,7 +157,7 @@
             if(isParentBtn.checked==false){
                 postData('https://orthopedagogie-zmdh.herokuapp.com/clienten?sleutel=814362922&', {
                     "clientid": Math.floor(Math.random() * 9999999),
-                    "volledigenaam": document.getElementById('naam1').value + document.getElementById('naam2').value,
+                    "volledigenaam": document.getElementById('naam1').value+ " "+document.getElementById('naam2').value,
                     "IBAN": document.getElementById('iba').value,
                     "BSN": document.getElementById('bsn').value,
                     "gebdatum": document.getElementById('lft').value,
