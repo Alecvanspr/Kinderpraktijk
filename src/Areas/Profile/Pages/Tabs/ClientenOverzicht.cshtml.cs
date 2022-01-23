@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,6 +12,8 @@ using src.Areas.Profile.ViewModels;
 
 namespace src.Areas.Profile.Pages.Tabs
 {
+    [Authorize(Roles = "Pedagoog")]
+
     public class ClientenOverzichtModel : PageModel
     {
         private readonly MijnContext _context;

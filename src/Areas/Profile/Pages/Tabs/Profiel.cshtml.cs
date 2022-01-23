@@ -36,9 +36,9 @@ namespace src.Areas.Profile.Pages.Tabs
         //Deze worden automatisch geset
         //Door deze filter zie je al gelijk de dingen die geactiveerd zijn
         [BindProperty]
-        public bool Aangemeld { get; set; } = true;
+        public bool Aangemeld { get; set; }
         [BindProperty]
-        public bool Afgemeld { get; set; } = false;
+        public bool Afgemeld { get; set; }
 
         public string SpecialistName { get; set; }
         
@@ -50,7 +50,11 @@ namespace src.Areas.Profile.Pages.Tabs
             SetCurrentUser(currentUserId);
             //Hiermee wordt een lijst met de actieve aanmeldingen gegenereerd
             //Daarvoor moet je de speciale FilterList aanroepe
-            Aanmeldingen = GetFilters(GetAanmeldingen(currentUserId)).ToList();
+            if(User.IsInRole("Pedagoog")){
+                Aanmeldingen = GetAanmeldingen(currentUserId).ToList();
+            }else{
+                Aanmeldingen = GetFilters(GetAanmeldingen(),aan,af).ToList();
+            }
         }
 
         public async Task<IActionResult> OnPostMeldAan(string id)
@@ -59,6 +63,7 @@ namespace src.Areas.Profile.Pages.Tabs
             CurrentUser.SpecialistId = _userManager.GetUserId(User);
             //hier wordt de laatste aanmelding die is gemaakt geopend
             var LaasteAanmelding = GetAanmeldingen(CurrentUser.SpecialistId)
+                                                    .OrderByDescending(x=>x.Id)
                                                      .First();
             
             //Hier wordt de laatste aanmelding op waar gezet
@@ -76,9 +81,10 @@ namespace src.Areas.Profile.Pages.Tabs
         {
             CurrentUser = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
 
-            var LaasteAanmelding = GetFilters(GetAanmeldingen(CurrentUser.SpecialistId))
+            var LaasteAanmelding = GetAanmeldingen(CurrentUser.SpecialistId)
+                                                    .OrderByDescending(x=>x.Id)
                                                      .First();
-            //Hier wordt de Specialist van de Current User verwiderd
+
             CurrentUser.SpecialistId = null;
 
             //hier wordt de afmelding waar gemaakt
@@ -110,15 +116,21 @@ namespace src.Areas.Profile.Pages.Tabs
                                         .ToListAsync();
         }
         //Hier kan je filters toevoegen van aan de Aanmeldingen lijst
-        public IQueryable<Aanmelding> GetFilters(IQueryable<Aanmelding> lijst){
-                return lijst.Where(x=>x.IsAangemeld==Aangemeld).Where(x=>x.IsAfgemeld==Afgemeld);
+        public IQueryable<Aanmelding> GetFilters(IQueryable<Aanmelding> lijst,bool aan, bool af){
+                return lijst.Where(x=>x.IsAangemeld==aan).Where(x=>x.IsAfgemeld==af);
         }
         //Hier wordt een lijst van alle aanmeldingen gegeven
         public IQueryable<Aanmelding> GetAanmeldingen(string PedagoogId){
                 return _context.Aanmeldingen
-                                            .Include(x=>x.Client)
+                .Include(x=>x.Client)
                                             .Include(x=>x.Pedagoog)
                                             .Where(x=>x.PedagoogId==PedagoogId);
+                                            
+        }
+        public IQueryable<Aanmelding> GetAanmeldingen(){
+                return _context.Aanmeldingen
+                                            .Include(x=>x.Client)
+                                            .Include(x=>x.Pedagoog);
         }
     }
 }

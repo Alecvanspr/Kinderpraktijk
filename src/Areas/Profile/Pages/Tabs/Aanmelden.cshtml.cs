@@ -139,6 +139,7 @@ namespace src.Areas.Profile.Pages.Tabs
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     Age = Input.Age,
+                    Email = Input.Email,
                     ParentId = _userManager.GetUserId(User)
             };
 

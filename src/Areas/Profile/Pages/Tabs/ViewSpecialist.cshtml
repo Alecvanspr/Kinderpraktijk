@@ -21,7 +21,7 @@
         <div class="row">
             @foreach (var a in Model.ProfileViewModel)
             {
-                <div class="col-3">
+                <div class="col-md-3 p-2">
                     <div class="card">
                         <img class="card-img-top" src="~/img/woman.jpg" alt="Card image cap">
                         <div class="card-body">
@@ -31,6 +31,8 @@
                                 <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Specialism): @Html.DisplayFor(modelItem => a.Specialism)</a>
                                 <br />
                                 <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Description): @Html.DisplayFor(modelItem => a.Description)</a>
+                                <br />
+                                <a>@Html.DisplayNameFor(a => a.ProfileViewModel[0].Email): @Html.DisplayFor(modelItem => a.Email)</a>
                             </p>
 
                             @if (User.IsInRole("Client"))

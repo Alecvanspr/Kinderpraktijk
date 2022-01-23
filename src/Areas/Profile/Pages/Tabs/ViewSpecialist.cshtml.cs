@@ -16,6 +16,7 @@ using src.Models;
 
 namespace src.Areas.Profile.Pages.Tabs
 {
+    
     public class ViewSpecialistModel : PageModel
     {
 
@@ -36,16 +37,24 @@ namespace src.Areas.Profile.Pages.Tabs
 
         public void OnGet()
         {
+            var currentUserID = _userManager.GetUserId(User);
             var result = (from s in _context.Users
                           where !String.IsNullOrEmpty(s.Specialism)
                           select s).ToList();
 
             ProfileViewModel = _mapper.Map<List<srcUser>, List<ProfileViewModel>>(result);
 
+            
+            checkAanmelding = _context.Aanmeldingen
+                                                .Where(x=>!x.IsAfgemeld)
+                                                .Any(x=>x.ClientId==currentUserID);
+                                                
+                    /*                            
             checkAanmelding = (from l in _context.Aanmeldingen
                                    where !String.IsNullOrEmpty(_userManager.GetUserId(User))
                                    where !String.IsNullOrEmpty(_userManager.GetUserId(User)) && (l.IsAangemeld.Equals(false) && l.IsAfgemeld.Equals(false))
-                                   select l).Any();                              
+                                   select l).Any(); 
+                                   */        
         }
 
         public async Task<IActionResult> OnPost(string id)
