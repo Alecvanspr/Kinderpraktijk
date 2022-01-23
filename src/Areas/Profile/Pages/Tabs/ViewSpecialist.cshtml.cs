@@ -62,12 +62,13 @@ namespace src.Areas.Profile.Pages.Tabs
         public async Task<IActionResult> OnPostRegister(string id)
         {
             var date = DateTime.Now;
-            Aanmelding aanmelding = new Aanmelding { AanmeldingDatum = date, ClientId = _userManager.GetUserId(User), PedagoogId = id };
+            var currentUser = _userManager.GetUserId(User);
+            Aanmelding aanmelding = new Aanmelding { AanmeldingDatum = date, ClientId = currentUser, PedagoogId = id };
+             _context.SaveChanges();
             _context.Aanmeldingen.Add(aanmelding);
             _context.SaveChanges();
             return RedirectToPage("/Tabs/ViewSpecialist", new { Area = "Profile" });
         }
-
 
     }
 }

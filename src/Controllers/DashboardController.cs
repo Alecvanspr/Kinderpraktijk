@@ -279,7 +279,7 @@ public class DashboardController : Controller{
                 .ToList();
         }
         ViewData["ChatsLijst"] = chatsChildCurrentUser;
-        return View(await _context.Users.Where(p => p.ParentId == currentUserId).ToListAsync());
+        return View(await _context.Users.Include(x=>x.Chats).Where(p => p.ParentId == currentUserId).ToListAsync());
     }
     public ActionResult NotAuthorized(){
         return View();

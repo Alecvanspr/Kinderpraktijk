@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using src.Areas.Profile.Pages.Tabs;
 using Xunit;
@@ -127,4 +128,61 @@ public class ProfielTests{
             Assert.Equal(expectedAan,controller.Aangemeld);
             Assert.Equal(expectedAf,controller.Afgemeld);
         }
+
+    [Fact]
+    //hierbij wordt getest of er een nieuwe groep wordt aangemaakt
+    public async Task CreateNewGroupTestAsync(){
+        //Arrange
+        var roleClaim = "Client";
+        var ClaimTypeId = "User2";
+        var SpecialistId = "User5";
+        MijnContext context = GetDatabase();
+        ProfielModel controller = getController(context,SpecialistId);
+        var user = context.Users.Where(x=>x.Id==ClaimTypeId).Single();
+        var pedagoog =  context.Users.Where(x=>x.Id==SpecialistId).Single();
+
+        //Hieronder staan de verwachte typen
+        var expectedChatName ="Prive chat "+ user.LastName;
+        var expectedChatUsers = 2;
+        var expectedType = ChatType.Private;
+
+        //act
+        var result = await controller.CreateNewGroupAsync(user, pedagoog);
+        var Chat =context.Chat.OrderByDescending(x=>x.Id).First();
+        //assert
+        //Deze checkt of het programma successvol is uitgevoerd
+        Assert.True(result);
+        //Dit checkt of de naam van klopt met de verwachte chat naam
+        Assert.Equal(expectedChatName,Chat.Naam);
+        
+        //dit is om te checken of het juiste aantal in de chat zitten
+        Assert.Equal(expectedChatUsers, Chat.Users.Count());
+
+        //Dit is om te testen of zowel de pedagoog als de user in de chat zitten
+        Assert.True(Chat.Users.Any(x=>x.UserId==user.Id));
+        Assert.True(Chat.Users.Any(x=>x.UserId==pedagoog.Id));
+
+        //Dit is om te checken of de kamer van het juiste type is
+        Assert.Equal(expectedType,Chat.type);
+    }
+    //Hieronder testsen wij het verwijderen van een prive groep tussen een pedagoog en een user
+    [Fact]
+    public void DeletePrivateGroup(){
+        //Arrange
+        var ClaimTypeId = "User1";
+        var SpecialistId = "User5";
+        MijnContext context = GetDatabase();
+        ProfielModel controller = getController(context,SpecialistId);
+        var user = context.Users.Where(x=>x.Id==ClaimTypeId).Single();
+
+        //Act
+        var result = controller.DeletePrivateGroup(user);
+        //Deze kijkt of er een prive chat is in de database.
+        //tot zover is er maar een chat die prive is in de database
+        var IsExist = context.Chat.Any(x=>x.type==ChatType.Private);
+    
+        //Assert
+        Assert.True(result);
+        Assert.False(IsExist);
+    }
 }
