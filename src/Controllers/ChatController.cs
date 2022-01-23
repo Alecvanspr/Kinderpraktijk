@@ -49,9 +49,6 @@ public class ChatController : Controller{
         _context.Messages.Add(NewMessage);
         await _context.SaveChangesAsync();
 
-        //Deze wordt wel verzonden, echter gaat dit naar alle clients. Ik den dat de GROUP niet werkt van de andere
-        //await _chat.Clients.All.SendAsync("ReceiveMessage",NewMessage);
-
         //bij deze await wordt het nieuwe bericht naar ieder gestuurd die in de groupschat zit met hetzelfde groupsnummer
         await _chat.Clients.Group(chatId+"").SendAsync("ReceiveMessage", NewMessage); //Hier doet hij het wel
             //Dit gaat een bericht sturen naar de client

@@ -1,33 +1,57 @@
-using System.Linq;
+using System;
+using Xunit;
+using src.Models;
+using Moq;
+using src.Areas.Identity.Data;
 using System.Security.Claims;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using src.Areas.Profile.Pages.Tabs;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using src.Areas.Profile.Pages.Tabs;
-using Xunit;
 
 public class SpecialistTests{
         private MijnContext GetDatabase(){
             MockDatabase m = new MockDatabase();
             return m.CreateContext();
         }
+        private async Task<bool> returnValue(){
+            await Task.Delay(2);
+            return true;
+        }
+        public IUserStore<srcUser> GetStore(){
+            var mockStore = new Mock<IUserStore<srcUser>>(); 
+            mockStore.Setup(x=>x.SetUserNameAsync(It.IsAny<srcUser>(),It.IsAny<String>(),It.IsAny<CancellationToken>()));
+            return mockStore.Object;
+        }
+        public UserManager<srcUser> GetManager(){
+            var mockUser = new Mock<UserManager<srcUser>>(GetStore(),null,null,null,null,null,null,null,null);
+            mockUser.Setup(x=>x.AddToRoleAsync(It.IsAny<srcUser>(),It.IsAny<string>()));
+            mockUser.Setup(x=>x.IsInRoleAsync(It.IsAny<srcUser>(),It.IsAny<string>())).Returns(returnValue());
+            return mockUser.Object;
+        }
         //ClaimTypeId is denk een soort van static userId
-        private SpecialistModel getController(MijnContext context,string roleClaim,string ClaimTypeId){
+        private ViewSpecialistModel getController(MijnContext context,string roleClaim,string ClaimTypeId){
             var mockImapper = new Mock<IMapper>();
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Role, roleClaim),
                 new Claim(ClaimTypes.NameIdentifier,ClaimTypeId)
             }, "mock"));
-            var controller = new SpecialistModel(context,mockImapper.Object);
+            var controller = new ViewSpecialistModel(context,GetManager(),mockImapper.Object);
             controller.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext()
             {
             HttpContext = new DefaultHttpContext() { User = user }
         };
          return controller;
     }
+    /* Dit is van een oudere methode. Die is overgezet en daarvan zijn de tests niet helemaal relevant meer
     //Dit is voor het testen van de GetUser
     [Theory]
     [InlineData("User1","Alecvanspr@gmail.com")]
@@ -100,41 +124,6 @@ public class SpecialistTests{
         Assert.False(controller.getSuccessvol());
         Assert.True(controller.getNietSuccessvol());
     }
-    [Fact]
-    //hierbij wordt getest of er een nieuwe groep wordt aangemaakt
-    public async Task CreateNewGroupTestAsync(){
-        //Arrange
-        var roleClaim = "Client";
-        var ClaimTypeId = "User2";
-        var SpecialistId = "User5";
-        MijnContext context = GetDatabase();
-        SpecialistModel controller = getController(context,roleClaim,ClaimTypeId);
-        var user = context.Users.Where(x=>x.Id==ClaimTypeId).Single();
-        var pedagoog =  context.Users.Where(x=>x.Id==SpecialistId).Single();
-
-        //Hieronder staan de verwachte typen
-        var expectedChatName ="Prive chat "+ user.LastName;
-        var expectedChatUsers = 2;
-        var expectedType = ChatType.Private;
-
-        //act
-        var result = await controller.CreateNewGroupAsync(user, pedagoog);
-        var Chat =context.Chat.OrderByDescending(x=>x.Id).First();
-        //assert
-        //Deze checkt of het programma successvol is uitgevoerd
-        Assert.True(result);
-        //Dit checkt of de naam van klopt met de verwachte chat naam
-        Assert.Equal(expectedChatName,Chat.Naam);
-        
-        //dit is om te checken of het juiste aantal in de chat zitten
-        Assert.Equal(expectedChatUsers, Chat.Users.Count());
-
-        //Dit is om te testen of zowel de pedagoog als de user in de chat zitten
-        Assert.True(Chat.Users.Any(x=>x.UserId==user.Id));
-        Assert.True(Chat.Users.Any(x=>x.UserId==pedagoog.Id));
-
-        //Dit is om te checken of de kamer van het juiste type is
-        Assert.Equal(expectedType,Chat.type);
-    }
+    */
 
 }

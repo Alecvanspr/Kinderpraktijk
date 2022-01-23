@@ -117,6 +117,16 @@ namespace src.Areas.Profile.Pages.Tabs
             [Display(Name = "Geboortedatum")]
             public DateTime Age { get; set; }
 
+            [Required]
+            [StringLength(50)]
+            [Display(Name = "IBAN")]
+            public string IBAN { get; set; }
+            
+            [Required]
+            [Display(Name = "BSN")]
+            public string BSN { get; set; }
+
+
             public string ParentId { get; set; }
         }
 
@@ -136,10 +146,12 @@ namespace src.Areas.Profile.Pages.Tabs
                 //var user = CreateUser();
                 var user = new srcUser
                 {
-                    FirstName = Input.FirstName,
-                    LastName = Input.LastName,
-                    Age = Input.Age,
-                    Email = Input.Email,
+                      FirstName = Input.FirstName,
+                        LastName = Input.LastName,
+                        Age = Input.Age,
+                        Email = Input.Email,
+                        IBAN = Input.IBAN,
+                        BSN = Input.BSN,
                     ParentId = _userManager.GetUserId(User)
             };
 

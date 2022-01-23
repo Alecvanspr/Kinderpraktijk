@@ -26,14 +26,16 @@ private MijnContext _context;
     public ClientController(MijnContext context){
         _context =context;
     }
-    //TODO De user moet automatisch gelinkt worden met de pedagoog bij het aanmelden.
-    //Bij het aanmelden van de user en de pedagoog moet deze groep automatisch aangemaakt 
+
     public ActionResult Index(string zoek){
         //hiermee worden alle privé chats toegevoegd
         ViewData["ZoekTerm"] = zoek;
         return View(ZoekOp(GetClients(),zoek).ToList());
     }
     public IQueryable<Chat> ZoekOp(IQueryable<Chat> lijst, string trefwoord){
+        if(trefwoord==null||trefwoord==""){
+            return lijst;
+        }
         return lijst.Where(x=>x.Naam.Contains(trefwoord));
     }
     public IQueryable<Chat> GetClients(){

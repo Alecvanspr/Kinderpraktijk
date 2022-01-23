@@ -41,6 +41,20 @@
                 <span asp-validation-for="Input.Age" class="text-danger"></span>    
             </div>    
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label id="ibaLabel" asp-for="Input.IBAN"></label>
+                <input id="iba" asp-for="Input.IBAN" required class="form-control" />
+                <span asp-validation-for="Input.IBAN" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label id="bsnLabel" asp-for="Input.BSN"></label>
+                <input id="bsn" asp-for="Input.BSN" required class="form-control" />
+                <span asp-validation-for="Input.BSN" class="text-danger"></span>
+            </div>
+        </div>
         <div class="col-md-6">    
             <div class="form-group">    
                 <label asp-for="Input.Password"></label>    

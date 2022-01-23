@@ -14,6 +14,18 @@
             <img class="align-content-center img-fluid" src="~/img/logo2.jpg" alt="Logo">
         </div>
 
+        <div class="container-fluid p-1">
+            <div class="d-flex justify-content-end align-items-center align-middle">
+                <div class="align-middle">
+                    <spand class="align-middle p-2">Pas de textgrootte aan</spand>
+                </div>
+                <div>
+                    <button onClick="font('a');" class="btn btn-success btn-sm" aria-label="vergroot tekst knop" id="increase-plugin-ac">A+</button>
+                    <button onClick="font('d');" class="btn btn-success btn-sm" aria-label="verklein tekst knop" id="decrease-plugin-ac">A-</button>
+                </div>
+            </div>
+        </div>
+
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #007a78">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -21,7 +33,7 @@
 
             <div class="collapse navbar-collapse pr" id="navbarTogglerDemo03">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
-                        <a class="nav-link text-white font-weight-bold" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white font-weight-bold" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active topnav">
                     <li class="nav-item">
@@ -37,20 +49,15 @@
                         <a class="nav-link text-white font-weight-bold" href="/Contact">Contact</a>
                     </li>
                 </ul>
-
-                <form class="form-inline my-2 my-lg-0 pr-2">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="bi bi-search"></i> Search</button>
-                </form>
                 <partial name="_LoginPartial" />
-
             </div>
-
         </nav>
     </header>
+
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
+
     <footer class="footer text-muted" style="background-color: #007a78">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none; background-color:white;">
             <symbol id="bootstrap" viewBox="0 0 118 94">
@@ -70,7 +77,7 @@
         <div class="container">
             <div class="d-flex justify-content-between text-white">
                 <div>
-                    &copy; 2021 - ZMDH - <a style="color:white;" asp-area="" asp-page="/Privacy">Privacy</a>
+                    &copy; 2021 - ZMDH - <a style="color:white;" href="/Home/Privacy"> Privacy</a>
                 </div>
                 <div>
                     <ul class="justify-content-around list-unstyled d-flex">
@@ -83,6 +90,7 @@
         </div>
     </footer>
 
+    <script src="~/js/purecookie.js"></script>
     <script src="~/js/accessibility.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

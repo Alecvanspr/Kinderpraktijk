@@ -163,6 +163,7 @@ namespace src.Areas.Identity.Pages.Account
                         FirstName = Input.FirstName,
                         LastName = Input.LastName,
                         Age = Input.Age,
+                        Email = Input.Email,
                         IBAN = Input.IBAN,
                         BSN = Input.BSN
                     };

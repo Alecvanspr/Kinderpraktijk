@@ -25,6 +25,7 @@ namespace src.Areas.Profile.Pages.Tabs
 
         public List<srcUser> users;
 
+        // ophalen van lijst met clienten
         public void OnGet()
         {
             string specialistId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

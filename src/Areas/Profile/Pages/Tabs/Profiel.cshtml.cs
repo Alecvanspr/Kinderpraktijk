@@ -69,6 +69,10 @@ namespace src.Areas.Profile.Pages.Tabs
             //Hier wordt de laatste aanmelding op waar gezet
             LaasteAanmelding.IsAangemeld = true;
             LaasteAanmelding.AfmeldingDatum =  DateTime.Now;
+            
+            //Hieronder wordt een nieuwe chat gemaakt tussen de pedagoog en de gebruiker
+            var Pedagoog = _context.Users.Where(x=>x.Id==CurrentUser.SpecialistId).SingleOrDefault();
+            await CreateNewGroupAsync(CurrentUser,Pedagoog);
 
             //Hier wordt de aanmelding die gedaan wordt opgeslagen
             _context.Aanmeldingen.Update(LaasteAanmelding);
@@ -86,6 +90,9 @@ namespace src.Areas.Profile.Pages.Tabs
                                                      .First();
 
             CurrentUser.SpecialistId = null;
+
+            //Hier chat verwijderen
+            DeletePrivateGroup(CurrentUser);
 
             //hier wordt de afmelding waar gemaakt
             LaasteAanmelding.IsAfgemeld = true;
@@ -131,6 +138,37 @@ namespace src.Areas.Profile.Pages.Tabs
                 return _context.Aanmeldingen
                                             .Include(x=>x.Client)
                                             .Include(x=>x.Pedagoog);
+        }
+        //Deze is voor het aanmaken van een prive chat
+        [HttpPost]
+        public async Task<bool> CreateNewGroupAsync(srcUser user, srcUser pedagoog){
+            Chat chat = new Chat(){Naam="Prive chat "+user.LastName,Beschrijving="Dit is de prive chat tussen jou en de pedagoog", type=ChatType.Private};
+            chat.Users = new List<ChatUser>(){
+                new ChatUser(){UserId= user.Id, Role=UserRole.Member,ChatId = chat.Id},
+                new ChatUser(){UserId=pedagoog.Id, Role=UserRole.Admin, ChatId = chat.Id}
+            };
+            _context.Chat.Add(chat);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        //Deze is voor het verwijderen van een prive chat tussen 2 groepen
+        [HttpPost]
+        public bool DeletePrivateGroup(srcUser client){
+            var chat = getPriveChat(client.Id);
+                //Dit is om alle verbindingen die gemaakt zijn met de chat ook gelijk worden verwijderd
+                foreach(var item in _context.ChatUsers.Where(x=>x.ChatId==chat)){
+                        _context.ChatUsers.Remove(item);
+                }
+                _context.Chat.Remove(_context.Chat.Where(x=>x.Id==chat).Single());
+                _context.SaveChanges();
+                return true;
+            }
+        public int getPriveChat(string userId){
+            var ChatUser = _context.ChatUsers.Include(x => x.chat)
+                .Where(x => x.UserId == userId)
+                .Where(x => x.chat.type == ChatType.Private)
+                .SingleOrDefault();
+            return ChatUser.ChatId;
         }
     }
 }
