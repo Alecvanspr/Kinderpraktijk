@@ -115,12 +115,16 @@ public class DashboardController : Controller{
         if(UserIsIn(ChatId)){
             ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
             return View(_context.Chat.Include(x=>x.Messages).Where(x=>x.Id==ChatId).Single());
-        } else if(AssistentSpecialistIsIn(ChatId))
-        {
-            ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
-            return View(_context.Chat.Include(x=>x.Messages).Where(x=>x.Id==ChatId).Single());
         }
-        return RedirectToAction("Index",_context.Chat);
+        else if(User.IsInRole("Assistent"))
+        {
+            if(AssistentSpecialistIsIn(ChatId))
+            {
+                ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
+                return View(_context.Chat.Include(x=>x.Messages).Where(x=>x.Id==ChatId).Single());
+            }
+        }
+        return RedirectToAction("Index", "Dashboard");
     }
 
     [Authorize(Roles = "Moderator,Pedagoog")]
@@ -304,10 +308,10 @@ public class DashboardController : Controller{
         return _context.ChatUsers.Where(x=>x.ChatId==ChatId).Any(x=>x.UserId==CurrentUser);
     }
 
-    public bool AssistentSpecialistIsIn(int ChatId)
+    public bool AssistentSpecialistIsIn(int chatId)
     {
         var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
         var specialistCurrentAssistent = _context.Users.Where(p => p.AssistentId == currentUser).FirstOrDefault();
-        return _context.ChatUsers.Where(p => p.ChatId == ChatId).Any(p => p.UserId == specialistCurrentAssistent.Id);
+        return _context.ChatUsers.Where(p => p.ChatId == chatId).Any(p => p.UserId == specialistCurrentAssistent.Id);
     }
 }

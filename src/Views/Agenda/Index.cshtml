@@ -1,0 +1,33 @@
+@model Kinderpraktijk.Models.AgendaModel
+
+@{
+    ViewData["Title"] = "AgendaIndex";
+    Layout ="~/Areas/Profile/Pages/_Layout.cshtml";
+}
+
+<div class="container">
+    <h1>Agenda</h1>
+    <hr />
+    <h2>Voeg een afspraak toe!</h2>
+    <form action="javascript:void(0);" method="POST" onsubmit="addAfspraak()">
+        <input type="text" id="add-beschrijving" placeholder="Beschrijving">
+        <input type="datetime-local" id="add-starttijd" placeholder="Begin datum">
+        <input type="number" id="add-duur" placeholder="Duur in minuten">
+        <input type="submit" value="Add">
+    </form>
+
+    <hr />
+    <table>
+        <tr>
+            <th class="col-md-2">Datum</th>
+            <th class="col-md-2">Duur in minuten</th>
+            <th class="col-md-2">Beschrijving</th>
+            <th class="col-md-2"></th>
+        </tr>
+        <tbody id="afspraken"></tbody>
+    </table>
+</div>
+    <script src="js/agenda.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        getAfspraken();
+    </script>

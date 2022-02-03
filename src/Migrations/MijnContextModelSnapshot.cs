@@ -96,6 +96,34 @@ namespace src.Migrations
                     b.ToTable("ChatUsers");
                 });
 
+            modelBuilder.Entity("Kinderpraktijk.Models.Afspraak", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Beschrijving")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Duur")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SpecialistId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("eindTijd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("startTijd")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpecialistId");
+
+                    b.ToTable("Afspraken");
+                });
+
             modelBuilder.Entity("Melding", b =>
                 {
                     b.Property<int>("Id")
@@ -408,6 +436,15 @@ namespace src.Migrations
                     b.Navigation("chat");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Kinderpraktijk.Models.Afspraak", b =>
+                {
+                    b.HasOne("srcUser", "Specialist")
+                        .WithMany()
+                        .HasForeignKey("SpecialistId");
+
+                    b.Navigation("Specialist");
                 });
 
             modelBuilder.Entity("Message", b =>

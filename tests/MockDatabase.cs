@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kinderpraktijk.Models;
 using Microsoft.EntityFrameworkCore;
 using Xunit.Abstractions;
 
@@ -16,7 +17,8 @@ public class MockDatabase{
             srcUser Jeremy = new srcUser(){Id="User2", UserName="Jeremy@gmail.com"};
             srcUser Claudio = new srcUser(){Id="User3",UserName="Claudio@gmail.com"};
             srcUser Bert = new srcUser(){Id="User4",UserName="BertVanAchternaam@gmail.com"};
-            srcUser Emma = new srcUser(){Id="User5",UserName="EmmaDaBlat@Pedagoog.net"}; //Dit is een pedagoog
+            srcUser Emma = new srcUser(){Id="User5",UserName="EmmaDaBlat@Pedagoog.net", AssistentId = "User6"}; //Dit is een pedagoog
+            srcUser Joeri = new srcUser(){Id="User6", UserName="JoeriAssistent@Assistent.com", SpecialistId = "User5"};
                 Chat chat1= new Chat(){
                     Id=1,Naam="Chat1",Beschrijving="Dit is een chat applicatie", Messages= new List<Message>(){
                         new Message{ Naam="Alec",Text="Hoi",timestamp=DateTime.Now},
@@ -47,14 +49,26 @@ public class MockDatabase{
                         new ChatUser{UserId = Alec.Id ,User=Alec ,Role=UserRole.Member},
                         new ChatUser{UserId = Emma.Id, User = Emma, Role= UserRole.Admin}
                     }, type= ChatType.Private};
+
+                    Chat chat4 = new Chat(){
+                        Id=4, Naam="Chat4", Beschrijving="Dit is een chat die de assistent kan lezen", Messages= new List<Message>(){
+                            new Message{ Naam="Emma", Text="Ik probeer dit", timestamp=DateTime.Now},
+                            new Message { Naam="Alec", Text="Oke nice", timestamp=DateTime.Now}
+                        },Users = new List<ChatUser>()
+                        {
+                            new ChatUser{UserId = Emma.Id, User = Emma, Role= UserRole.Member},
+                            new ChatUser{UserId = Alec.Id, User = Alec, Role= UserRole.Member}
+                        }, type= ChatType.Room};
             context.Users.Add(Alec);
             context.Users.Add(Jeremy);
             context.Users.Add(Claudio);
             context.Users.Add(Bert);
             context.Users.Add(Emma);
+            context.Users.Add(Joeri);
             context.Chat.Add(chat1);
             context.Chat.Add(chat2);
             context.Chat.Add(chat3);
+            context.Chat.Add(chat4);
             context.SaveChanges();
             //Onderstaande code is voor de tests
             context.Meldingen.Add(new Melding(){Id=2,Titel="Melding2",Bericht="Hierin klaagt iemand over een bom ofzo",Datum=DateTime.Now});
@@ -66,6 +80,8 @@ public class MockDatabase{
             context.Aanmeldingen.Add(new Aanmelding(){Id=2,Client=Alec,ClientId="User1",Pedagoog=Emma,PedagoogId="User5",AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
             context.Aanmeldingen.Add(new Aanmelding(){Id=3,Client=Claudio,ClientId="User2",Pedagoog=Emma,PedagoogId="User5",AanmeldingDatum=DateTime.Now,IsAangemeld=true,IsAfgemeld=false});
             context.Aanmeldingen.Add(new Aanmelding(){Id=4,Client=Jeremy,ClientId="User3",Pedagoog=Emma,PedagoogId="User5",AanmeldingDatum=DateTime.Now,IsAangemeld=false,IsAfgemeld=false});
+            context.SaveChanges();
+            context.Afspraken.Add(new Afspraak(){Id=1,Beschrijving="Dit is een testafsprak met Kees", startTijd = new DateTime(2022,2,2,10,10,0), Duur = 20, eindTijd = new DateTime(2022,2,2,10,30,0), SpecialistId = "User5"});
             context.SaveChanges();
             return GetCleanContext(false);
         }
