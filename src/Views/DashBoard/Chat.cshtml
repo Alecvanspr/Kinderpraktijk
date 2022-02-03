@@ -31,12 +31,15 @@
     }
 </div>
 <div class="chat-input">
-    <form onsubmit="sendMessage(event)" asp-controller="Chat" asp-action="CreateMessage" method="post">
-        <input type="hidden" name="chatId" value="@Model.Id">
-        <input type="hidden" name="roomName" value="@Model.Naam">
-        <input class="form-control form-control-lg" id="MessageField" type="text" name="Message" pattern="^([a-zA-Z0-9_ ?!]+)$">
-        <input class="btn btn-primary" value="Verstuur bericht" type="submit"/>
-    </form>
+    @if (!User.IsInRole("Assistent"))
+    {
+        <form onsubmit="sendMessage(event)" asp-controller="Chat" asp-action="CreateMessage" method="post">
+            <input type="hidden" name="chatId" value="@Model.Id">
+            <input type="hidden" name="roomName" value="@Model.Naam">
+            <input class="form-control form-control-lg" id="MessageField" type="text" name="Message" pattern="^([a-zA-Z0-9_ ?!]+)$">
+            <input class="btn btn-primary" value="Verstuur bericht" type="submit"/>
+        </form>
+    }
 </div>
 
 @section scripts{
@@ -51,7 +54,8 @@
     //De naam van de Chathub is case sensitive
     //hierbij moet ook de link veranderd worden zodra het kan
     const connection = new signalR.HubConnectionBuilder()
-                                    .withUrl("https://kinderpraktijkhij2.azurewebsites.net/chathub")
+                                    @* .withUrl("https://kinderpraktijkhij2.azurewebsites.net/chathub") *@
+                                    .withUrl("https://localhost:5001/chathub")
                                     .configureLogging(signalR.LogLevel.Information)
                                     .build();
 

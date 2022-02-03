@@ -35,7 +35,7 @@ public class filterenEnSorteren{
             var userId = "User1";
             MijnContext _context = GetDatabase();
             DashboardController controller = getController(_context,"Client",userId);
-            var expectedCount = 1;
+            var expectedCount = 2;
             
             //act
             var result = controller.GetChats();
@@ -126,7 +126,7 @@ public class filterenEnSorteren{
         //Bij deze Chat testen wij een deel van de titel
         //Met Chat1 vragen wij de complete titel
         //Met Chat2 vragen wij een deel van de titel
-        [InlineData("User1","Chat",1)]
+        [InlineData("User1","Chat",2)]
         [InlineData("User1","Chat1",1)]
         [InlineData("User1","Chat2",0)]
         [InlineData("User2","Chat",2)]
@@ -166,7 +166,7 @@ public class filterenEnSorteren{
         //Bij deze A testen wij een deel van de titel
         //Met Chat1 vragen wij de complete titel
         //Met Chat2 vragen wij een deel van de titel
-        [InlineData("User1","a",1)]
+        [InlineData("User1","a",2)]
         [InlineData("User1","2",0)]
         [InlineData("User1","q",0)]
         [InlineData("User2","a",2)]

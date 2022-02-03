@@ -9,7 +9,7 @@ public class SampleData{
     {
         var serviceScope = serviceProvider;
         MijnContext context = (MijnContext)serviceScope.GetService(typeof(MijnContext));
-        string[] roles = new string[] { "Ouder", "Client", "Pedagoog", "Moderator"};
+        string[] roles = new string[] { "Ouder", "Client", "Pedagoog", "Moderator", "Assistent"};
 
         foreach (string role in roles)
         {

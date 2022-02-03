@@ -77,7 +77,7 @@ public class DashboardController : Controller{
         return lijst.Where(x => x.Leeftijdscategorie == leeftijdsCatagorie);
     }
     //Dit is de Query van het onderwerp waarop gesorteerd kan worden
-    public IQueryable<Chat>  Onderwerp(IQueryable<Chat> lijst,string onderwerp){
+    public IQueryable<Chat> Onderwerp(IQueryable<Chat> lijst,string onderwerp){
         if(onderwerp == null || onderwerp == ""){
             return lijst;
         }
@@ -86,6 +86,13 @@ public class DashboardController : Controller{
     //Met onderstaande methode wordt gekeken in welke lists de user staat ingeschreven
     public IQueryable<Chat> GetChats(){
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        if(User.IsInRole("Assistent"))
+        {
+            var currentUser = _context.Users.Where(p => p.Id == CurrentUser).FirstOrDefault();
+            string assistentPedagoogId = currentUser.SpecialistId;
+            return _context.ChatUsers.Include(p => p.chat).Where(p => p.UserId == currentUser.SpecialistId).Select(p => p.chat).Where(p => p.type != ChatType.Private);
+        }
+        
         return _context.ChatUsers.Include(x=>x.chat).Where(x=>x.UserId==CurrentUser).Select(x=>x.chat).Where(x=>x.type==ChatType.Room);
     }
     public IQueryable<Chat> GetAllChats(){
@@ -103,13 +110,21 @@ public class DashboardController : Controller{
 
     //Deze is voor de chat zelf. Hiermee kan je alle berichten zien
     [HttpGet]
-    [Authorize(Roles = "Moderator,Pedagoog,Client")]
+    [Authorize(Roles = "Moderator,Pedagoog,Client,Assistent")]
     public IActionResult Chat(int ChatId){
         if(UserIsIn(ChatId)){
             ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
             return View(_context.Chat.Include(x=>x.Messages).Where(x=>x.Id==ChatId).Single());
         }
-        return RedirectToAction("Index",_context.Chat);
+        else if(User.IsInRole("Assistent"))
+        {
+            if(AssistentSpecialistIsIn(ChatId))
+            {
+                ViewData["IsModerator"] = User.IsInRole("Moderator")||User.IsInRole("Pedagoog");
+                return View(_context.Chat.Include(x=>x.Messages).Where(x=>x.Id==ChatId).Single());
+            }
+        }
+        return RedirectToAction("Index", "Dashboard");
     }
 
     [Authorize(Roles = "Moderator,Pedagoog")]
@@ -291,5 +306,12 @@ public class DashboardController : Controller{
         var CurrentUser =User.FindFirst(ClaimTypes.NameIdentifier).Value;
         //hieronder wordt gekeken of de user in de lijst zit van alle users van de aangegeven chat
         return _context.ChatUsers.Where(x=>x.ChatId==ChatId).Any(x=>x.UserId==CurrentUser);
+    }
+
+    public bool AssistentSpecialistIsIn(int chatId)
+    {
+        var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        var specialistCurrentAssistent = _context.Users.Where(p => p.AssistentId == currentUser).FirstOrDefault();
+        return _context.ChatUsers.Where(p => p.ChatId == chatId).Any(p => p.UserId == specialistCurrentAssistent.Id);
     }
 }

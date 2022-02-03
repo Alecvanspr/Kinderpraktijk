@@ -22,6 +22,10 @@ public class srcUser : IdentityUser
     [Column(TypeName = "nvarchar(450)")]
     public string SpecialistId { get; set; }
     public srcUser Specialist{get;set;}
+    [ForeignKey("srcUser")]
+    [Column(TypeName = "nvarchar(450)")]
+    public string AssistentId { get; set; }
+    public srcUser Assistent { get; set; }
 
     public bool UserBlocked { get; set; }
 

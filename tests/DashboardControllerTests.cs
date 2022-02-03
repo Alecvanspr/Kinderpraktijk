@@ -43,7 +43,7 @@ namespace tests
         private string Client = "Client";
         private string Pedagoog = "Pedagoog";
         private string Moderator = "Moderator";
-
+        private string Assistent = "Assistent";
         //Index Tests\\
         //Met deze test, test ik of als je de role hebt van ouder dat deze dan geridirect wordt naar de overzichtspagina
         [Fact]
@@ -77,7 +77,7 @@ namespace tests
         //BIj deze test wordt getest het aantal correcte chats opgehaald worden
         //Als het filteren en sorteren getest moet worden moeten daar ook performance testen bij gemaakt worden
         [Theory]
-        [InlineData("User1",1)]
+        [InlineData("User1",2)]
         [InlineData("User2",2)]
         [InlineData("User3",2)]
         [InlineData("User4",0)]
@@ -465,6 +465,37 @@ namespace tests
             var result = controller.heeftPriveChat();
             //assert
             Assert.Equal(expectedBool, result);
+        }
+
+        [Theory]
+        [InlineData("User6", 4, true)]
+        [InlineData("User6", 2, false)]
+        [InlineData("User6", 1, false)]
+        public void TestSpecialistAssistentIsIn(string userId, int chatId, bool verwacht)
+        {
+            //Arrange
+            MijnContext context = GetDatabase();
+            DashboardController controller = getController(context, Assistent, userId);
+
+            //Act
+            var result = controller.AssistentSpecialistIsIn(chatId);
+
+            //Assert
+            Assert.Equal(verwacht, result);
+        }
+
+        [Fact]
+        public void TestRedirectChat()
+        {
+            //Arrange
+            DashboardController controller = getController(GetDatabase(), Assistent, "User6");
+
+            //Act
+            var result = controller.Chat(1);
+            var ChatRedirect = Assert.IsType<RedirectToActionResult>(result);
+
+            //Assert
+            Assert.Equal("Index", ChatRedirect.ActionName);
         }
     }
 }

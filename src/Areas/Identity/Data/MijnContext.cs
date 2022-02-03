@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using src.Models;
+using Kinderpraktijk.Models;
 
 public class MijnContext : IdentityDbContext<srcUser>{
 
@@ -12,6 +12,7 @@ public class MijnContext : IdentityDbContext<srcUser>{
     public DbSet<ChatUser> ChatUsers{get;set;}
     public DbSet<Melding> Meldingen{get;set;}
     public DbSet<Aanmelding> Aanmeldingen{get;set;}
+    public DbSet<Afspraak> Afspraken { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
